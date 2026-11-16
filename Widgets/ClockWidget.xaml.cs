@@ -70,6 +70,12 @@ public partial class ClockWidget : UserControl, IIslandWidget, IBackNavigable
     {
         if (!_calendarEnabled) return;
         e.Handled = true;
+        OpenCalendar();
+    }
+
+    public void OpenCalendar()
+    {
+        if (CalendarPage.Visibility == Visibility.Visible) return;
         var today = DateTime.Today;
         _month = new DateTime(today.Year, today.Month, 1);
         BuildCalendar(0);

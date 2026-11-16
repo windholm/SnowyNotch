@@ -699,6 +699,7 @@ public partial class MainWindow
                 EnsureLyricsView().ShowDemo(_snap);
                 ShowView(View.Lyrics);
                 break;
+            case "lyrics-shot": ShowView(View.Lyrics); break; // текст уже подставлен через ShowDemo
             case "look": EnsureSettingsView().ShowSection("look"); ShowView(View.Settings); break;
             case "customize":
                 _customizing = true;

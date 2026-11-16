@@ -172,6 +172,7 @@ public partial class MainWindow : Window
             UpdateState();
         }
 
+        if (App.ShotMode) return; // съёмка скриншотов: только демо-трек, реальный плеер не слушаем
         _media.Changed += OnMediaChanged;
         try
         {

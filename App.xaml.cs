@@ -20,6 +20,9 @@ public partial class App : System.Windows.Application
 
     /// <summary>Сочетание, которое реально открывает «Звук» (для настроек).</summary>
     public static string? AudioHotkeyLabel { get; private set; }
+
+    /// <summary>Режим съёмки скриншотов для README (только Debug, --shots=папка): чистые настройки, демо-данные, ничего не сохраняется.</summary>
+    public static bool ShotMode { get; private set; }
     private readonly ToolsService _tools = new();
     private readonly TrayService _files = new();
     private AppSettings _settings = new();
@@ -37,6 +40,23 @@ public partial class App : System.Windows.Application
             Shutdown();
             return;
         }
+
+#if DEBUG
+        // Скриншоты для README: настройки по умолчанию на английском, без трея, хоткеев и сохранения.
+        string? shots = Array.Find(e.Args, a => a.StartsWith("--shots="));
+        if (shots != null)
+        {
+            ShotMode = true;
+            // Главная как у нового пользователя: по умолчанию там только музыка.
+            _settings = new AppSettings { FirstRunDone = true, Language = "en", HideInFullscreen = false };
+            Localization.L.Init(_settings.Language);
+            _island = new MainWindow(_settings, _tools, _files);
+            _island.Show();
+            string dir = shots["--shots=".Length..];
+            Dispatcher.InvokeAsync(() => _island.RunShots(dir, _files, _tools), DispatcherPriority.ApplicationIdle);
+            return;
+        }
+#endif
 
         _singleInstance = new Mutex(true, @"Local\SnowyNotch.SingleInstance", out bool isFirst);
         // Перезапуск (смена языка): прежний остров ещё закрывается — ждём, пока он отпустит мьютекс.

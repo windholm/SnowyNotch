@@ -112,14 +112,14 @@ public partial class LyricsView : UserControl, IMediaView, IIslandWidget
         Show(result);
     }
 
-    public void ShowDemo(MediaSnapshot? snap)
+    public void ShowDemo(MediaSnapshot? snap, IReadOnlyList<string>? text = null)
     {
         _loadVersion++;
         _snap = snap;
         var lines = new List<LyricLine>();
-        string[] demo = { L.T("Первая строка для проверки"), L.T("Вторая строка чуть длиннее первой, чтобы перенестись"),
+        IReadOnlyList<string> demo = text ?? new[] { L.T("Первая строка для проверки"), L.T("Вторая строка чуть длиннее первой, чтобы перенестись"),
                           L.T("Третья — сейчас звучит"), L.T("Четвёртая строка"), L.T("Пятая строка"), L.T("Шестая строка") };
-        for (int i = 0; i < demo.Length; i++) lines.Add(new LyricLine(TimeSpan.FromSeconds(i * 3), demo[i]));
+        for (int i = 0; i < demo.Count; i++) lines.Add(new LyricLine(TimeSpan.FromSeconds(i * 3), demo[i]));
         Show(new LyricsResult(lines, null));
         _demo = true;
         Dispatcher.InvokeAsync(() =>
