@@ -1,0 +1,550 @@
+﻿<UserControl x:Class="SnowyNotch.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:l="clr-namespace:SnowyNotch.Localization"
+             xmlns:c="clr-namespace:SnowyNotch.Controls"
+             Width="720" Height="430" Foreground="White">
+    <Grid Margin="0,10,0,10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="190"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Сайдбар: разделы сгруппированы по тому, как часто туда заходят. -->
+        <StackPanel Margin="14,2,12,0">
+            <StackPanel Orientation="Horizontal" Margin="4,0,0,14">
+                <Image Width="30" Height="30" Source="/SnowyNotch;component/Assets/SnowyNotch.png"
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                <StackPanel Margin="9,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="SnowyNotch" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock Text="{l:T 'Настройки'}" FontSize="11.5" Foreground="{StaticResource TextSecondary}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock Text="{l:T 'ОСНОВНОЕ'}" Style="{StaticResource GroupLabel}" Margin="8,0,0,4"/>
+            <RadioButton x:Name="NavGeneral" Style="{StaticResource SidebarItem}" GroupName="SettingsNav" Content="{l:T 'Общие'}"
+                         Tag="{StaticResource IconSettings}" Background="#8E8E93" Checked="Nav_Checked" IsChecked="True"/>
+            <RadioButton x:Name="NavLook" Style="{StaticResource SidebarItem}" GroupName="SettingsNav" Content="{l:T 'Вид'}"
+                         Tag="{StaticResource IconSparkle}" Background="#5E5CE6" Checked="Nav_Checked"/>
+            <RadioButton x:Name="NavWidgets" Style="{StaticResource SidebarItem}" GroupName="SettingsNav" Content="{l:T 'Главная'}"
+                         Tag="{StaticResource IconGrid}" Background="#FF9F0A" Checked="Nav_Checked"/>
+
+            <TextBlock Text="{l:T 'СЕРВИСЫ'}" Style="{StaticResource GroupLabel}" Margin="8,10,0,4"/>
+            <RadioButton x:Name="NavMedia" Style="{StaticResource SidebarItem}" GroupName="SettingsNav" Content="{l:T 'Медиа'}"
+                         Tag="{StaticResource IconMusic}" Background="#FF375F" Checked="Nav_Checked"/>
+            <RadioButton x:Name="NavDevices" Style="{StaticResource SidebarItem}" GroupName="SettingsNav" Content="{l:T 'Звук и устройства'}"
+                         Tag="{StaticResource IconSpeakerHigh}" Background="#0A84FF" Checked="Nav_Checked"/>
+            <RadioButton x:Name="NavClaude" Style="{StaticResource SidebarItem}" GroupName="SettingsNav" Content="Agents"
+                         Tag="{StaticResource IconAgents}" Background="#8B7CF6" Checked="Nav_Checked"/>
+
+            <TextBlock Text="{l:T 'ЕЩЁ'}" Style="{StaticResource GroupLabel}" Margin="8,10,0,4"/>
+            <RadioButton x:Name="NavNavigation" Style="{StaticResource SidebarItem}" GroupName="SettingsNav" Content="{l:T 'Управление'}"
+                         Tag="{StaticResource IconArrows}" Background="#30B0C7" Checked="Nav_Checked"/>
+            <RadioButton x:Name="NavAbout" Style="{StaticResource SidebarItem}" GroupName="SettingsNav" Content="{l:T 'О программе'}"
+                         Tag="{StaticResource IconInfo}" Background="#636366" Checked="Nav_Checked"/>
+        </StackPanel>
+
+        <Grid Grid.Column="1" Margin="0,0,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Margin="0,0,4,8">
+                <StackPanel Margin="0,0,40,0">
+                    <TextBlock x:Name="SectionTitle" Style="{StaticResource SectionTitle}" Text="{l:T 'Общие'}" Margin="0"/>
+                    <TextBlock x:Name="SectionSubtitle" FontSize="12" Foreground="{StaticResource TextSecondary}" Margin="0,2,0,0"
+                               TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
+                <Button Style="{StaticResource IconButton}" Width="28" Height="28" Background="#1FFFFFFF"
+                        HorizontalAlignment="Right" VerticalAlignment="Top" Click="Close_Click" ToolTip="{l:T 'Закрыть (Esc)'}">
+                    <c:IconGlyph Data="{StaticResource IconClose}" Width="15" Height="15" StrokeWidth="1.8"/>
+                </Button>
+            </Grid>
+
+            <ScrollViewer x:Name="Scroller" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                          Focusable="False" Padding="0,0,8,0">
+                <Grid x:Name="Sections">
+
+                    <StackPanel x:Name="SecGeneral">
+                        <!-- Язык интерфейса: применяется перезапуском острова (секунда, настройки откроются снова) -->
+                        <Border Style="{StaticResource Card}" Margin="0,0,0,10">
+                            <StackPanel>
+                                <StackPanel Margin="12,8,10,6">
+                                    <TextBlock Text="{l:T 'Язык'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Text="{l:T 'Остров перезапустится, чтобы применить язык'}" Style="{StaticResource Hint}"/>
+                                </StackPanel>
+                                <WrapPanel x:Name="LanguageChips" Margin="12,0,6,10"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Grid Style="{StaticResource Row}">
+                                    <TextBlock Text="{l:T 'Раскрывать при наведении'}" Style="{StaticResource Label}" Margin="0,0,46,0"/>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding ExpandOnHover}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource SliderRow}" IsEnabled="{Binding ExpandOnHover}">
+                                    <Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                                    <TextBlock Text="{l:T 'Задержка раскрытия'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Style="{StaticResource Value}"><Run Text="{Binding HoverDelayMs, StringFormat={}{0:0}, Mode=OneWay}"/><Run Text="{l:T ' мс'}"/></TextBlock>
+                                    <Slider Grid.Row="1" Style="{StaticResource Slider}" Minimum="0" Maximum="800" TickFrequency="20"
+                                            Value="{Binding HoverDelayMs}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource SliderRow}">
+                                    <Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                                    <TextBlock Text="{l:T 'Сворачивать через'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Style="{StaticResource Value}"><Run Text="{Binding CollapseDelayMs, StringFormat={}{0:0}, Mode=OneWay}"/><Run Text="{l:T ' мс'}"/></TextBlock>
+                                    <Slider Grid.Row="1" Style="{StaticResource Slider}" Minimum="100" Maximum="2000" TickFrequency="50"
+                                            Value="{Binding CollapseDelayMs}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Style="{StaticResource Card}" Margin="0,10,0,0">
+                            <StackPanel>
+                                <Grid Style="{StaticResource Row}">
+                                    <StackPanel Margin="0,0,46,0">
+                                        <TextBlock Text="{l:T 'Колёсико мыши — убрать остров с дороги'}" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{l:T 'Клик колёсиком по острову — он становится прозрачным и пропускает клики, ещё клик там же — возвращается. Долгое нажатие колёсиком — убрать совсем (так же и вернуть)'}" Style="{StaticResource Hint}"/>
+                                    </StackPanel>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding MiddleClickGhost}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Style="{StaticResource Card}" Margin="0,10,0,0">
+                            <StackPanel>
+                                <Grid Style="{StaticResource Row}">
+                                    <StackPanel Margin="0,0,46,0">
+                                        <TextBlock Text="{l:T 'Прятать в играх и видео'}" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{l:T 'Когда приложение открыто на весь экран'}" Style="{StaticResource Hint}"/>
+                                    </StackPanel>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding HideInFullscreen}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource Row}">
+                                    <TextBlock Text="{l:T 'Прятать, когда ничего не происходит'}" Style="{StaticResource Label}" Margin="0,0,46,0"/>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding HideWhenIdle}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource Row}">
+                                    <TextBlock Text="{l:T 'Запускать вместе с Windows'}" Style="{StaticResource Label}" Margin="0,0,46,0"/>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding LaunchAtStartup}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <TextBlock Style="{StaticResource Hint}" Margin="4,8,0,0"
+                                   Text="{l:T 'Win + / открывает эти настройки. Правый клик по острову — тоже. Все сочетания — в «Управлении».'}"/>
+                    </StackPanel>
+
+                    <!-- ===== Звук и устройства ===== -->
+                    <StackPanel x:Name="SecDevices" Visibility="Collapsed">
+                        <Border Style="{StaticResource Card}">
+                            <Grid Style="{StaticResource Row}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <c:AppIcon Width="36" Height="36" Glyph="{StaticResource AppGlyphSpeaker}" Top="#4FB2FF" Bottom="#0057D9"
+                                           VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" Margin="11,0,12,0" VerticalAlignment="Center">
+                                    <TextBlock Text="{l:T 'Звук по программам'}" Style="{StaticResource Label}"/>
+                                    <TextBlock x:Name="AudioHotkeyText" Style="{StaticResource Hint}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                                <Button Grid.Column="2" Style="{StaticResource PillButton}" Background="#0A84FF" VerticalAlignment="Center"
+                                        Content="{l:T 'Открыть'}" Click="OpenAudio_Click"/>
+                            </Grid>
+                        </Border>
+
+                        <TextBlock Text="{l:T 'ПОКАЗЫВАТЬ В ОСТРОВЕ'}" Style="{StaticResource GroupLabel}"/>
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Grid Style="{StaticResource Row}">
+                                    <StackPanel Margin="0,0,46,0">
+                                        <TextBlock Text="{l:T 'Громкость и яркость'}" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{l:T 'Изменения показываются в острове, ползунок можно тянуть'}" Style="{StaticResource Hint}"/>
+                                    </StackPanel>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding ShowHud}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource Row}">
+                                    <StackPanel Margin="0,0,46,0">
+                                        <TextBlock Text="{l:T 'Bluetooth-наушники'}" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{l:T 'Пузырь с зарядом при подключении и при низком заряде'}" Style="{StaticResource Hint}"/>
+                                    </StackPanel>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding ShowBluetooth}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource Row}" x:Name="BatteryRow">
+                                    <StackPanel Margin="0,0,46,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{l:T 'Заряд ноутбука'}" Style="{StaticResource Label}"/>
+                                            <c:BatteryGlyph Width="22" Height="11" Level="0.8" Charging="True" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <TextBlock x:Name="BatteryHint" Style="{StaticResource Hint}" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                    <CheckBox x:Name="BatterySwitch" Style="{StaticResource Switch}" IsChecked="{Binding ShowBattery}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel x:Name="SecLook" Visibility="Collapsed">
+                        <TextBlock Text="{l:T 'ФОРМА'}" Style="{StaticResource GroupLabel}" Margin="4,0,0,6"/>
+                        <UniformGrid Columns="2" Margin="0,0,-8,0">
+                            <RadioButton Style="{StaticResource ChoiceCard}" GroupName="Shape"
+                                         IsChecked="{Binding Preset, Converter={StaticResource EnumEq}, ConverterParameter=MacBookNotch}">
+                                <StackPanel>
+                                    <Border Height="44" CornerRadius="7" ClipToBounds="True">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#3F2BD8" Offset="0"/><GradientStop Color="#1A1AA8" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Path Fill="Black" VerticalAlignment="Top" HorizontalAlignment="Center"
+                                              Data="M0,0 H74 A6,6 0 0 0 68,6 V10 A6,6 0 0 1 62,16 H12 A6,6 0 0 1 6,10 V6 A6,6 0 0 0 0,0 Z"/>
+                                    </Border>
+                                    <TextBlock Text="{l:T 'Вырез'}" FontSize="12" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource ChoiceCard}" GroupName="Shape"
+                                         IsChecked="{Binding Preset, Converter={StaticResource EnumEq}, ConverterParameter=DynamicIsland}">
+                                <StackPanel>
+                                    <Border Height="44" CornerRadius="7" ClipToBounds="True">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#3F2BD8" Offset="0"/><GradientStop Color="#1A1AA8" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Border Width="52" Height="13" CornerRadius="6.5" Background="Black"
+                                                VerticalAlignment="Top" Margin="0,5,0,0"/>
+                                    </Border>
+                                    <TextBlock Text="{l:T 'Остров'}" FontSize="12" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </RadioButton>
+                        </UniformGrid>
+
+                        <TextBlock Text="{l:T 'ОТДЕЛКА'}" Style="{StaticResource GroupLabel}"/>
+                        <UniformGrid Columns="3" Margin="0,0,-8,0">
+                            <RadioButton Style="{StaticResource ChoiceCard}" GroupName="Finish"
+                                         IsChecked="{Binding Finish, Converter={StaticResource EnumEq}, ConverterParameter=DynamicGlass}">
+                                <StackPanel>
+                                    <Border Height="34" CornerRadius="7" Background="#7A3CE6">
+                                        <Border Margin="8,0,8,6" CornerRadius="0,0,6,6" VerticalAlignment="Stretch">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Color="Black" Offset="0.3"/><GradientStop Color="#55141418" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                        </Border>
+                                    </Border>
+                                    <TextBlock Text="Dynamic Glass" FontSize="11.5" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource ChoiceCard}" GroupName="Finish"
+                                         IsChecked="{Binding Finish, Converter={StaticResource EnumEq}, ConverterParameter=Glass}">
+                                <StackPanel>
+                                    <Border Height="34" CornerRadius="7" Background="#7A3CE6">
+                                        <Border Margin="8,0,8,6" CornerRadius="0,0,6,6" Background="#661C1C22"
+                                                BorderBrush="#33FFFFFF" BorderThickness="1,0,1,1"/>
+                                    </Border>
+                                    <TextBlock Text="{l:T 'Стекло'}" FontSize="11.5" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton Style="{StaticResource ChoiceCard}" GroupName="Finish"
+                                         IsChecked="{Binding Finish, Converter={StaticResource EnumEq}, ConverterParameter=Black}">
+                                <StackPanel>
+                                    <Border Height="34" CornerRadius="7" Background="#7A3CE6">
+                                        <Border Margin="8,0,8,6" CornerRadius="0,0,6,6" Background="Black"/>
+                                    </Border>
+                                    <TextBlock Text="{l:T 'Чёрный'}" FontSize="11.5" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </RadioButton>
+                        </UniformGrid>
+
+                        <Border Style="{StaticResource Card}" Margin="0,10,0,0">
+                            <StackPanel>
+                                <Grid Style="{StaticResource SliderRow}"
+                                      IsEnabled="{Binding Finish, Converter={StaticResource EnumEq}, ConverterParameter=DynamicGlass}"
+                                      x:Name="GlassRow">
+                                    <Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                                    <TextBlock Text="{l:T 'Прозрачность стекла'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Text="{Binding GlassIntensity, StringFormat={}{0:0%}}" Style="{StaticResource Value}"/>
+                                    <Slider Grid.Row="1" Style="{StaticResource Slider}" Minimum="0" Maximum="1" TickFrequency="0.05"
+                                            Value="{Binding GlassIntensity}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource Row}">
+                                    <StackPanel Margin="0,0,46,0">
+                                        <TextBlock Text="{l:T 'Тонкий контур'}" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{l:T 'Видно край острова на тёмных обоях'}" Style="{StaticResource Hint}"/>
+                                    </StackPanel>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding SubtleOutline}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <TextBlock Text="{l:T 'ЦВЕТ АКЦЕНТА'}" Style="{StaticResource GroupLabel}"/>
+                        <WrapPanel x:Name="Swatches" Margin="4,0,0,0"/>
+
+                        <TextBlock Text="{l:T 'РАЗМЕР И ДВИЖЕНИЕ'}" Style="{StaticResource GroupLabel}"/>
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Grid Style="{StaticResource SliderRow}">
+                                    <Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                                    <TextBlock Text="{l:T 'Ширина'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Text="{Binding Length, StringFormat={}{0:0%}}" Style="{StaticResource Value}"/>
+                                    <Slider Grid.Row="1" Style="{StaticResource Slider}" Minimum="0.6" Maximum="1.6" TickFrequency="0.05"
+                                            Value="{Binding Length}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource SliderRow}">
+                                    <Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                                    <TextBlock Text="{l:T 'Масштаб'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Text="{Binding Scale, StringFormat={}{0:0%}}" Style="{StaticResource Value}"/>
+                                    <Slider Grid.Row="1" Style="{StaticResource Slider}" Minimum="0.8" Maximum="1.3" TickFrequency="0.05"
+                                            Value="{Binding Scale}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource SliderRow}"
+                                      IsEnabled="{Binding Preset, Converter={StaticResource EnumEq}, ConverterParameter=DynamicIsland}">
+                                    <Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                                    <TextBlock Text="{l:T 'Отступ сверху (остров)'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Text="{Binding TopOffset, StringFormat={}{0:0} px}" Style="{StaticResource Value}"/>
+                                    <Slider Grid.Row="1" Style="{StaticResource Slider}" Minimum="0" Maximum="40" TickFrequency="1"
+                                            Value="{Binding TopOffset}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource SliderRow}">
+                                    <Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                                    <TextBlock Text="{l:T 'Скорость анимации'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Text="{Binding AnimationSpeed, StringFormat={}{0:0.0}×}" Style="{StaticResource Value}"/>
+                                    <Slider Grid.Row="1" Style="{StaticResource Slider}" Minimum="0.6" Maximum="1.6" TickFrequency="0.1"
+                                            Value="{Binding AnimationSpeed}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel x:Name="SecWidgets" Visibility="Collapsed">
+                        <TextBlock Style="{StaticResource Hint}" FontSize="12.5" Margin="2,0,0,10"
+                                   Text="{l:T 'На главной стоят до трёх виджетов в ряд. Раскладку меняют прямо в острове: убрать — красный минус, добавить — иконка снизу.'}"/>
+                        <Border Style="{StaticResource Card}" Padding="12">
+                            <StackPanel>
+                                <TextBlock Text="{l:T 'Сейчас на главной'}" FontSize="12" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,8"/>
+                                <WrapPanel x:Name="CurrentWidgets"/>
+                                <Button Style="{StaticResource PillButton}" Background="#2EFFFFFF" HorizontalAlignment="Left"
+                                        Margin="0,6,0,0" Click="Customize_Click">
+                                    <StackPanel Orientation="Horizontal">
+                                        <c:IconGlyph Data="{StaticResource IconPencil}" Width="16" Height="16"/>
+                                        <TextBlock Text="{l:T 'Изменить раскладку'}" Margin="6,0,0,0" FontSize="12.5" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                        <TextBlock Style="{StaticResource Hint}" Margin="4,8,0,0"
+                                   Text="{l:T 'Все виджеты также есть на странице «Виджеты» (значок сетки под островом).'}"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="SecMedia" Visibility="Collapsed">
+                        <Border Style="{StaticResource Card}" Margin="0,0,0,10">
+                            <Grid Style="{StaticResource Row}">
+                                <StackPanel Margin="0,0,46,0">
+                                    <TextBlock Text="{l:T 'Только музыка'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Style="{StaticResource Hint}" TextWrapping="Wrap"
+                                               Text="{l:T 'Плеер показывает музыкальные приложения (Spotify, Apple Music, Яндекс Музыка, Deezer, TIDAL, AIMP, foobar2000…) и музыкальные сайты в браузере (SoundCloud, YouTube Music, Spotify Web, VK, Bandcamp…). YouTube, видео, звонки и прочий звук не показываются'}"/>
+                                </StackPanel>
+                                <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding MusicOnly}"/>
+                            </Grid>
+                        </Border>
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Grid Style="{StaticResource Row}">
+                                    <TextBlock Text="{l:T 'Эквалайзер'}" Style="{StaticResource Label}" Margin="0,0,46,0"/>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding ShowVisualizer}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource Row}" IsEnabled="{Binding ShowVisualizer}">
+                                    <StackPanel Margin="0,0,46,0">
+                                        <TextBlock Text="{l:T 'Цвет из обложки'}" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{l:T 'Иначе полоски белые'}" Style="{StaticResource Hint}"/>
+                                    </StackPanel>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding AccentFromArtwork}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource Card}" Margin="0,10,0,0">
+                            <StackPanel>
+                                <Grid Style="{StaticResource Row}">
+                                    <StackPanel Margin="0,0,46,0">
+                                        <TextBlock Text="{l:T 'Показывать новый трек'}" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{l:T 'Остров ненадолго раскрывается при смене песни'}" Style="{StaticResource Hint}"/>
+                                    </StackPanel>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding PeekOnTrackChange}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource SliderRow}" IsEnabled="{Binding PeekOnTrackChange}">
+                                    <Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                                    <TextBlock Text="{l:T 'Сколько показывать'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Style="{StaticResource Value}"><Run Text="{Binding PeekDurationSec, StringFormat={}{0:0.0}, Mode=OneWay}"/><Run Text="{l:T ' с'}"/></TextBlock>
+                                    <Slider Grid.Row="1" Style="{StaticResource Slider}" Minimum="1" Maximum="10" TickFrequency="0.5"
+                                            Value="{Binding PeekDurationSec}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource Card}" Margin="0,10,0,0">
+                            <Grid Style="{StaticResource Row}">
+                                <StackPanel Margin="0,0,46,0">
+                                    <TextBlock Text="{l:T 'Текст песен'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Text="{l:T 'Синхронный текст из открытой базы lrclib.net. Ищется, только когда вы открываете текст; туда уходят название, исполнитель и длительность трека'}" Style="{StaticResource Hint}"/>
+                                </StackPanel>
+                                <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding LyricsEnabled}"/>
+                            </Grid>
+                        </Border>
+                        <TextBlock Text="{l:T 'КНОПКИ ПЛЕЕРА'}" Style="{StaticResource GroupLabel}"/>
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Grid Style="{StaticResource Row}">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,46,0">
+                                        <c:IconGlyph Data="{StaticResource IconShuffle}" Width="18" Height="18"/>
+                                        <TextBlock Text="{l:T 'Перемешать'}" Style="{StaticResource Label}" Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding ShowShuffleButton}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource Row}">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,46,0">
+                                        <c:IconGlyph Data="{StaticResource IconRepeat}" Width="18" Height="18"/>
+                                        <TextBlock Text="{l:T 'Повтор'}" Style="{StaticResource Label}" Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding ShowRepeatButton}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <TextBlock Style="{StaticResource Hint}" Margin="4,8,0,0"
+                                   Text="{l:T 'Кнопки встают по краям плеера. Некоторые плееры (часто браузеры) их не поддерживают — тогда они неактивны.'}"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="SecClaude" Visibility="Collapsed">
+                        <!-- Claude Code -->
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Grid Style="{StaticResource Row}">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,130,0">
+                                        <c:AgentLogo Agent="Claude" Width="34" Height="34" VerticalAlignment="Center"/>
+                                        <StackPanel Margin="11,0,0,0" VerticalAlignment="Center">
+                                            <TextBlock Text="Claude Code" Style="{StaticResource Label}"/>
+                                            <TextBlock x:Name="ClaudeStatusText" Style="{StaticResource Hint}" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <Button x:Name="ClaudeConnectButton" Style="{StaticResource PillButton}" HorizontalAlignment="Right"
+                                            VerticalAlignment="Center" Background="#E0784F" Click="ClaudeConnect_Click"/>
+                                </Grid>
+                                <Border Height="1" Background="{StaticResource Hairline}" Margin="0,2"/>
+                                <Grid Style="{StaticResource Row}">
+                                    <StackPanel Margin="0,0,46,0">
+                                        <TextBlock Text="{l:T 'Показывать лимиты Claude'}" Style="{StaticResource Label}"/>
+                                        <TextBlock Style="{StaticResource Hint}" TextWrapping="Wrap"
+                                                   Text="{l:T '5-часовой и недельный лимит подписки, как в /usage. Остров берёт вход Claude Code на этом компьютере и спрашивает только api.anthropic.com раз в 5 минут; токен никуда больше не передаётся и не сохраняется.'}"/>
+                                    </StackPanel>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding ClaudeUsageEnabled}"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Codex -->
+                        <Border Style="{StaticResource Card}" Margin="0,10,0,0">
+                            <Grid Style="{StaticResource Row}">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,130,0">
+                                    <c:AgentLogo Agent="Codex" Width="34" Height="34" VerticalAlignment="Center"/>
+                                    <StackPanel Margin="11,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock Text="Codex" Style="{StaticResource Label}"/>
+                                        <TextBlock x:Name="CodexStatusText" Style="{StaticResource Hint}" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button x:Name="CodexConnectButton" Style="{StaticResource PillButton}" HorizontalAlignment="Right"
+                                        VerticalAlignment="Center" Background="#4A9EFF" Click="CodexConnect_Click"/>
+                            </Grid>
+                        </Border>
+
+                        <Border Style="{StaticResource Card}" Margin="0,10,0,0">
+                            <Grid Style="{StaticResource Row}">
+                                <StackPanel Margin="0,0,46,0">
+                                    <TextBlock Text="{l:T 'Показывать работу агентов'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Text="{l:T 'Шаги, файлы и статус в острове, пузырь агента рядом с ним'}" Style="{StaticResource Hint}"/>
+                                </StackPanel>
+                                <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding ShowAgents}"/>
+                            </Grid>
+                        </Border>
+                        <TextBlock Style="{StaticResource Hint}" Margin="4,10,0,0" TextWrapping="Wrap"
+                                   Text="{l:T 'Claude Code: «Подключить» добавляет в ~/.claude/settings.json HTTP-хуки на 127.0.0.1:47318 (только этот компьютер). Codex: остров читает журналы сессий в ~/.codex/sessions, а в ~/.codex/config.toml добавляется notify, чтобы точно знать, когда ход закончен. Перед изменением файлов один раз сохраняется копия рядом; «Отключить» убирает только своё. Остров только наблюдает и не отвечает на запросы разрешений. Работает в новых сессиях.'}"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="SecNavigation" Visibility="Collapsed">
+                        <Border Style="{StaticResource Card}">
+                            <StackPanel>
+                                <Grid Style="{StaticResource Row}">
+                                    <TextBlock Text="{l:T 'Переключение страниц'}" Style="{StaticResource Label}"/>
+                                    <Border Style="{StaticResource SegmentHost}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton Style="{StaticResource Segment}" GroupName="Nav" Content="{l:T 'Скролл'}"
+                                                         IsChecked="{Binding Navigation, Converter={StaticResource EnumEq}, ConverterParameter=Scroll}"/>
+                                            <RadioButton Style="{StaticResource Segment}" GroupName="Nav" Content="{l:T 'Кнопки'}"
+                                                         IsChecked="{Binding Navigation, Converter={StaticResource EnumEq}, ConverterParameter=Buttons}"/>
+                                            <RadioButton Style="{StaticResource Segment}" GroupName="Nav" Content="{l:T 'Оба'}"
+                                                         IsChecked="{Binding Navigation, Converter={StaticResource EnumEq}, ConverterParameter=Both}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource Row}" x:Name="NavStyleRow">
+                                    <TextBlock Text="{l:T 'Где кнопки'}" Style="{StaticResource Label}"/>
+                                    <Border Style="{StaticResource SegmentHost}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton Style="{StaticResource Segment}" GroupName="NavStyle" Content="{l:T 'Под островом'}"
+                                                         IsChecked="{Binding NavButtonStyle, Converter={StaticResource EnumEq}, ConverterParameter=BottomBar}"/>
+                                            <RadioButton Style="{StaticResource Segment}" GroupName="NavStyle" Content="{l:T 'Вкладки сверху'}"
+                                                         IsChecked="{Binding NavButtonStyle, Converter={StaticResource EnumEq}, ConverterParameter=TopTabs}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <TextBlock Style="{StaticResource Hint}" Margin="4,8,0,0"
+                                   Text="{l:T 'Скролл: колёсико или свайп двумя пальцами по острову листает Главную → Трей → Виджеты, по одной странице за жест.'}"/>
+
+                        <TextBlock Text="{l:T 'СОЧЕТАНИЯ КЛАВИШ'}" Style="{StaticResource GroupLabel}"/>
+                        <Border Style="{StaticResource Card}" Padding="14,6">
+                            <StackPanel x:Name="ShortcutList"/>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel x:Name="SecAbout" Visibility="Collapsed">
+                        <Border Height="96" CornerRadius="14" Margin="0,0,0,12">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#3F2BD8" Offset="0"/><GradientStop Color="#1A1AA8" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Path Fill="Black" VerticalAlignment="Top" HorizontalAlignment="Center"
+                                  Data="M0,0 H190 A12,12 0 0 0 178,12 V30 A14,14 0 0 1 164,44 H26 A14,14 0 0 1 12,30 V12 A12,12 0 0 0 0,0 Z"/>
+                        </Border>
+                        <TextBlock Text="SnowyNotch" FontSize="18" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="VersionText" Style="{StaticResource Hint}" Margin="0,2,0,8"/>
+                        <TextBlock Style="{StaticResource Hint}" FontSize="12.5" Margin="0,0,0,12"
+                                   Text="{l:T 'Остров для Windows: музыка, таймеры, трей для файлов и виджеты прямо у верхнего края экрана.'}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource PillButton}" Content="{l:T 'Сбросить настройки'}" Click="Reset_Click"/>
+                            <Button Style="{StaticResource PillButton}" Margin="8,0,0,0" Click="Exit_Click">
+                                <TextBlock Text="{l:T 'Выйти из SnowyNotch'}" Foreground="{StaticResource DangerRed}"/>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

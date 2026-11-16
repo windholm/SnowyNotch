@@ -1,0 +1,333 @@
+001|Definições        Win + /
+002|Mostrar a ilha
+003|Sair
+004|Ligado
+005|Bateria fraca
+006|A carregar
+007|Na bateria
+008|Ativar som
+009|Silenciar
+010|A bateria está a carregar
+011|Ligue o carregador
+012|O portátil está a funcionar com bateria
+013|Bateria dos auscultadores
+014|Ligados
+015|{0} de {1}
+016|Remover selecionados
+017|Limpar a bandeja
+018|Concluído
+019|Selecionar ficheiros
+020|Ficheiro copiado
+021|Copiados: {0}
+022|Clique para copiar os ficheiros, arraste para mover todos de uma vez
+023|Adicionar widgets
+024|O início está vazio
+025|Música, relógio, temporizador — o que quiser
+026|Remover
+027|Nada a tocar
+028|{0} (em pausa) · {1}
+029|A decorrer · {0}
+030|Em pausa · {0}
+031|Pronto
+032|Volume · {0}
+033|Volume das apps
+034|Vazio
+035|a trabalhar
+036|{0} aguarda resposta
+037|{0} · concluído
+038| usado
+039|Claude e Codex aguardam uma tarefa
+040|Claude aguarda uma tarefa
+041|Codex aguarda uma tarefa
+042|Não ligados
+043|O início comporta {0} widgets
+044|Adicionar ao início
+045|Todos os widgets já estão no início
+046|Auscultadores (demo)
+047|Remover da bandeja
+048|Início
+049|Bandeja
+050|Widgets
+051|Definições (Win + /)
+052|Cancelar
+053|Ficheiros
+054|Largue os ficheiros aqui
+055|Solte para adicionar
+056|Editar o início
+057|Voltar aos serviços
+058|Bem-vindo ao SnowyNotch!
+059|Passe o cursor sobre a ilha, largue um ficheiro nela ou prima Win + /
+060|Começar
+061|Definições
+062|Serviços
+063|{0} h
+064|À sua espera
+065|Precisa da sua permissão
+066|A ler {0}
+067|A editar {0}
+068|A criar {0}
+069|Comando: {0}
+070|A procurar «{0}»
+071|A procurar ficheiros {0}
+072|A abrir {0}
+073|A pesquisar na web «{0}»
+074|A iniciar um assistente
+075|A atualizar o plano
+076|Ferramenta {0}
+077|Sons do sistema
+078|Os limites do Claude estão desativados
+079|Inicie sessão no Claude Code (claude → /login)
+080|A sessão do Claude Code expirou — abra o Claude Code e ele renova-a
+081|O Claude recusou o acesso — abra o Claude Code para renovar a sessão
+082|Não foi possível obter os limites ({0})
+083|Este plano não tem limites
+084|Sem ligação ao Claude
+085|Esta semana
+086|Sessão atual
+087|Limite
+088|Parado
+089|A pesquisar na web
+090|A ver uma imagem
+091|A trabalhar
+092|Comando
+093|A ler um ficheiro
+094|A ver ficheiros
+095|A executar {0}
+096|ficheiros
+097|A criar
+098|A editar
+099|{0} {1} e mais {2}
+100|O Codex ainda não foi executado
+101|Os limites aparecem após o seu primeiro pedido no Codex
+102|Dispositivo
+103|Leitor multimédia
+104|Nova nota
+105|Pausa
+106|Pausa longa
+107|Foco
+108|Texto
+109|Limites
+110|Progresso da tarefa
+111|Ligações dos agentes
+112|Atualizar
+113|Ligar
+114|Progresso
+115|Ligar o Claude Code ou o Codex
+116|Não ligado
+117|Ligue o Claude Code: a ilha mostra os passos e o estado e, com o seu consentimento, os limites da subscrição.
+118|Ligue o Codex: a ilha mostra o progresso e os limites a partir dos registos do Codex neste computador.
+119|Os limites aparecem após o primeiro pedido
+121|A trabalhar numa tarefa
+122|À espera da sua resposta
+123|Livre
+124|Sem tarefas ativas
+125|Sem dados de limites
+126|Limite reposto
+127|Atualizado {0}
+128|À espera de dados
+129|não ligado
+130|{0:0}% usado
+131|sem dados
+132|no domingo
+133|na segunda-feira
+134|na terça-feira
+135|na quarta-feira
+136|na quinta-feira
+137|na sexta-feira
+138|no sábado
+139|A repor
+140|Repõe às {0}
+141|Repõe amanhã às {0}
+142|Repõe {0} às {1}
+143|Repõe: {0}, {1}
+144|agora mesmo
+145|há {0} min
+146|há {0} h
+147|Sessões: {0}
+148|Agentes
+149|Os agentes estão livres por agora
+150|Os agentes não estão ligados
+151|Dê uma tarefa ao Claude Code ou ao Codex — os passos, ficheiros e estado aparecem aqui.
+152|Ligue o Claude Code ou o Codex em Definições → Agents e a ilha mostra como vai o trabalho.
+153|À espera de uma tarefa
+154|A guardar…
+155|A ler…
+156|Alterado
+157|Lido
+158|GERAL
+159|Geral
+160|Aspeto
+161|SERVIÇOS
+162|Multimédia
+163|Som e dispositivos
+164|MAIS
+165|Controlos
+166|Acerca de
+167|Fechar (Esc)
+168|Idioma
+169|A ilha vai reiniciar para aplicar o idioma
+170|Expandir ao passar o cursor
+171|Atraso da expansão
+172| ms
+173|Recolher após
+174|Roda do rato — afastar a ilha
+175|Um clique com a roda na ilha torna-a transparente e deixa passar os cliques; outro clique no mesmo sítio trá-la de volta. Um toque longo com a roda esconde-a por completo (e trá-la de volta da mesma forma)
+176|Ocultar em jogos e vídeos
+177|Quando uma app está em ecrã inteiro
+178|Ocultar quando nada acontece
+179|Iniciar com o Windows
+180|Win + / abre estas definições. Um clique direito na ilha também. Todos os atalhos estão em «Controlos».
+181|Som por app
+182|Abrir
+183|MOSTRAR NA ILHA
+184|Volume e brilho
+185|As alterações aparecem na ilha e o controlo pode ser arrastado
+186|Auscultadores Bluetooth
+187|Uma bolha com a bateria ao ligar e quando está fraca
+188|Bateria do portátil
+189|FORMA
+190|Entalhe
+191|Ilha
+192|ACABAMENTO
+193|Vidro
+194|Preto
+195|Transparência do vidro
+196|Contorno fino
+197|Mostra a borda da ilha em fundos escuros
+198|COR DE DESTAQUE
+199|TAMANHO E MOVIMENTO
+200|Largura
+201|Escala
+202|Margem superior (ilha)
+203|Velocidade da animação
+204|O início tem até três widgets em fila. Altere a disposição na própria ilha: remover com o menos vermelho, adicionar com um ícone por baixo.
+205|No início agora
+206|Alterar disposição
+207|Todos os widgets também estão na página «Widgets» (o ícone de grelha sob a ilha).
+208|Só música
+209|O leitor mostra apps de música (Spotify, Apple Music, Yandex Music, Deezer, TIDAL, AIMP, foobar2000…) e sites de música no navegador (SoundCloud, YouTube Music, Spotify Web, VK, Bandcamp…). YouTube, vídeos, chamadas e outros sons não são mostrados
+210|Equalizador
+211|Cor da capa
+212|Caso contrário, as barras são brancas
+213|Mostrar a nova faixa
+214|A ilha expande-se brevemente ao mudar de música
+215|Duração
+216| s
+217|Letras
+218|Letras sincronizadas da base aberta lrclib.net. Só são procuradas quando abre a letra; o título, o artista e a duração da faixa são enviados para lá
+219|BOTÕES DO LEITOR
+220|Aleatório
+221|Repetir
+222|Os botões ficam nas extremidades do leitor. Alguns leitores (muitas vezes navegadores) não os suportam — nesse caso ficam inativos.
+223|Mostrar limites do Claude
+224|Os limites de 5 horas e semanal da subscrição, como em /usage. A ilha usa a sessão do Claude Code neste computador e só consulta api.anthropic.com a cada 5 minutos; o token não é enviado para mais lado nenhum nem guardado.
+225|Mostrar o trabalho dos agentes
+226|Passos, ficheiros e estado na ilha, e a bolha do agente ao lado
+227|Claude Code: «Ligar» adiciona a ~/.claude/settings.json hooks HTTP para 127.0.0.1:47318 (só este computador). Codex: a ilha lê os registos de sessão em ~/.codex/sessions e adiciona notify a ~/.codex/config.toml para saber exatamente quando um turno termina. Antes de alterar os ficheiros é guardada uma cópia ao lado uma vez; «Desligar» remove só o que adicionou. A ilha apenas observa e nunca responde a pedidos de permissão. Funciona em novas sessões.
+228|Mudança de página
+229|Deslocar
+230|Botões
+231|Ambos
+232|Posição dos botões
+233|Sob a ilha
+234|Separadores em cima
+235|Deslocar: a roda ou um deslize com dois dedos na ilha passa Início → Bandeja → Widgets, uma página por gesto.
+236|ATALHOS DE TECLADO
+237|Uma ilha para o Windows: música, temporizadores, uma bandeja de ficheiros e widgets mesmo no topo do ecrã.
+238|Repor definições
+239|Sair do SnowyNotch
+240|Versão {0}.{1}.{2}
+241|Idioma, expansão, ocultação e arranque da ilha
+242|Idioma do sistema
+243|Forma, acabamento, cor e tamanho da ilha
+244|O que está na página inicial da ilha
+245|Leitor, letras e que fontes contam como música
+246|Volume das apps, HUD, auscultadores e bateria
+247|Claude Code e Codex: progresso e limites
+248|Como mudar de página e todos os atalhos
+249|Versão e reposição
+250|Desligar
+251|Ligado — a ilha recebe eventos do Claude Code
+252|Não ligado
+253|Ligado — progresso, fim de turno e limites
+254|Ligado — progresso e limites dos registos (o notify é usado por outra coisa, fim de turno detetado por pausa)
+255|Ligado. ~/.codex/config.toml já tem o seu próprio notify — não lhe mexemos; o fim de turno é detetado por pausa.
+256|Ligado sem notify: não foi possível alterar ~/.codex/config.toml ({0})
+257|Não foi possível alterar ~/.claude/settings.json: {0}
+258|O volume de cada app em separado. Abra a partir de qualquer sítio: {0}
+259|O volume de cada app em separado. O atalho está ocupado por outra app — abra através de «Widgets»
+260|Mostra quando o carregador é ligado e avisa aos 20 % e 10 %
+261|Nenhuma bateria encontrada — isto não é um portátil, a definição não é necessária
+262|Abrir ou fechar as definições
+263|Som: volume das apps
+264|Clique direito na ilha
+265|Clique com a roda na ilha
+266|Tornar transparente / repor
+267|Roda sobre a ilha
+268|Passar Início → Bandeja → Widgets
+269|Notas: título
+270|Notas: lista de verificação
+271|Notas: negrito, itálico, sublinhado
+272|Fechar o painel aberto
+273|Som
+274|Volume
+275|Neste momento nenhuma app está a reproduzir som
+276|Silenciar
+277|silenciado
+278|S
+279|Voltar
+280|A pesquisa de letras está desativada
+281|A procurar a letra…
+282|Primeira linha de teste
+283|A segunda linha é um pouco mais longa do que a primeira para mudar de linha
+284|Terceira — a tocar agora
+285|Quarta linha
+286|Quinta linha
+287|Sexta linha
+288|Letra não encontrada
+289|Recolher a capa
+290|Letra
+291|Abrir a capa
+292|Ponha Spotify, SoundCloud ou outra música
+293|Abrir {0}
+294|Notas
+295|Ainda não há notas
+296|Markdown, listas, listas de verificação — copiadas como texto limpo
+297|Nova nota
+298|Todas as notas
+299|Copiar como Markdown
+300|Eliminar nota
+301|Negrito (Ctrl+B)
+302|Itálico (Ctrl+I)
+303|Sublinhado (Ctrl+U)
+304|Riscado (Ctrl+Shift+X)
+305|Realçar (Ctrl+Shift+H)
+306|Cor do texto
+307|Título 1 (Ctrl+1)
+308|Título 2 (Ctrl+2)
+309|Título 3 (Ctrl+3)
+310|Lista
+311|Lista numerada
+312|Lista de verificação (Ctrl+Shift+L)
+313|Citação
+314|Eliminar
+315|Ontem
+316|Guardado
+317|Cronómetro
+318|Repor
+319|Temporizador
+320|Pomodoro
+321|Pomodoros no ciclo: uma pausa longa após o quarto
+322|Iniciar
+323|Etapa seguinte
+324|Pausa
+325|Continuar
+326|Pomodoro {0} de {1} · 25 min
+327|5 min de pausa, depois foco
+328|Ciclo concluído · 15 min de pausa
+329|Repor a etapa
+330|Recomeçar o ciclo
+331|Música
+332|Relógio
+333|Sistema
+334|A semana foi para: {0}

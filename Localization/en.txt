@@ -1,0 +1,333 @@
+001|Settings        Win + /
+002|Show island
+003|Quit
+004|Connected
+005|Low battery
+006|Charging
+007|On battery
+008|Unmute
+009|Mute
+010|Battery is charging
+011|Plug in the charger
+012|Laptop is running on battery
+013|Headphone battery
+014|Connected
+015|{0} of {1}
+016|Remove selected
+017|Clear tray
+018|Done
+019|Select files
+020|File copied
+021|Copied: {0}
+022|Click to copy the files, drag to move them all at once
+023|Add widgets
+024|Home is empty
+025|Music, clock, timer — whatever you like
+026|Remove
+027|Nothing playing
+028|{0} (paused) · {1}
+029|Running · {0}
+030|Paused · {0}
+031|Ready
+032|Volume · {0}
+033|App volume
+034|Empty
+035|working
+036|{0} is waiting for you
+037|{0} · done
+038| used
+039|Claude and Codex are waiting for a task
+040|Claude is waiting for a task
+041|Codex is waiting for a task
+042|Not connected
+043|Home fits {0} widgets
+044|Add to Home
+045|All widgets are already on Home
+046|Headphones (demo)
+047|Remove from tray
+048|Home
+049|Tray
+050|Widgets
+051|Settings (Win + /)
+052|Cancel
+053|Files
+054|Drop files here
+055|Release to add
+056|Edit Home
+057|Back to services
+058|Welcome to SnowyNotch!
+059|Hover over the island, drop a file on it or press Win + /
+060|Get started
+061|Settings
+062|Services
+063|{0} h
+064|Waiting for you
+065|Needs your permission
+066|Reading {0}
+067|Editing {0}
+068|Creating {0}
+069|Command: {0}
+070|Searching “{0}”
+071|Finding files {0}
+072|Opening {0}
+073|Searching the web for “{0}”
+074|Starting a helper
+075|Updating the plan
+076|Tool {0}
+077|System sounds
+078|Claude limits are off
+079|Sign in to Claude Code (claude → /login)
+080|Claude Code sign-in expired — open Claude Code and it will renew it
+081|Claude refused access — open Claude Code to renew the sign-in
+082|Couldn't get limits ({0})
+083|Limits aren't available for this plan
+084|Can't reach Claude
+085|This week
+086|Current session
+087|Limit
+088|Stopped
+089|Searching the web
+090|Viewing an image
+091|Working
+092|Command
+093|Reading a file
+094|Browsing files
+095|Running {0}
+096|files
+097|Creating
+098|Editing
+099|{0} {1} and {2} more
+100|Codex hasn't been run yet
+101|Limits will appear after your first Codex request
+102|Device
+103|Media Player
+104|New note
+105|Break
+106|Long break
+107|Focus
+108|Text
+109|Limits
+110|Task progress
+111|Agent connections
+112|Refresh
+113|Connect
+114|Progress
+115|Connect Claude Code or Codex
+116|Not connected
+117|Connect Claude Code: the island will show steps and status and, with your consent, your subscription limits.
+118|Connect Codex: the island will show progress and limits from the Codex logs on this computer.
+119|Limits will appear after the first request
+121|Working on a task
+122|Waiting for your answer
+123|Idle
+124|No active tasks
+125|No limit data
+126|Limit reset
+127|Updated {0}
+128|Waiting for data
+129|not connected
+130|{0:0}% used
+131|no data
+132|on Sunday
+133|on Monday
+134|on Tuesday
+135|on Wednesday
+136|on Thursday
+137|on Friday
+138|on Saturday
+139|Resetting
+140|Resets at {0}
+141|Resets tomorrow at {0}
+142|Resets {0} at {1}
+143|Resets: {0}, {1}
+144|just now
+145|{0} min ago
+146|{0} h ago
+147|Sessions: {0}
+148|Agents
+149|Agents are idle for now
+150|Agents aren't connected
+151|Give Claude Code or Codex a task — steps, files and status will show up here.
+152|Connect Claude Code or Codex in Settings → Agents and the island will show how the work is going.
+153|Waiting for a task
+154|Saving…
+155|Reading…
+156|Edited
+157|Read
+158|GENERAL
+159|General
+160|Appearance
+161|SERVICES
+162|Media
+163|Sound & devices
+164|MORE
+165|Controls
+166|About
+167|Close (Esc)
+168|Language
+169|The island will restart to apply the language
+170|Expand on hover
+171|Expand delay
+172| ms
+173|Collapse after
+174|Mouse wheel — move the island out of the way
+175|Middle-click the island to make it transparent and click-through; middle-click the same spot to bring it back. Long middle-press hides it completely (and brings it back the same way)
+176|Hide in games and videos
+177|When an app is in full screen
+178|Hide when nothing is happening
+179|Launch with Windows
+180|Win + / opens these settings. So does right-clicking the island. All shortcuts are under “Controls”.
+181|Per-app sound
+182|Open
+183|SHOW IN THE ISLAND
+184|Volume and brightness
+185|Changes appear in the island, and you can drag the slider
+186|Bluetooth headphones
+187|A battery bubble when they connect and when the battery is low
+188|Laptop battery
+189|SHAPE
+190|Notch
+191|Island
+192|FINISH
+193|Glass
+194|Black
+195|Glass transparency
+196|Thin outline
+197|Shows the island edge on dark wallpapers
+198|ACCENT COLOR
+199|SIZE AND MOTION
+200|Width
+201|Scale
+202|Top offset (island)
+203|Animation speed
+204|Home holds up to three widgets in a row. Change the layout right in the island: remove with the red minus, add with an icon below.
+205|On Home now
+206|Change layout
+207|All widgets are also on the “Widgets” page (the grid icon under the island).
+208|Music only
+209|The player shows music apps (Spotify, Apple Music, Yandex Music, Deezer, TIDAL, AIMP, foobar2000…) and music sites in the browser (SoundCloud, YouTube Music, Spotify Web, VK, Bandcamp…). YouTube, videos, calls and other sounds aren't shown
+210|Equalizer
+211|Color from artwork
+212|Otherwise the bars are white
+213|Show new track
+214|The island briefly expands when the song changes
+215|Show for
+216| s
+217|Lyrics
+218|Synced lyrics from the open lrclib.net database. Searched only when you open the lyrics; the track title, artist and length are sent there
+219|PLAYER BUTTONS
+220|Shuffle
+221|Repeat
+222|The buttons sit at the edges of the player. Some players (often browsers) don't support them — then they're inactive.
+223|Show Claude limits
+224|The 5-hour and weekly subscription limits, as in /usage. The island uses the Claude Code sign-in on this computer and only asks api.anthropic.com once every 5 minutes; the token is never sent anywhere else or stored.
+225|Show agent activity
+226|Steps, files and status in the island, and the agent bubble next to it
+227|Claude Code: “Connect” adds HTTP hooks to 127.0.0.1:47318 (this computer only) in ~/.claude/settings.json. Codex: the island reads the session logs in ~/.codex/sessions and adds notify to ~/.codex/config.toml to know exactly when a turn ends. A backup copy is saved next to the files once before changing them; “Disconnect” removes only what it added. The island only watches and never answers permission requests. Works in new sessions.
+228|Page switching
+229|Scroll
+230|Buttons
+231|Both
+232|Button position
+233|Under the island
+234|Tabs on top
+235|Scroll: the mouse wheel or a two-finger swipe on the island flips Home → Tray → Widgets, one page per gesture.
+236|KEYBOARD SHORTCUTS
+237|An island for Windows: music, timers, a file tray and widgets right at the top edge of the screen.
+238|Reset settings
+239|Quit SnowyNotch
+240|Version {0}.{1}.{2}
+241|Language, expanding, hiding and launching the island
+242|System default
+243|Shape, finish, color and size of the island
+244|What's on the island's Home page
+245|Player, lyrics and which sources count as music
+246|App volume, HUD, headphones and battery
+247|Claude Code and Codex: progress and limits
+248|How to flip pages and all keyboard shortcuts
+249|Version and settings reset
+250|Disconnect
+251|Connected — the island receives Claude Code events
+252|Not connected
+253|Connected — progress, end of turn and limits
+254|Connected — progress and limits from the logs (notify is used by something else, end of turn detected by pause)
+255|Connected. ~/.codex/config.toml already has its own notify — we leave it alone; end of turn is detected by pause.
+256|Connected without notify: couldn't change ~/.codex/config.toml ({0})
+257|Couldn't change ~/.claude/settings.json: {0}
+258|Volume for each app separately. Open from anywhere: {0}
+259|Volume for each app separately. The hotkey is taken by another app — open it from “Widgets”
+260|Shows when the charger is plugged in and warns at 20 % and 10 %
+261|No battery found — this isn't a laptop, so you don't need this
+262|Open or close settings
+263|Sound: app volume
+264|Right-click the island
+265|Middle-click the island
+266|Make transparent / restore
+267|Mouse wheel over the island
+268|Flip Home → Tray → Widgets
+269|Notes: heading
+270|Notes: checklist
+271|Notes: bold, italic, underline
+272|Close the open panel
+273|Sound
+274|Volume
+275|No app is playing sound right now
+276|Mute
+277|muted
+278|W
+279|Back
+280|Lyrics search is off
+281|Looking for lyrics…
+282|First line for testing
+283|The second line is a bit longer than the first so it wraps
+284|Third — playing now
+285|Fourth line
+286|Fifth line
+287|Sixth line
+288|Lyrics not found
+289|Collapse artwork
+290|Lyrics
+291|Open artwork
+292|Play Spotify, SoundCloud or other music
+293|Open {0}
+294|Notes
+295|No notes yet
+296|Markdown, lists, checklists — copied as clean text
+297|New note
+298|All notes
+299|Copy as Markdown
+300|Delete note
+301|Bold (Ctrl+B)
+302|Italic (Ctrl+I)
+303|Underline (Ctrl+U)
+304|Strikethrough (Ctrl+Shift+X)
+305|Highlight (Ctrl+Shift+H)
+306|Text color
+307|Heading 1 (Ctrl+1)
+308|Heading 2 (Ctrl+2)
+309|Heading 3 (Ctrl+3)
+310|List
+311|Numbered list
+312|Checklist (Ctrl+Shift+L)
+313|Quote
+314|Delete
+315|Yesterday
+316|Saved
+317|Stopwatch
+318|Reset
+319|Timer
+320|Pomodoro
+321|Pomodoros in the cycle: a long break after the fourth
+322|Start
+323|Next stage
+324|Pause
+325|Resume
+326|Pomodoro {0} of {1} · 25 min
+327|5 min break, then focus
+328|Cycle complete · 15 min break
+329|Reset stage
+330|Restart the cycle
+331|Music
+332|Clock
+333|System
+334|This week went to: {0}

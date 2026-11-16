@@ -1,0 +1,333 @@
+001|Ustawienia        Win + /
+002|Pokaż wyspę
+003|Zakończ
+004|Połączono
+005|Niski poziom baterii
+006|Ładowanie
+007|Na baterii
+008|Włącz dźwięk
+009|Wycisz
+010|Bateria się ładuje
+011|Podłącz ładowarkę
+012|Laptop działa na baterii
+013|Bateria słuchawek
+014|Połączone
+015|{0} z {1}
+016|Usuń zaznaczone
+017|Wyczyść zasobnik
+018|Gotowe
+019|Zaznacz pliki
+020|Skopiowano plik
+021|Skopiowano: {0}
+022|Kliknij, aby skopiować pliki, przeciągnij, aby przenieść wszystkie naraz
+023|Dodaj widżety
+024|Strona główna jest pusta
+025|Muzyka, zegar, minutnik — co chcesz
+026|Usuń
+027|Nic nie gra
+028|{0} (pauza) · {1}
+029|Trwa · {0}
+030|Pauza · {0}
+031|Gotowy
+032|Głośność · {0}
+033|Głośność aplikacji
+034|Pusto
+035|pracuje
+036|{0} czeka na odpowiedź
+037|{0} · gotowe
+038| wykorzystano
+039|Claude i Codex czekają na zadanie
+040|Claude czeka na zadanie
+041|Codex czeka na zadanie
+042|Niepołączone
+043|Na stronie głównej mieszczą się {0} widżety
+044|Dodaj do strony głównej
+045|Wszystkie widżety są już na stronie głównej
+046|Słuchawki (demo)
+047|Usuń z zasobnika
+048|Główna
+049|Zasobnik
+050|Widżety
+051|Ustawienia (Win + /)
+052|Anuluj
+053|Pliki
+054|Upuść pliki tutaj
+055|Puść, aby dodać
+056|Edytuj stronę główną
+057|Wróć do usług
+058|Witaj w SnowyNotch!
+059|Najedź kursorem na wyspę, upuść na nią plik lub naciśnij Win + /
+060|Zaczynamy
+061|Ustawienia
+062|Usługi
+063|{0} godz.
+064|Czeka na ciebie
+065|Potrzebuje twojej zgody
+066|Czyta {0}
+067|Edytuje {0}
+068|Tworzy {0}
+069|Polecenie: {0}
+070|Szuka „{0}”
+071|Szuka plików {0}
+072|Otwiera {0}
+073|Szuka w sieci „{0}”
+074|Uruchamia pomocnika
+075|Aktualizuje plan
+076|Narzędzie {0}
+077|Dźwięki systemowe
+078|Limity Claude są wyłączone
+079|Zaloguj się w Claude Code (claude → /login)
+080|Logowanie w Claude Code wygasło — otwórz Claude Code, a odnowi je samo
+081|Claude odmówił dostępu — otwórz Claude Code, aby odnowić logowanie
+082|Nie udało się pobrać limitów ({0})
+083|Ten plan nie ma limitów
+084|Brak połączenia z Claude
+085|Ten tydzień
+086|Bieżąca sesja
+087|Limit
+088|Zatrzymano
+089|Szuka w sieci
+090|Ogląda obraz
+091|Pracuje
+092|Polecenie
+093|Czyta plik
+094|Przegląda pliki
+095|Uruchamia {0}
+096|pliki
+097|Tworzy
+098|Edytuje
+099|{0} {1} i jeszcze {2}
+100|Codex nie był jeszcze uruchamiany
+101|Limity pojawią się po pierwszym zapytaniu w Codex
+102|Urządzenie
+103|Odtwarzacz multimedialny
+104|Nowa notatka
+105|Przerwa
+106|Długa przerwa
+107|Skupienie
+108|Tekst
+109|Limity
+110|Postęp zadania
+111|Połączenia agentów
+112|Odśwież
+113|Połącz
+114|Postęp
+115|Połącz Claude Code lub Codex
+116|Niepołączony
+117|Połącz Claude Code: wyspa pokaże kroki i status, a za twoją zgodą — limity subskrypcji.
+118|Połącz Codex: wyspa pokaże postęp pracy i limity z dzienników Codex na tym komputerze.
+119|Limity pojawią się po pierwszym zapytaniu
+121|Pracuje nad zadaniem
+122|Czeka na twoją odpowiedź
+123|Wolny
+124|Brak aktywnych zadań
+125|Brak danych o limitach
+126|Limit zresetowany
+127|Zaktualizowano {0}
+128|Czekamy na dane
+129|niepołączony
+130|wykorzystano {0:0}%
+131|brak danych
+132|w niedzielę
+133|w poniedziałek
+134|we wtorek
+135|w środę
+136|w czwartek
+137|w piątek
+138|w sobotę
+139|Resetuje się
+140|Reset o {0}
+141|Reset jutro o {0}
+142|Reset {0} o {1}
+143|Reset: {0}, {1}
+144|przed chwilą
+145|{0} min temu
+146|{0} godz. temu
+147|Sesje: {0}
+148|Agenci
+149|Agenci na razie nic nie robią
+150|Agenci nie są połączeni
+151|Daj zadanie w Claude Code lub Codex — tutaj pojawią się kroki, pliki i status.
+152|Połącz Claude Code lub Codex w Ustawienia → Agents, a wyspa pokaże, jak idzie praca.
+153|Czeka na zadanie
+154|Zapisuję…
+155|Czytam…
+156|Zmieniony
+157|Przeczytany
+158|PODSTAWOWE
+159|Ogólne
+160|Wygląd
+161|USŁUGI
+162|Multimedia
+163|Dźwięk i urządzenia
+164|WIĘCEJ
+165|Sterowanie
+166|O programie
+167|Zamknij (Esc)
+168|Język
+169|Wyspa uruchomi się ponownie, aby zastosować język
+170|Rozwijaj po najechaniu
+171|Opóźnienie rozwinięcia
+172| ms
+173|Zwijaj po
+174|Kółko myszy — usuń wyspę z drogi
+175|Kliknięcie kółkiem na wyspie czyni ją przezroczystą i przepuszczającą kliknięcia, kolejne kliknięcie w tym samym miejscu ją przywraca. Długie naciśnięcie kółka chowa ją całkowicie (i tak samo przywraca)
+176|Ukrywaj w grach i filmach
+177|Gdy aplikacja jest na pełnym ekranie
+178|Ukrywaj, gdy nic się nie dzieje
+179|Uruchamiaj z Windows
+180|Win + / otwiera te ustawienia. Prawy klik na wyspie też. Wszystkie skróty są w „Sterowaniu”.
+181|Dźwięk według aplikacji
+182|Otwórz
+183|POKAZUJ NA WYSPIE
+184|Głośność i jasność
+185|Zmiany pokazują się na wyspie, suwak można przeciągać
+186|Słuchawki Bluetooth
+187|Bańka z poziomem baterii przy połączeniu i przy niskim poziomie
+188|Bateria laptopa
+189|KSZTAŁT
+190|Wcięcie
+191|Wyspa
+192|WYKOŃCZENIE
+193|Szkło
+194|Czarny
+195|Przezroczystość szkła
+196|Cienki kontur
+197|Widać krawędź wyspy na ciemnych tapetach
+198|KOLOR AKCENTU
+199|ROZMIAR I RUCH
+200|Szerokość
+201|Skala
+202|Odstęp od góry (wyspa)
+203|Szybkość animacji
+204|Na stronie głównej mieszczą się maksymalnie trzy widżety w rzędzie. Układ zmienia się bezpośrednio na wyspie: usuń czerwonym minusem, dodaj ikoną poniżej.
+205|Teraz na stronie głównej
+206|Zmień układ
+207|Wszystkie widżety są też na stronie „Widżety” (ikona siatki pod wyspą).
+208|Tylko muzyka
+209|Odtwarzacz pokazuje aplikacje muzyczne (Spotify, Apple Music, Yandex Music, Deezer, TIDAL, AIMP, foobar2000…) i serwisy muzyczne w przeglądarce (SoundCloud, YouTube Music, Spotify Web, VK, Bandcamp…). YouTube, filmy, rozmowy i inne dźwięki nie są pokazywane
+210|Korektor
+211|Kolor z okładki
+212|W przeciwnym razie paski są białe
+213|Pokazuj nowy utwór
+214|Wyspa na chwilę się rozwija przy zmianie utworu
+215|Jak długo pokazywać
+216| s
+217|Teksty piosenek
+218|Zsynchronizowane teksty z otwartej bazy lrclib.net. Wyszukiwane tylko, gdy otwierasz tekst; trafiają tam tytuł, wykonawca i długość utworu
+219|PRZYCISKI ODTWARZACZA
+220|Losowo
+221|Powtarzaj
+222|Przyciski są na krawędziach odtwarzacza. Niektóre odtwarzacze (często przeglądarki) ich nie obsługują — wtedy są nieaktywne.
+223|Pokazuj limity Claude
+224|5-godzinny i tygodniowy limit subskrypcji, jak w /usage. Wyspa korzysta z logowania Claude Code na tym komputerze i pyta tylko api.anthropic.com raz na 5 minut; token nie jest nigdzie indziej wysyłany ani zapisywany.
+225|Pokazuj pracę agentów
+226|Kroki, pliki i status na wyspie, bańka agenta obok niej
+227|Claude Code: „Połącz” dodaje do ~/.claude/settings.json haki HTTP na 127.0.0.1:47318 (tylko ten komputer). Codex: wyspa czyta dzienniki sesji w ~/.codex/sessions i dodaje notify do ~/.codex/config.toml, aby dokładnie wiedzieć, kiedy tura się kończy. Przed zmianą plików raz zapisywana jest kopia obok; „Rozłącz” usuwa tylko to, co dodał. Wyspa tylko obserwuje i nie odpowiada na prośby o uprawnienia. Działa w nowych sesjach.
+228|Przełączanie stron
+229|Przewijanie
+230|Przyciski
+231|Oba
+232|Gdzie przyciski
+233|Pod wyspą
+234|Karty u góry
+235|Przewijanie: kółko lub przesunięcie dwoma palcami po wyspie przełącza Główna → Zasobnik → Widżety, jedna strona na gest.
+236|SKRÓTY KLAWISZOWE
+237|Wyspa dla Windows: muzyka, minutniki, zasobnik na pliki i widżety tuż przy górnej krawędzi ekranu.
+238|Resetuj ustawienia
+239|Zamknij SnowyNotch
+240|Wersja {0}.{1}.{2}
+241|Język, rozwijanie, ukrywanie i uruchamianie wyspy
+242|Jak w systemie
+243|Kształt, wykończenie, kolor i rozmiar wyspy
+244|Co jest na stronie głównej wyspy
+245|Odtwarzacz, teksty piosenek i które źródła uznawać za muzykę
+246|Głośność aplikacji, HUD, słuchawki i bateria
+247|Claude Code i Codex: postęp pracy i limity
+248|Jak przełączać strony i wszystkie skróty
+249|Wersja i reset ustawień
+250|Rozłącz
+251|Połączono — wyspa odbiera zdarzenia Claude Code
+252|Niepołączono
+253|Połączono — postęp, koniec tury i limity
+254|Połączono — postęp i limity z dzienników (notify jest zajęty przez coś innego, koniec tury wykrywany po pauzie)
+255|Połączono. ~/.codex/config.toml ma już własne notify — nie ruszamy go; koniec tury wykrywany jest po pauzie.
+256|Połączono bez notify: nie udało się zmienić ~/.codex/config.toml ({0})
+257|Nie udało się zmienić ~/.claude/settings.json: {0}
+258|Głośność każdej aplikacji osobno. Otwórz z dowolnego miejsca: {0}
+259|Głośność każdej aplikacji osobno. Skrót jest zajęty przez inną aplikację — otwórz przez „Widżety”
+260|Pokazuje podłączenie ładowarki i ostrzega przy 20 % i 10 %
+261|Nie znaleziono baterii — to nie laptop, to ustawienie nie jest potrzebne
+262|Otwórz lub zamknij ustawienia
+263|Dźwięk: głośność aplikacji
+264|Prawy klik na wyspie
+265|Kliknięcie kółkiem na wyspie
+266|Uczyń przezroczystą / przywróć
+267|Kółko nad wyspą
+268|Przełączaj Główna → Zasobnik → Widżety
+269|Notatki: nagłówek
+270|Notatki: lista zadań
+271|Notatki: pogrubienie, kursywa, podkreślenie
+272|Zamknij otwarty panel
+273|Dźwięk
+274|Głośność
+275|Teraz żadna aplikacja nie odtwarza dźwięku
+276|Wycisz
+277|wyciszone
+278|T
+279|Wstecz
+280|Wyszukiwanie tekstów jest wyłączone
+281|Szukam tekstu…
+282|Pierwsza linia do sprawdzenia
+283|Druga linia jest trochę dłuższa od pierwszej, żeby się zawinęła
+284|Trzecia — teraz gra
+285|Czwarta linia
+286|Piąta linia
+287|Szósta linia
+288|Nie znaleziono tekstu
+289|Zwiń okładkę
+290|Tekst piosenki
+291|Otwórz okładkę
+292|Włącz Spotify, SoundCloud lub inną muzykę
+293|Otwórz {0}
+294|Notatki
+295|Nie ma jeszcze notatek
+296|Markdown, listy, listy zadań — kopiowane jako czysty tekst
+297|Nowa notatka
+298|Wszystkie notatki
+299|Kopiuj jako Markdown
+300|Usuń notatkę
+301|Pogrubienie (Ctrl+B)
+302|Kursywa (Ctrl+I)
+303|Podkreślenie (Ctrl+U)
+304|Przekreślenie (Ctrl+Shift+X)
+305|Zakreślacz (Ctrl+Shift+H)
+306|Kolor tekstu
+307|Nagłówek 1 (Ctrl+1)
+308|Nagłówek 2 (Ctrl+2)
+309|Nagłówek 3 (Ctrl+3)
+310|Lista
+311|Lista numerowana
+312|Lista zadań (Ctrl+Shift+L)
+313|Cytat
+314|Usuń
+315|Wczoraj
+316|Zapisano
+317|Stoper
+318|Resetuj
+319|Minutnik
+320|Pomodoro
+321|Pomodoro w cyklu: po czwartym — długa przerwa
+322|Start
+323|Następny etap
+324|Pauza
+325|Dalej
+326|Pomodoro {0} z {1} · 25 min
+327|5 min odpoczynku, potem skupienie
+328|Cykl ukończony · 15 min odpoczynku
+329|Resetuj etap
+330|Zacznij cykl od nowa
+331|Muzyka
+332|Zegar
+333|System
+334|Tydzień poszedł na: {0}

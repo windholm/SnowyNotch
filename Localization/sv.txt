@@ -1,0 +1,333 @@
+001|Inställningar        Win + /
+002|Visa ön
+003|Avsluta
+004|Ansluten
+005|Låg batterinivå
+006|Laddar
+007|På batteri
+008|Slå på ljud
+009|Stäng av ljud
+010|Batteriet laddas
+011|Anslut laddaren
+012|Datorn går på batteri
+013|Hörlurarnas batteri
+014|Anslutna
+015|{0} av {1}
+016|Ta bort markerade
+017|Töm facket
+018|Klar
+019|Markera filer
+020|Filen kopierades
+021|Kopierat: {0}
+022|Klicka för att kopiera filerna, dra för att flytta alla på en gång
+023|Lägg till widgetar
+024|Hem är tomt
+025|Musik, klocka, timer — vad du vill
+026|Ta bort
+027|Inget spelas
+028|{0} (pausad) · {1}
+029|Pågår · {0}
+030|Pausad · {0}
+031|Redo
+032|Volym · {0}
+033|Appvolym
+034|Tomt
+035|arbetar
+036|{0} väntar på svar
+037|{0} · klar
+038| använt
+039|Claude och Codex väntar på en uppgift
+040|Claude väntar på en uppgift
+041|Codex väntar på en uppgift
+042|Inte anslutna
+043|Hem rymmer {0} widgetar
+044|Lägg till på Hem
+045|Alla widgetar finns redan på Hem
+046|Hörlurar (demo)
+047|Ta bort från facket
+048|Hem
+049|Fack
+050|Widgetar
+051|Inställningar (Win + /)
+052|Avbryt
+053|Filer
+054|Släpp filer här
+055|Släpp för att lägga till
+056|Redigera Hem
+057|Tillbaka till tjänster
+058|Välkommen till SnowyNotch!
+059|Håll muspekaren över ön, släpp en fil på den eller tryck Win + /
+060|Kom igång
+061|Inställningar
+062|Tjänster
+063|{0} h
+064|Väntar på dig
+065|Behöver ditt tillstånd
+066|Läser {0}
+067|Redigerar {0}
+068|Skapar {0}
+069|Kommando: {0}
+070|Söker ”{0}”
+071|Söker filer {0}
+072|Öppnar {0}
+073|Söker på webben efter ”{0}”
+074|Startar en hjälpare
+075|Uppdaterar planen
+076|Verktyg {0}
+077|Systemljud
+078|Claude-gränser är avstängda
+079|Logga in i Claude Code (claude → /login)
+080|Inloggningen i Claude Code har gått ut — öppna Claude Code så förnyar den den
+081|Claude nekade åtkomst — öppna Claude Code för att förnya inloggningen
+082|Kunde inte hämta gränser ({0})
+083|Gränser finns inte för den här planen
+084|Ingen anslutning till Claude
+085|Den här veckan
+086|Aktuell session
+087|Gräns
+088|Stoppad
+089|Söker på webben
+090|Tittar på en bild
+091|Arbetar
+092|Kommando
+093|Läser en fil
+094|Bläddrar bland filer
+095|Kör {0}
+096|filer
+097|Skapar
+098|Redigerar
+099|{0} {1} och {2} till
+100|Codex har inte körts än
+101|Gränser visas efter din första förfrågan i Codex
+102|Enhet
+103|Mediespelaren
+104|Ny anteckning
+105|Paus
+106|Lång paus
+107|Fokus
+108|Text
+109|Gränser
+110|Uppgiftens förlopp
+111|Agentanslutningar
+112|Uppdatera
+113|Anslut
+114|Förlopp
+115|Anslut Claude Code eller Codex
+116|Inte ansluten
+117|Anslut Claude Code: ön visar steg och status och, med ditt samtycke, prenumerationens gränser.
+118|Anslut Codex: ön visar arbetets förlopp och gränser från Codex-loggarna på den här datorn.
+119|Gränser visas efter första förfrågan
+121|Arbetar med en uppgift
+122|Väntar på ditt svar
+123|Ledig
+124|Inga aktiva uppgifter
+125|Inga data om gränser
+126|Gränsen har återställts
+127|Uppdaterad {0}
+128|Väntar på data
+129|inte ansluten
+130|{0:0}% använt
+131|inga data
+132|på söndag
+133|på måndag
+134|på tisdag
+135|på onsdag
+136|på torsdag
+137|på fredag
+138|på lördag
+139|Återställs
+140|Återställs kl. {0}
+141|Återställs i morgon kl. {0}
+142|Återställs {0} kl. {1}
+143|Återställs: {0}, {1}
+144|nyss
+145|för {0} min sedan
+146|för {0} h sedan
+147|Sessioner: {0}
+148|Agenter
+149|Agenterna är lediga just nu
+150|Agenterna är inte anslutna
+151|Ge Claude Code eller Codex en uppgift — steg, filer och status visas här.
+152|Anslut Claude Code eller Codex under Inställningar → Agents så visar ön hur arbetet går.
+153|Väntar på en uppgift
+154|Sparar…
+155|Läser…
+156|Ändrad
+157|Läst
+158|ALLMÄNT
+159|Allmänt
+160|Utseende
+161|TJÄNSTER
+162|Media
+163|Ljud och enheter
+164|MER
+165|Styrning
+166|Om
+167|Stäng (Esc)
+168|Språk
+169|Ön startas om för att byta språk
+170|Expandera vid hovring
+171|Fördröjning före expandering
+172| ms
+173|Fäll ihop efter
+174|Mushjulet — flytta undan ön
+175|Klicka med mushjulet på ön så blir den genomskinlig och släpper igenom klick; klicka på samma ställe igen så kommer den tillbaka. Ett långt tryck med mushjulet döljer den helt (och tar tillbaka den på samma sätt)
+176|Dölj i spel och videor
+177|När en app visas i helskärm
+178|Dölj när inget händer
+179|Starta med Windows
+180|Win + / öppnar de här inställningarna. Det gör även högerklick på ön. Alla kortkommandon finns under ”Styrning”.
+181|Ljud per app
+182|Öppna
+183|VISA I ÖN
+184|Volym och ljusstyrka
+185|Ändringar visas i ön, och reglaget går att dra
+186|Bluetooth-hörlurar
+187|En bubbla med batterinivå när de ansluts och när batteriet är lågt
+188|Datorns batteri
+189|FORM
+190|Utskärning
+191|Ö
+192|YTA
+193|Glas
+194|Svart
+195|Glasets genomskinlighet
+196|Tunn kontur
+197|Visar öns kant på mörka bakgrunder
+198|ACCENTFÄRG
+199|STORLEK OCH RÖRELSE
+200|Bredd
+201|Skala
+202|Avstånd från överkanten (ö)
+203|Animationshastighet
+204|Hem rymmer upp till tre widgetar i rad. Ändra layouten direkt i ön: ta bort med det röda minuset, lägg till med en ikon nedanför.
+205|På Hem nu
+206|Ändra layout
+207|Alla widgetar finns också på sidan ”Widgetar” (rutnätsikonen under ön).
+208|Endast musik
+209|Spelaren visar musikappar (Spotify, Apple Music, Yandex Music, Deezer, TIDAL, AIMP, foobar2000…) och musiksajter i webbläsaren (SoundCloud, YouTube Music, Spotify Web, VK, Bandcamp…). YouTube, videor, samtal och annat ljud visas inte
+210|Equalizer
+211|Färg från omslaget
+212|Annars är staplarna vita
+213|Visa nytt spår
+214|Ön expanderar en kort stund när låten byts
+215|Visa i
+216| s
+217|Låttexter
+218|Synkade texter från den öppna databasen lrclib.net. Söks bara när du öppnar texten; spårets titel, artist och längd skickas dit
+219|SPELARKNAPPAR
+220|Blanda
+221|Upprepa
+222|Knapparna hamnar vid spelarens kanter. Vissa spelare (ofta webbläsare) stöder dem inte — då är de inaktiva.
+223|Visa Claude-gränser
+224|Prenumerationens 5-timmars- och veckogräns, som i /usage. Ön använder inloggningen i Claude Code på den här datorn och frågar bara api.anthropic.com var 5:e minut; token skickas aldrig någon annanstans och sparas inte.
+225|Visa agenternas arbete
+226|Steg, filer och status i ön, och agentens bubbla bredvid den
+227|Claude Code: ”Anslut” lägger till HTTP-hookar till 127.0.0.1:47318 (bara den här datorn) i ~/.claude/settings.json. Codex: ön läser sessionsloggarna i ~/.codex/sessions och lägger till notify i ~/.codex/config.toml för att veta exakt när en tur är klar. En säkerhetskopia sparas bredvid filerna en gång innan de ändras; ”Koppla från” tar bara bort det som lades till. Ön bara observerar och svarar aldrig på behörighetsfrågor. Fungerar i nya sessioner.
+228|Byta sida
+229|Rullning
+230|Knappar
+231|Båda
+232|Var knapparna sitter
+233|Under ön
+234|Flikar överst
+235|Rullning: mushjulet eller ett svep med två fingrar på ön bläddrar Hem → Fack → Widgetar, en sida per gest.
+236|KORTKOMMANDON
+237|En ö för Windows: musik, timers, ett filfack och widgetar direkt vid skärmens överkant.
+238|Återställ inställningar
+239|Avsluta SnowyNotch
+240|Version {0}.{1}.{2}
+241|Språk, expandering, döljning och start av ön
+242|Systemets språk
+243|Öns form, yta, färg och storlek
+244|Vad som finns på öns Hem-sida
+245|Spelare, låttexter och vilka källor som räknas som musik
+246|Appvolym, HUD, hörlurar och batteri
+247|Claude Code och Codex: förlopp och gränser
+248|Hur man bläddrar och alla kortkommandon
+249|Version och återställning
+250|Koppla från
+251|Ansluten — ön tar emot händelser från Claude Code
+252|Inte ansluten
+253|Ansluten — förlopp, turens slut och gränser
+254|Ansluten — förlopp och gränser från loggarna (notify används av något annat, turens slut avgörs av paus)
+255|Ansluten. ~/.codex/config.toml har redan en egen notify — den rörs inte; turens slut avgörs av paus.
+256|Ansluten utan notify: kunde inte ändra ~/.codex/config.toml ({0})
+257|Kunde inte ändra ~/.claude/settings.json: {0}
+258|Volym för varje app separat. Öppna var som helst: {0}
+259|Volym för varje app separat. Kortkommandot används av en annan app — öppna via ”Widgetar”
+260|Visar när laddaren ansluts och varnar vid 20 % och 10 %
+261|Inget batteri hittades — det här är ingen bärbar dator, så inställningen behövs inte
+262|Öppna eller stäng inställningarna
+263|Ljud: appvolym
+264|Högerklick på ön
+265|Mushjulsklick på ön
+266|Gör genomskinlig / återställ
+267|Mushjulet över ön
+268|Bläddra Hem → Fack → Widgetar
+269|Anteckningar: rubrik
+270|Anteckningar: checklista
+271|Anteckningar: fet, kursiv, understruken
+272|Stäng öppen panel
+273|Ljud
+274|Volym
+275|Ingen app spelar upp ljud just nu
+276|Ljud av
+277|ljud av
+278|V
+279|Tillbaka
+280|Sökning efter låttexter är av
+281|Letar efter text…
+282|Första raden för test
+283|Andra raden är lite längre än den första så att den radbryts
+284|Tredje — spelas nu
+285|Fjärde raden
+286|Femte raden
+287|Sjätte raden
+288|Ingen text hittades
+289|Fäll ihop omslaget
+290|Låttext
+291|Öppna omslaget
+292|Spela Spotify, SoundCloud eller annan musik
+293|Öppna {0}
+294|Anteckningar
+295|Inga anteckningar än
+296|Markdown, listor, checklistor — kopieras som ren text
+297|Ny anteckning
+298|Alla anteckningar
+299|Kopiera som Markdown
+300|Ta bort anteckning
+301|Fet (Ctrl+B)
+302|Kursiv (Ctrl+I)
+303|Understruken (Ctrl+U)
+304|Genomstruken (Ctrl+Shift+X)
+305|Markering (Ctrl+Shift+H)
+306|Textfärg
+307|Rubrik 1 (Ctrl+1)
+308|Rubrik 2 (Ctrl+2)
+309|Rubrik 3 (Ctrl+3)
+310|Lista
+311|Numrerad lista
+312|Checklista (Ctrl+Shift+L)
+313|Citat
+314|Ta bort
+315|I går
+316|Sparat
+317|Tidtagarur
+318|Återställ
+319|Timer
+320|Pomodoro
+321|Pomodoros i cykeln: en lång paus efter den fjärde
+322|Starta
+323|Nästa steg
+324|Paus
+325|Fortsätt
+326|Pomodoro {0} av {1} · 25 min
+327|5 min paus, sedan fokus
+328|Cykeln klar · 15 min paus
+329|Återställ steget
+330|Börja om cykeln
+331|Musik
+332|Klocka
+333|System
+334|Veckan gick till: {0}

@@ -1,0 +1,333 @@
+001|Einstellungen        Win + /
+002|Insel anzeigen
+003|Beenden
+004|Verbunden
+005|Akku schwach
+006|Wird geladen
+007|Akkubetrieb
+008|Ton einschalten
+009|Stummschalten
+010|Akku wird geladen
+011|Ladegerät anschließen
+012|Laptop läuft mit Akku
+013|Kopfhörer-Akku
+014|Verbunden
+015|{0} von {1}
+016|Auswahl entfernen
+017|Ablage leeren
+018|Fertig
+019|Dateien auswählen
+020|Datei kopiert
+021|Kopiert: {0}
+022|Klicken zum Kopieren, ziehen zum Verschieben aller Dateien auf einmal
+023|Widgets hinzufügen
+024|Startseite ist leer
+025|Musik, Uhr, Timer — was Sie möchten
+026|Entfernen
+027|Es läuft nichts
+028|{0} (pausiert) · {1}
+029|Läuft · {0}
+030|Pausiert · {0}
+031|Bereit
+032|Lautstärke · {0}
+033|App-Lautstärke
+034|Leer
+035|arbeitet
+036|{0} wartet auf Antwort
+037|{0} · fertig
+038| genutzt
+039|Claude und Codex warten auf eine Aufgabe
+040|Claude wartet auf eine Aufgabe
+041|Codex wartet auf eine Aufgabe
+042|Nicht verbunden
+043|Auf die Startseite passen {0} Widgets
+044|Zur Startseite hinzufügen
+045|Alle Widgets sind schon auf der Startseite
+046|Kopfhörer (Demo)
+047|Aus der Ablage entfernen
+048|Start
+049|Ablage
+050|Widgets
+051|Einstellungen (Win + /)
+052|Abbrechen
+053|Dateien
+054|Dateien hierher ziehen
+055|Loslassen zum Hinzufügen
+056|Startseite bearbeiten
+057|Zurück zu den Diensten
+058|Willkommen bei SnowyNotch!
+059|Bewegen Sie den Mauszeiger über die Insel, ziehen Sie eine Datei darauf oder drücken Sie Win + /
+060|Los geht's
+061|Einstellungen
+062|Dienste
+063|{0} Std.
+064|Wartet auf Sie
+065|Braucht Ihre Erlaubnis
+066|Liest {0}
+067|Bearbeitet {0}
+068|Erstellt {0}
+069|Befehl: {0}
+070|Sucht „{0}“
+071|Sucht Dateien {0}
+072|Öffnet {0}
+073|Sucht im Web nach „{0}“
+074|Startet einen Helfer
+075|Aktualisiert den Plan
+076|Werkzeug {0}
+077|Systemklänge
+078|Claude-Limits sind aus
+079|Melden Sie sich in Claude Code an (claude → /login)
+080|Die Anmeldung in Claude Code ist abgelaufen — öffnen Sie Claude Code, es erneuert sie selbst
+081|Claude hat den Zugriff verweigert — öffnen Sie Claude Code, um die Anmeldung zu erneuern
+082|Limits konnten nicht abgerufen werden ({0})
+083|Für diesen Tarif gibt es keine Limits
+084|Keine Verbindung zu Claude
+085|Diese Woche
+086|Aktuelle Sitzung
+087|Limit
+088|Gestoppt
+089|Sucht im Web
+090|Sieht sich ein Bild an
+091|Arbeitet
+092|Befehl
+093|Liest eine Datei
+094|Durchsucht Dateien
+095|Führt {0} aus
+096|Dateien
+097|Erstellt
+098|Bearbeitet
+099|{0} {1} und {2} weitere
+100|Codex wurde noch nicht gestartet
+101|Limits erscheinen nach Ihrer ersten Anfrage in Codex
+102|Gerät
+103|Medienwiedergabe
+104|Neue Notiz
+105|Pause
+106|Lange Pause
+107|Fokus
+108|Text
+109|Limits
+110|Aufgabenfortschritt
+111|Agent-Verbindungen
+112|Aktualisieren
+113|Verbinden
+114|Fortschritt
+115|Claude Code oder Codex verbinden
+116|Nicht verbunden
+117|Verbinden Sie Claude Code: Die Insel zeigt Schritte und Status und, mit Ihrer Zustimmung, die Abo-Limits.
+118|Verbinden Sie Codex: Die Insel zeigt Fortschritt und Limits aus den Codex-Protokollen auf diesem Computer.
+119|Limits erscheinen nach der ersten Anfrage
+121|Arbeitet an einer Aufgabe
+122|Wartet auf Ihre Antwort
+123|Frei
+124|Keine aktiven Aufgaben
+125|Keine Limit-Daten
+126|Limit zurückgesetzt
+127|Aktualisiert {0}
+128|Warte auf Daten
+129|nicht verbunden
+130|{0:0} % genutzt
+131|keine Daten
+132|am Sonntag
+133|am Montag
+134|am Dienstag
+135|am Mittwoch
+136|am Donnerstag
+137|am Freitag
+138|am Samstag
+139|Wird zurückgesetzt
+140|Zurücksetzung um {0}
+141|Zurücksetzung morgen um {0}
+142|Zurücksetzung {0} um {1}
+143|Zurücksetzung: {0}, {1}
+144|gerade eben
+145|vor {0} Min.
+146|vor {0} Std.
+147|Sitzungen: {0}
+148|Agenten
+149|Die Agenten sind gerade frei
+150|Agenten sind nicht verbunden
+151|Geben Sie Claude Code oder Codex eine Aufgabe — hier erscheinen Schritte, Dateien und Status.
+152|Verbinden Sie Claude Code oder Codex unter Einstellungen → Agents, dann zeigt die Insel, wie die Arbeit läuft.
+153|Wartet auf eine Aufgabe
+154|Speichere…
+155|Lese…
+156|Geändert
+157|Gelesen
+158|ALLGEMEIN
+159|Allgemein
+160|Aussehen
+161|DIENSTE
+162|Medien
+163|Ton und Geräte
+164|MEHR
+165|Steuerung
+166|Über
+167|Schließen (Esc)
+168|Sprache
+169|Die Insel wird neu gestartet, um die Sprache zu übernehmen
+170|Beim Darüberfahren aufklappen
+171|Verzögerung beim Aufklappen
+172| ms
+173|Zuklappen nach
+174|Mausrad — Insel aus dem Weg räumen
+175|Mittelklick auf die Insel macht sie durchsichtig und klickdurchlässig, ein weiterer Mittelklick an derselben Stelle holt sie zurück. Langes Drücken des Mausrads blendet sie ganz aus (und auf dieselbe Weise wieder ein)
+176|In Spielen und Videos ausblenden
+177|Wenn eine App im Vollbild läuft
+178|Ausblenden, wenn nichts passiert
+179|Mit Windows starten
+180|Win + / öffnet diese Einstellungen. Ein Rechtsklick auf die Insel ebenfalls. Alle Tastenkürzel unter „Steuerung“.
+181|Ton pro App
+182|Öffnen
+183|IN DER INSEL ANZEIGEN
+184|Lautstärke und Helligkeit
+185|Änderungen erscheinen in der Insel, der Regler lässt sich ziehen
+186|Bluetooth-Kopfhörer
+187|Eine Akku-Blase beim Verbinden und bei niedrigem Akkustand
+188|Laptop-Akku
+189|FORM
+190|Notch
+191|Insel
+192|OBERFLÄCHE
+193|Glas
+194|Schwarz
+195|Glastransparenz
+196|Dünne Kontur
+197|Zeigt den Inselrand auf dunklen Hintergründen
+198|AKZENTFARBE
+199|GRÖSSE UND BEWEGUNG
+200|Breite
+201|Skalierung
+202|Abstand oben (Insel)
+203|Animationsgeschwindigkeit
+204|Auf der Startseite stehen bis zu drei Widgets nebeneinander. Das Layout ändern Sie direkt in der Insel: Entfernen mit dem roten Minus, Hinzufügen über ein Symbol darunter.
+205|Jetzt auf der Startseite
+206|Layout ändern
+207|Alle Widgets gibt es auch auf der Seite „Widgets“ (Rastersymbol unter der Insel).
+208|Nur Musik
+209|Der Player zeigt Musik-Apps (Spotify, Apple Music, Yandex Music, Deezer, TIDAL, AIMP, foobar2000…) und Musikseiten im Browser (SoundCloud, YouTube Music, Spotify Web, VK, Bandcamp…). YouTube, Videos, Anrufe und andere Töne werden nicht angezeigt
+210|Equalizer
+211|Farbe aus dem Cover
+212|Sonst sind die Balken weiß
+213|Neuen Titel anzeigen
+214|Die Insel klappt beim Titelwechsel kurz auf
+215|Anzeigedauer
+216| s
+217|Songtexte
+218|Synchrone Texte aus der offenen Datenbank lrclib.net. Gesucht wird nur, wenn Sie den Text öffnen; dorthin gehen Titel, Interpret und Länge des Songs
+219|PLAYER-TASTEN
+220|Zufallswiedergabe
+221|Wiederholen
+222|Die Tasten sitzen an den Rändern des Players. Manche Player (oft Browser) unterstützen sie nicht — dann sind sie inaktiv.
+223|Claude-Limits anzeigen
+224|Das 5-Stunden- und das Wochenlimit des Abos, wie in /usage. Die Insel nutzt die Claude-Code-Anmeldung auf diesem Computer und fragt nur alle 5 Minuten api.anthropic.com ab; das Token wird nirgendwo anders hingeschickt und nicht gespeichert.
+225|Arbeit der Agenten anzeigen
+226|Schritte, Dateien und Status in der Insel, die Agenten-Blase daneben
+227|Claude Code: „Verbinden“ fügt in ~/.claude/settings.json HTTP-Hooks auf 127.0.0.1:47318 hinzu (nur dieser Computer). Codex: Die Insel liest die Sitzungsprotokolle in ~/.codex/sessions und ergänzt notify in ~/.codex/config.toml, um genau zu wissen, wann ein Zug endet. Vor dem Ändern wird einmal eine Sicherungskopie daneben gespeichert; „Trennen“ entfernt nur das Eigene. Die Insel beobachtet nur und beantwortet keine Berechtigungsanfragen. Gilt für neue Sitzungen.
+228|Seitenwechsel
+229|Scrollen
+230|Tasten
+231|Beides
+232|Position der Tasten
+233|Unter der Insel
+234|Tabs oben
+235|Scrollen: Mausrad oder Zwei-Finger-Wischen auf der Insel blättert Start → Ablage → Widgets, eine Seite pro Geste.
+236|TASTENKÜRZEL
+237|Eine Insel für Windows: Musik, Timer, eine Dateiablage und Widgets direkt am oberen Bildschirmrand.
+238|Einstellungen zurücksetzen
+239|SnowyNotch beenden
+240|Version {0}.{1}.{2}
+241|Sprache, Aufklappen, Ausblenden und Start der Insel
+242|Systemsprache
+243|Form, Oberfläche, Farbe und Größe der Insel
+244|Was auf der Startseite der Insel steht
+245|Player, Songtexte und welche Quellen als Musik zählen
+246|App-Lautstärke, HUD, Kopfhörer und Akku
+247|Claude Code und Codex: Fortschritt und Limits
+248|Wie man blättert und alle Tastenkürzel
+249|Version und Zurücksetzen
+250|Trennen
+251|Verbunden — die Insel empfängt Ereignisse von Claude Code
+252|Nicht verbunden
+253|Verbunden — Fortschritt, Zugende und Limits
+254|Verbunden — Fortschritt und Limits aus den Protokollen (notify wird anderweitig genutzt, Zugende per Pause erkannt)
+255|Verbunden. ~/.codex/config.toml hat schon ein eigenes notify — das bleibt unangetastet; das Zugende wird per Pause erkannt.
+256|Ohne notify verbunden: ~/.codex/config.toml konnte nicht geändert werden ({0})
+257|~/.claude/settings.json konnte nicht geändert werden: {0}
+258|Lautstärke jeder App einzeln. Von überall öffnen: {0}
+259|Lautstärke jeder App einzeln. Das Tastenkürzel ist von einer anderen App belegt — über „Widgets“ öffnen
+260|Zeigt das Anschließen des Ladegeräts und warnt bei 20 % und 10 %
+261|Kein Akku gefunden — das ist kein Laptop, die Einstellung wird nicht gebraucht
+262|Einstellungen öffnen oder schließen
+263|Ton: App-Lautstärke
+264|Rechtsklick auf die Insel
+265|Mittelklick auf die Insel
+266|Durchsichtig machen / zurückholen
+267|Mausrad über der Insel
+268|Blättern Start → Ablage → Widgets
+269|Notizen: Überschrift
+270|Notizen: Checkliste
+271|Notizen: fett, kursiv, unterstrichen
+272|Offenes Fenster schließen
+273|Ton
+274|Lautstärke
+275|Gerade gibt keine App Ton aus
+276|Stumm
+277|stumm
+278|KW
+279|Zurück
+280|Songtextsuche ist aus
+281|Suche Songtext…
+282|Erste Zeile zum Testen
+283|Die zweite Zeile ist etwas länger als die erste, damit sie umbricht
+284|Dritte — läuft gerade
+285|Vierte Zeile
+286|Fünfte Zeile
+287|Sechste Zeile
+288|Kein Songtext gefunden
+289|Cover einklappen
+290|Songtext
+291|Cover öffnen
+292|Starten Sie Spotify, SoundCloud oder andere Musik
+293|{0} öffnen
+294|Notizen
+295|Noch keine Notizen
+296|Markdown, Listen, Checklisten — als sauberer Text kopiert
+297|Neue Notiz
+298|Alle Notizen
+299|Als Markdown kopieren
+300|Notiz löschen
+301|Fett (Ctrl+B)
+302|Kursiv (Ctrl+I)
+303|Unterstreichen (Ctrl+U)
+304|Durchstreichen (Ctrl+Shift+X)
+305|Markieren (Ctrl+Shift+H)
+306|Textfarbe
+307|Überschrift 1 (Ctrl+1)
+308|Überschrift 2 (Ctrl+2)
+309|Überschrift 3 (Ctrl+3)
+310|Liste
+311|Nummerierte Liste
+312|Checkliste (Ctrl+Shift+L)
+313|Zitat
+314|Löschen
+315|Gestern
+316|Gespeichert
+317|Stoppuhr
+318|Zurücksetzen
+319|Timer
+320|Pomodoro
+321|Pomodoros im Zyklus: nach dem vierten eine lange Pause
+322|Start
+323|Nächster Abschnitt
+324|Pause
+325|Weiter
+326|Pomodoro {0} von {1} · 25 Min.
+327|5 Min. Pause, dann Fokus
+328|Zyklus geschafft · 15 Min. Pause
+329|Abschnitt zurücksetzen
+330|Zyklus neu beginnen
+331|Musik
+332|Uhr
+333|System
+334|Die Woche ging an: {0}

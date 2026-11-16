@@ -1,0 +1,484 @@
+﻿<Window x:Class="SnowyNotch.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:l="clr-namespace:SnowyNotch.Localization"
+        xmlns:c="clr-namespace:SnowyNotch.Controls"
+        Title="SnowyNotch"
+        Width="1100" Height="460"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ShowActivated="False"
+        AllowDrop="True"
+        FontFamily="Segoe UI Variable Display, Segoe UI"
+        Foreground="White"
+        UseLayoutRounding="True">
+
+    <Window.Resources>
+        <!-- Плитка трея: превью без подложки (миниатюра, страница PDF, папка, мини-превью кода) и имя под ним. -->
+        <DataTemplate x:Key="TrayTile">
+            <Grid x:Name="Tile" Width="116" Margin="2,0,2,16" Background="Transparent" Cursor="Hand" ToolTip="{Binding Path}"
+                  PreviewMouseLeftButtonDown="TrayTile_PreviewMouseLeftButtonDown" MouseMove="TrayTile_MouseMove"
+                  MouseLeftButtonUp="TrayTile_MouseLeftButtonUp" Loaded="TrayTile_Loaded"
+                  RenderTransformOrigin="0.5,0.5">
+                <StackPanel>
+                    <Grid Height="78">
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <ScaleTransform x:Name="Lift"/>
+                            </Grid.RenderTransform>
+                            <!-- Рамка выбора -->
+                            <Border x:Name="SelRing" Margin="-4" CornerRadius="{Binding ThumbRadius}" BorderThickness="2.2"
+                                    BorderBrush="{DynamicResource AccentBrush}" Background="#1A0A84FF" Opacity="0"/>
+                            <Border Width="{Binding ThumbWidth}" Height="{Binding ThumbHeight}" CornerRadius="{Binding ThumbRadius}">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="{Binding Thumb}" Stretch="UniformToFill"
+                                                RenderOptions.BitmapScalingMode="HighQuality"/>
+                                </Border.Background>
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="14" ShadowDepth="3" Direction="270" Color="Black"
+                                                      Opacity="{Binding ShadowOpacity}"/>
+                                </Border.Effect>
+                            </Border>
+                        </Grid>
+
+                        <!-- Отметка в режиме выбора -->
+                        <Grid x:Name="Check" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top"
+                              Margin="0,0,12,0" Visibility="Collapsed">
+                            <Ellipse x:Name="CheckBg" Fill="#99000000" Stroke="#E6FFFFFF" StrokeThickness="1.5"/>
+                            <c:IconGlyph x:Name="CheckMark" Data="{StaticResource IconCheck}" Width="13" Height="13"
+                                         StrokeWidth="2.4" Opacity="0"/>
+                        </Grid>
+
+                        <Button x:Name="RemoveTile" Style="{StaticResource IconButton}" Width="20" Height="20" Background="#F23A3A3E"
+                                HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,10,0" Opacity="0"
+                                Click="TrayRemove_Click" ToolTip="{l:T 'Убрать из трея'}">
+                            <c:IconGlyph Data="{StaticResource IconClose}" Width="12" Height="12" StrokeWidth="2"/>
+                        </Button>
+                    </Grid>
+                    <TextBlock Text="{Binding Name}" FontSize="13.5" FontWeight="SemiBold" Margin="2,9,2,0" TextAlignment="Center"
+                               TextTrimming="CharacterEllipsis" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+            <DataTemplate.Triggers>
+                <Trigger SourceName="Tile" Property="IsMouseOver" Value="True">
+                    <Setter TargetName="RemoveTile" Property="Opacity" Value="1"/>
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="Lift" Storyboard.TargetProperty="ScaleX" To="1.07" Duration="0:0:0.22">
+                                    <DoubleAnimation.EasingFunction><QuinticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation Storyboard.TargetName="Lift" Storyboard.TargetProperty="ScaleY" To="1.07" Duration="0:0:0.22">
+                                    <DoubleAnimation.EasingFunction><QuinticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="Lift" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.3">
+                                    <DoubleAnimation.EasingFunction><QuinticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation Storyboard.TargetName="Lift" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.3">
+                                    <DoubleAnimation.EasingFunction><QuinticEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+                <DataTrigger Binding="{Binding Selecting}" Value="True">
+                    <Setter TargetName="Check" Property="Visibility" Value="Visible"/>
+                    <Setter TargetName="RemoveTile" Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                    <Setter TargetName="SelRing" Property="Opacity" Value="1"/>
+                    <Setter TargetName="CheckBg" Property="Fill" Value="{DynamicResource AccentBrush}"/>
+                    <Setter TargetName="CheckBg" Property="Stroke" Value="{DynamicResource AccentBrush}"/>
+                    <Setter TargetName="CheckMark" Property="Opacity" Value="1"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid x:Name="Root">
+        <StackPanel x:Name="Cluster" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <StackPanel.LayoutTransform>
+                <ScaleTransform x:Name="ClusterScale" ScaleX="1" ScaleY="1"/>
+            </StackPanel.LayoutTransform>
+
+            <Grid x:Name="IslandRow">
+                <Border x:Name="StopwatchBubble" Visibility="Hidden" Width="36" Height="36" CornerRadius="18" Background="Black"
+                        BorderBrush="#17FFFFFF" BorderThickness="1"
+                        HorizontalAlignment="Center" VerticalAlignment="Top" Cursor="Hand"
+                        Opacity="0" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5"
+                        MouseLeftButtonUp="Bubble_Click" Tag="stopwatch">
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="StopwatchBubbleScale" ScaleX="0.4" ScaleY="0.4"/>
+                            <TranslateTransform x:Name="StopwatchBubbleShift"/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                    <Grid>
+                        <c:RingProgress Width="27" Height="27" Thickness="2.8" TrackBrush="#3364D2FF"
+                                        RingBrush="{StaticResource StopwatchCyan}" Progress="{Binding Stopwatch.Progress}"/>
+                        <c:ToolGlyph Kind="Stopwatch" Foreground="{StaticResource StopwatchCyan}" Width="16" Height="16" StrokeWidth="1.7"
+                                     Progress="{Binding Stopwatch.Progress}" IsRunning="{Binding Stopwatch.IsRunning}"/>
+                    </Grid>
+                </Border>
+                <Border x:Name="TimerBubble" Visibility="Hidden" Width="36" Height="36" CornerRadius="18" Background="Black"
+                        BorderBrush="#17FFFFFF" BorderThickness="1"
+                        HorizontalAlignment="Center" VerticalAlignment="Top" Cursor="Hand"
+                        Opacity="0" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5"
+                        MouseLeftButtonUp="Bubble_Click" Tag="timer">
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="TimerBubbleScale" ScaleX="0.4" ScaleY="0.4"/>
+                            <TranslateTransform x:Name="TimerBubbleShift"/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                    <Grid>
+                        <!-- Фокус: оранжевое кольцо «сколько осталось» на тёмно-оранжевой дорожке.
+                             Перерыв Pomodoro: чашка кофе с паром, кольцо так же уходит, но на серой дорожке. -->
+                        <c:RingProgress Width="27" Height="27" Thickness="2.8"
+                                        RingBrush="{StaticResource TimerOrange}" Progress="{Binding Timer.RingProgress}">
+                            <c:RingProgress.Style>
+                                <Style TargetType="c:RingProgress">
+                                    <Setter Property="TrackBrush" Value="#4DFF9F0A"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Timer.IsBreak}" Value="True">
+                                            <Setter Property="TrackBrush" Value="#38FFFFFF"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </c:RingProgress.Style>
+                        </c:RingProgress>
+                        <c:ToolGlyph Foreground="{StaticResource TimerOrange}" StrokeWidth="1.7"
+                                     IsRunning="{Binding Timer.IsRunning}">
+                            <c:ToolGlyph.Style>
+                                <Style TargetType="c:ToolGlyph">
+                                    <Setter Property="Kind" Value="Timer"/>
+                                    <Setter Property="Width" Value="16"/>
+                                    <Setter Property="Height" Value="16"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Timer.IsBreak}" Value="True">
+                                            <Setter Property="Kind" Value="Coffee"/>
+                                            <Setter Property="Width" Value="18"/>
+                                            <Setter Property="Height" Value="18"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </c:ToolGlyph.Style>
+                        </c:ToolGlyph>
+                    </Grid>
+                </Border>
+
+                <Border x:Name="ClaudeBubble" Visibility="Hidden" Width="36" Height="36" CornerRadius="18" Background="Black"
+                        BorderBrush="#17FFFFFF" BorderThickness="1"
+                        HorizontalAlignment="Center" VerticalAlignment="Top" Cursor="Hand"
+                        Opacity="0" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5"
+                        MouseLeftButtonUp="ClaudeBubble_Click">
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="ClaudeBubbleScale" ScaleX="0.4" ScaleY="0.4"/>
+                            <TranslateTransform x:Name="ClaudeBubbleShift"/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                    <Grid>
+                        <c:RingProgress x:Name="ClaudeRing" Width="28" Height="28" Thickness="2.6" Progress="0.28" TrackBrush="#33FFFFFF"
+                                        RingBrush="#E0784F" RenderTransformOrigin="0.5,0.5">
+                            <c:RingProgress.RenderTransform>
+                                <RotateTransform x:Name="ClaudeRingSpin"/>
+                            </c:RingProgress.RenderTransform>
+                        </c:RingProgress>
+                        <c:Clawd x:Name="ClaudeBuddy" Width="19" Height="19"/>
+                        <c:AgentLogo x:Name="CodexBubbleLogo" Agent="Codex" Width="18" Height="18" Visibility="Collapsed"/>
+                    </Grid>
+                </Border>
+
+                <Border x:Name="HeadsetBubble" Visibility="Hidden" Width="36" Height="36" CornerRadius="18" Background="Black"
+                        BorderBrush="#17FFFFFF" BorderThickness="1"
+                        HorizontalAlignment="Center" VerticalAlignment="Top" Cursor="Hand"
+                        Opacity="0" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5"
+                        MouseLeftButtonUp="HeadsetBubble_Click">
+                    <Border.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="HeadsetBubbleScale" ScaleX="0.4" ScaleY="0.4"/>
+                            <TranslateTransform x:Name="HeadsetBubbleShift"/>
+                        </TransformGroup>
+                    </Border.RenderTransform>
+                    <Grid>
+                        <c:RingProgress x:Name="HeadsetRing" Width="27" Height="27" Thickness="3" RingBrush="#30D158"/>
+                        <c:IconGlyph Data="{StaticResource IconHeadphones}" Width="15" Height="15" StrokeWidth="1.8"/>
+                    </Grid>
+                </Border>
+
+                <Grid x:Name="Island" HorizontalAlignment="Center" VerticalAlignment="Top"
+                      MouseEnter="Hover_Enter" MouseLeave="Hover_Leave"
+                      MouseLeftButtonUp="Island_MouseLeftButtonUp" MouseRightButtonUp="Island_MouseRightButtonUp"
+                      MouseWheel="Island_MouseWheel"
+                      DragEnter="Island_DragEnter" DragOver="Island_DragOver" DragLeave="Island_DragLeave" Drop="Island_Drop">
+
+                    <Path x:Name="Shape" Fill="Black"/>
+                    <Path x:Name="Outline" Stroke="#29FFFFFF" StrokeThickness="1" IsHitTestVisible="False"/>
+
+                    <Grid x:Name="Body" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                        <Grid x:Name="CompactView" Height="36" VerticalAlignment="Top" Opacity="0" Visibility="Hidden" IsHitTestVisible="False">
+                            <Border x:Name="CompactArt" Width="24" Height="24" CornerRadius="6"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,0,0" Background="#2A2A2E"/>
+                            <c:AudioBars x:Name="CompactBars" Width="20" Height="14" BarCount="6"
+                                         HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                        </Grid>
+
+                        <Grid x:Name="TopTabs" VerticalAlignment="Top" Margin="14,10,14,0" Opacity="0" IsHitTestVisible="False"
+                              Visibility="Collapsed">
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton x:Name="TabHome" Style="{StaticResource TopTab}" GroupName="TopTabs" Content="{l:T 'Главная'}"
+                                             Tag="{StaticResource IconHome}" Checked="NavTab_Checked"/>
+                                <RadioButton x:Name="TabTray" Style="{StaticResource TopTab}" GroupName="TopTabs" Content="{l:T 'Трей'}"
+                                             Tag="{StaticResource IconTray}" Checked="NavTab_Checked"/>
+                                <RadioButton x:Name="TabWidgets" Style="{StaticResource TopTab}" GroupName="TopTabs" Content="{l:T 'Виджеты'}"
+                                             Tag="{StaticResource IconGrid}" Checked="NavTab_Checked" Click="NavWidgets_Click"/>
+                            </StackPanel>
+                            <Button Style="{StaticResource IconButton}" Width="28" Height="28" HorizontalAlignment="Right"
+                                    Foreground="#A6FFFFFF" Click="OpenSettings_Click" ToolTip="{l:T 'Настройки (Win + /)'}">
+                                <c:IconGlyph Data="{StaticResource IconSettings}" Width="17" Height="17" StrokeWidth="1.5"/>
+                            </Button>
+                        </Grid>
+
+                        <Canvas x:Name="ViewHost" VerticalAlignment="Top" HorizontalAlignment="Left">
+
+                            <StackPanel x:Name="HomeView" Visibility="Hidden" Opacity="0">
+                                <StackPanel x:Name="HomeRow" Orientation="Horizontal" Margin="20,14,20,14" HorizontalAlignment="Center"/>
+                                <Grid x:Name="CustomizeDock" Visibility="Collapsed" Margin="14,0,14,12">
+                                    <Border Height="1" Background="{StaticResource Hairline}" VerticalAlignment="Top"/>
+                                    <WrapPanel x:Name="DockTiles" Margin="0,12,84,0" VerticalAlignment="Center"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,10,0,0">
+                                        <Button Style="{StaticResource IconButton}" Width="32" Height="32" Background="#33FFFFFF"
+                                                Click="CustomizeCancel_Click" ToolTip="{l:T 'Отмена'}">
+                                            <c:IconGlyph Data="{StaticResource IconClose}" Width="17" Height="17" StrokeWidth="2"/>
+                                        </Button>
+                                        <Button Style="{StaticResource IconButton}" Width="32" Height="32" Margin="8,0,0,0"
+                                                Background="{DynamicResource AccentBrush}" Click="CustomizeDone_Click" ToolTip="{l:T 'Готово'}">
+                                            <c:IconGlyph Data="{StaticResource IconCheck}" Width="18" Height="18" StrokeWidth="2.2"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+
+                            <Grid x:Name="TrayView" Width="560" Visibility="Hidden" Opacity="0">
+                                <Grid Margin="18,14,18,16">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid x:Name="TrayHeader" Margin="8,0,0,14" Visibility="Collapsed">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="{l:T 'Файлы'}" FontSize="17" FontWeight="Bold"/>
+                                            <TextBlock x:Name="TrayCountText" FontSize="17" FontWeight="SemiBold" Foreground="#73FFFFFF"
+                                                       Margin="7,0,0,0"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                            <Button x:Name="TraySelectButton" Style="{StaticResource IconButton}" Width="32" Height="32"
+                                                    Background="#2EFFFFFF" Click="TraySelect_Click" ToolTip="{l:T 'Выбрать файлы'}">
+                                                <c:IconGlyph Data="{StaticResource IconCheck}" Width="16" Height="16" StrokeWidth="2.2"/>
+                                            </Button>
+                                            <Button x:Name="TrayBasketButton" Style="{StaticResource IconButton}" Width="32" Height="32"
+                                                    Background="#2EFFFFFF" Margin="8,0,0,0" Click="TrayBasket_Click"
+                                                    PreviewMouseLeftButtonDown="TrayBasket_PreviewMouseLeftButtonDown"
+                                                    PreviewMouseMove="TrayBasket_PreviewMouseMove"
+                                                    ToolTip="{l:T 'Нажмите — скопировать файлы, потяните — перенести все сразу'}">
+                                                <c:IconGlyph x:Name="TrayBasketIcon" Data="{StaticResource IconBasket}" Width="17" Height="17"/>
+                                            </Button>
+                                            <Button x:Name="TrayClearButton" Style="{StaticResource IconButton}" Width="32" Height="32"
+                                                    Background="#2EFFFFFF" Margin="8,0,0,0" Click="TrayClear_Click" ToolTip="{l:T 'Очистить трей'}">
+                                                <c:IconGlyph Data="{StaticResource IconTrash}" Width="17" Height="17"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Grid Grid.Row="1" MinHeight="170">
+                                        <Grid x:Name="TrayEmpty">
+                                            <Rectangle RadiusX="18" RadiusY="18" Stroke="#33FFFFFF" StrokeThickness="1.4" StrokeDashArray="5 4"/>
+                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <c:IconGlyph Data="{StaticResource IconTray}" Foreground="#80FFFFFF" Width="34" Height="34"
+                                                             StrokeWidth="1.4" HorizontalAlignment="Center"/>
+                                                <TextBlock Text="{l:T 'Перетащите файлы сюда'}" FontSize="13" Foreground="#B3FFFFFF"
+                                                           Margin="0,9,0,0" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <ScrollViewer x:Name="TrayScroll" MaxHeight="290" VerticalScrollBarVisibility="Auto"
+                                                      HorizontalScrollBarVisibility="Disabled" Focusable="False" Visibility="Collapsed">
+                                            <ItemsControl x:Name="TrayList" ItemTemplate="{StaticResource TrayTile}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel HorizontalAlignment="Center"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+
+                                        <Grid x:Name="DropGlow" Opacity="0" IsHitTestVisible="False">
+                                            <Border CornerRadius="18" Background="#F2141416"/>
+                                            <Border CornerRadius="18" Background="{DynamicResource AccentBrush}" Opacity="0.16"/>
+                                            <Rectangle x:Name="DropDashes" RadiusX="18" RadiusY="18" Stroke="{DynamicResource AccentBrush}"
+                                                       StrokeThickness="2" StrokeDashArray="5 4"/>
+                                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <c:IconGlyph x:Name="DropIcon" Data="{StaticResource IconTray}" Foreground="White" Width="38" Height="38"
+                                                             StrokeWidth="1.5" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                                                    <c:IconGlyph.RenderTransform>
+                                                        <TranslateTransform x:Name="DropIconShift"/>
+                                                    </c:IconGlyph.RenderTransform>
+                                                </c:IconGlyph>
+                                                <TextBlock Text="{l:T 'Отпустите, чтобы добавить'}" FontSize="13.5" FontWeight="SemiBold"
+                                                           Margin="0,9,0,0" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            <StackPanel x:Name="WidgetsView" Width="586" Visibility="Hidden" Opacity="0">
+                                <WrapPanel x:Name="WidgetTiles" Margin="16,14,16,4" HorizontalAlignment="Center"/>
+                                <Button Style="{StaticResource PillButton}" HorizontalAlignment="Right" Margin="0,4,22,14" Padding="11,6"
+                                        Click="EditHome_Click">
+                                    <StackPanel Orientation="Horizontal">
+                                        <c:IconGlyph Data="{StaticResource IconPencil}" Width="15" Height="15"/>
+                                        <TextBlock Text="{l:T 'Изменить главную'}" FontSize="12" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+
+                            <Grid x:Name="FocusView" Visibility="Hidden" Opacity="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <!-- Шапка открытого сервиса: назад к панели сервисов (как в Agents) -->
+                                <StackPanel Orientation="Horizontal" Margin="22,12,22,0">
+                                    <Button Style="{StaticResource IconButton}" Width="30" Height="30" Background="#2EFFFFFF" Margin="0,0,10,0"
+                                            Click="FocusBack_Click" ToolTip="{l:T 'Назад к сервисам'}">
+                                        <c:IconGlyph Data="{StaticResource IconChevronLeft}" Width="17" Height="17" StrokeWidth="2.2"/>
+                                    </Button>
+                                    <c:IconGlyph x:Name="FocusIcon" VerticalAlignment="Center" Foreground="#B3FFFFFF" Width="19" Height="19"/>
+                                    <TextBlock x:Name="FocusTitle" FontSize="15" FontWeight="SemiBold" Foreground="#B3FFFFFF" Margin="8,0,0,0"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <ContentControl x:Name="FocusHost" Grid.Row="1" Margin="22,10,22,14" Focusable="False"/>
+                            </Grid>
+
+                            <ContentControl x:Name="ArtworkHost" Visibility="Hidden" Opacity="0" Focusable="False"/>
+
+                            <ContentControl x:Name="LyricsHost" Visibility="Hidden" Opacity="0" Focusable="False"/>
+
+                            <ContentControl x:Name="AgentHost" Visibility="Hidden" Opacity="0" Focusable="False"/>
+
+                            <Grid x:Name="HudView" Width="330" Visibility="Hidden" Opacity="0">
+                                <Grid x:Name="HudLevelRow" Margin="16,12,18,12" Height="30">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button x:Name="HudIconButton" Style="{StaticResource IconButton}" Width="30" Height="30"
+                                            Click="HudIcon_Click">
+                                        <c:IconGlyph x:Name="HudIcon" Data="{StaticResource IconSpeakerHigh}" Width="21" Height="21"/>
+                                    </Button>
+                                    <Grid x:Name="HudTrack" Grid.Column="1" Height="24" Margin="10,0,12,0" Background="Transparent" Cursor="Hand"
+                                          MouseLeftButtonDown="HudTrack_MouseLeftButtonDown" MouseMove="HudTrack_MouseMove"
+                                          MouseLeftButtonUp="HudTrack_MouseLeftButtonUp">
+                                        <Border Height="6" CornerRadius="3" Background="#2EFFFFFF" VerticalAlignment="Center"/>
+                                        <Border x:Name="HudFill" Height="6" CornerRadius="3" Width="0" Background="White"
+                                                HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    </Grid>
+                                    <TextBlock x:Name="HudValue" Grid.Column="2" FontSize="13" FontWeight="SemiBold" Width="38"
+                                               TextAlignment="Right" VerticalAlignment="Center"/>
+                                </Grid>
+                                <Grid x:Name="HudDeviceRow" Margin="16,12,18,12" Height="30" Visibility="Collapsed">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border x:Name="HudDeviceIconBg" Width="30" Height="30" CornerRadius="15" Background="#1FFFFFFF">
+                                            <c:IconGlyph x:Name="HudDeviceIcon" Data="{StaticResource IconHeadphones}" Width="19" Height="19"/>
+                                        </Border>
+                                        <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                                            <TextBlock x:Name="HudDeviceName" FontSize="13" FontWeight="SemiBold" MaxWidth="190"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock x:Name="HudDeviceSub" FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel x:Name="HudBatteryPanel" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <c:RingProgress x:Name="HudBatteryRing" Width="22" Height="22" Thickness="2.6" RingBrush="#30D158"/>
+                                        <c:BatteryGlyph x:Name="HudBatteryGlyph" Width="30" Height="15" VerticalAlignment="Center" Visibility="Collapsed"/>
+                                        <TextBlock x:Name="HudBatteryText" FontSize="13" FontWeight="SemiBold" Margin="7,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+
+                            <ContentControl x:Name="SettingsHost" Visibility="Hidden" Opacity="0" Focusable="False"/>
+
+                            <StackPanel x:Name="WelcomeView" Width="440" Visibility="Hidden" Opacity="0">
+                                <TextBlock Text="hello" FontFamily="Segoe Script" FontSize="40" HorizontalAlignment="Center" Margin="0,16,0,0"/>
+                                <TextBlock Text="{l:T 'Добро пожаловать в SnowyNotch!'}" FontSize="14" FontWeight="SemiBold"
+                                           HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                                <TextBlock Text="{l:T 'Наведите курсор на остров, бросьте на него файл или нажмите Win + /'}" FontSize="12"
+                                           Foreground="{StaticResource TextSecondary}" HorizontalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,18">
+                                    <Button Style="{StaticResource PillButton}" Background="{DynamicResource AccentBrush}" Content="{l:T 'Начать'}"
+                                            FontSize="13" MinWidth="96" Click="WelcomeStart_Click"/>
+                                    <Button Style="{StaticResource PillButton}" Content="{l:T 'Настройки'}" FontSize="13" MinWidth="96"
+                                            Margin="10,0,0,0" Click="WelcomeSettings_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Canvas>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid x:Name="NavHitArea" HorizontalAlignment="Center" Visibility="Collapsed" Background="Transparent"
+                  MouseEnter="Hover_Enter" MouseLeave="Hover_Leave" MouseWheel="Island_MouseWheel">
+            <Border x:Name="NavBar" HorizontalAlignment="Center" Margin="22,10,22,16" Padding="4" CornerRadius="18"
+                    BorderBrush="#1CFFFFFF" BorderThickness="1"
+                    Opacity="0" IsHitTestVisible="False"
+                    RenderTransformOrigin="0.5,0">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#F2232326" Offset="0"/>
+                        <GradientStop Color="#F2161618" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Border.RenderTransform>
+                    <TranslateTransform x:Name="NavBarShift" Y="-6"/>
+                </Border.RenderTransform>
+                <Grid x:Name="NavGrid">
+                    <Border x:Name="NavIndicator" HorizontalAlignment="Left" Width="42" Height="32" CornerRadius="14"
+                            Background="#2EFFFFFF" BorderBrush="#14FFFFFF" BorderThickness="0.5,0.5,0.5,0" Opacity="0">
+                        <Border.RenderTransform>
+                            <TranslateTransform x:Name="NavIndicatorShift"/>
+                        </Border.RenderTransform>
+                    </Border>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton x:Name="NavHome" Style="{StaticResource NavButton}" GroupName="NavBar"
+                                     Tag="{StaticResource IconHome}" ToolTip="{l:T 'Главная'}" Checked="NavTab_Checked"/>
+                        <RadioButton x:Name="NavTray" Style="{StaticResource NavButton}" GroupName="NavBar"
+                                     Tag="{StaticResource IconTray}" ToolTip="{l:T 'Трей'}" Checked="NavTab_Checked">
+                            <TextBlock x:Name="NavTrayBadge" FontSize="11.5" FontWeight="SemiBold" Margin="6,0,0,0" Visibility="Collapsed"/>
+                        </RadioButton>
+                        <RadioButton x:Name="NavWidgets" Style="{StaticResource NavButton}" GroupName="NavBar"
+                                     Tag="{StaticResource IconGrid}" ToolTip="{l:T 'Сервисы'}" Checked="NavTab_Checked" Click="NavWidgets_Click"/>
+                        <Ellipse Width="3" Height="3" Fill="#40FFFFFF" Margin="6,0" VerticalAlignment="Center"/>
+                        <Button Style="{StaticResource IconButton}" Width="42" Height="32" Foreground="#80FFFFFF"
+                                Click="OpenSettings_Click" ToolTip="{l:T 'Настройки (Win + /)'}">
+                            <c:IconGlyph Data="{StaticResource IconSettings}" Width="18" Height="18" StrokeWidth="1.55"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

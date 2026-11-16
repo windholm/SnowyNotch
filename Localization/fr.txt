@@ -1,0 +1,333 @@
+001|Paramètres        Win + /
+002|Afficher l'île
+003|Quitter
+004|Connecté
+005|Batterie faible
+006|En charge
+007|Sur batterie
+008|Réactiver le son
+009|Couper le son
+010|La batterie se recharge
+011|Branchez le chargeur
+012|Le portable fonctionne sur batterie
+013|Batterie du casque
+014|Connecté
+015|{0} sur {1}
+016|Retirer la sélection
+017|Vider le plateau
+018|Terminé
+019|Sélectionner des fichiers
+020|Fichier copié
+021|Copiés : {0}
+022|Cliquez pour copier les fichiers, faites glisser pour tous les déplacer d'un coup
+023|Ajouter des widgets
+024|L'accueil est vide
+025|Musique, horloge, minuteur — ce que vous voulez
+026|Retirer
+027|Rien en lecture
+028|{0} (en pause) · {1}
+029|En cours · {0}
+030|En pause · {0}
+031|Prêt
+032|Volume · {0}
+033|Volume des applis
+034|Vide
+035|travaille
+036|{0} attend une réponse
+037|{0} · terminé
+038| utilisés
+039|Claude et Codex attendent une tâche
+040|Claude attend une tâche
+041|Codex attend une tâche
+042|Non connectés
+043|L'accueil peut contenir {0} widgets
+044|Ajouter à l'accueil
+045|Tous les widgets sont déjà sur l'accueil
+046|Casque (démo)
+047|Retirer du plateau
+048|Accueil
+049|Plateau
+050|Widgets
+051|Paramètres (Win + /)
+052|Annuler
+053|Fichiers
+054|Déposez des fichiers ici
+055|Relâchez pour ajouter
+056|Modifier l'accueil
+057|Retour aux services
+058|Bienvenue dans SnowyNotch !
+059|Survolez l'île, déposez-y un fichier ou appuyez sur Win + /
+060|Commencer
+061|Paramètres
+062|Services
+063|{0} h
+064|Vous attend
+065|A besoin de votre autorisation
+066|Lit {0}
+067|Modifie {0}
+068|Crée {0}
+069|Commande : {0}
+070|Recherche « {0} »
+071|Cherche les fichiers {0}
+072|Ouvre {0}
+073|Recherche sur le web « {0} »
+074|Lance un assistant
+075|Met à jour le plan
+076|Outil {0}
+077|Sons système
+078|Les limites Claude sont désactivées
+079|Connectez-vous à Claude Code (claude → /login)
+080|La connexion à Claude Code a expiré — ouvrez Claude Code, il la renouvellera
+081|Claude a refusé l'accès — ouvrez Claude Code pour renouveler la connexion
+082|Impossible d'obtenir les limites ({0})
+083|Aucune limite pour cette offre
+084|Pas de connexion à Claude
+085|Cette semaine
+086|Session en cours
+087|Limite
+088|Arrêté
+089|Recherche sur le web
+090|Regarde une image
+091|Travaille
+092|Commande
+093|Lit un fichier
+094|Parcourt les fichiers
+095|Exécute {0}
+096|fichiers
+097|Crée
+098|Modifie
+099|{0} {1} et {2} autres
+100|Codex n'a pas encore été lancé
+101|Les limites apparaîtront après votre première requête dans Codex
+102|Appareil
+103|Lecteur multimédia
+104|Nouvelle note
+105|Pause
+106|Longue pause
+107|Concentration
+108|Texte
+109|Limites
+110|Progression de la tâche
+111|Connexions des agents
+112|Actualiser
+113|Connecter
+114|Progression
+115|Connecter Claude Code ou Codex
+116|Non connecté
+117|Connectez Claude Code : l'île affichera les étapes et le statut et, avec votre accord, les limites de l'abonnement.
+118|Connectez Codex : l'île affichera la progression et les limites depuis les journaux Codex de cet ordinateur.
+119|Les limites apparaîtront après la première requête
+121|Travaille sur une tâche
+122|Attend votre réponse
+123|Libre
+124|Aucune tâche active
+125|Aucune donnée de limite
+126|Limite réinitialisée
+127|Mis à jour {0}
+128|En attente de données
+129|non connecté
+130|{0:0} % utilisés
+131|aucune donnée
+132|dimanche
+133|lundi
+134|mardi
+135|mercredi
+136|jeudi
+137|vendredi
+138|samedi
+139|Réinitialisation en cours
+140|Réinitialisation à {0}
+141|Réinitialisation demain à {0}
+142|Réinitialisation {0} à {1}
+143|Réinitialisation : {0}, {1}
+144|à l'instant
+145|il y a {0} min
+146|il y a {0} h
+147|Sessions : {0}
+148|Agents
+149|Les agents sont libres pour l'instant
+150|Les agents ne sont pas connectés
+151|Donnez une tâche à Claude Code ou Codex — les étapes, fichiers et statut apparaîtront ici.
+152|Connectez Claude Code ou Codex dans Paramètres → Agents, et l'île montrera l'avancement du travail.
+153|Attend une tâche
+154|Enregistrement…
+155|Lecture…
+156|Modifié
+157|Lu
+158|GÉNÉRAL
+159|Général
+160|Apparence
+161|SERVICES
+162|Médias
+163|Son et appareils
+164|PLUS
+165|Commandes
+166|À propos
+167|Fermer (Échap)
+168|Langue
+169|L'île va redémarrer pour appliquer la langue
+170|Déplier au survol
+171|Délai avant dépliage
+172| ms
+173|Replier après
+174|Molette — écarter l'île
+175|Un clic molette sur l'île la rend transparente et laisse passer les clics ; un autre clic au même endroit la fait revenir. Un appui long sur la molette la masque complètement (et la ramène de la même façon)
+176|Masquer dans les jeux et vidéos
+177|Quand une appli est en plein écran
+178|Masquer quand rien ne se passe
+179|Lancer avec Windows
+180|Win + / ouvre ces paramètres. Un clic droit sur l'île aussi. Tous les raccourcis sont dans « Commandes ».
+181|Son par appli
+182|Ouvrir
+183|AFFICHER DANS L'ÎLE
+184|Volume et luminosité
+185|Les changements s'affichent dans l'île et le curseur peut être glissé
+186|Casque Bluetooth
+187|Une bulle avec la batterie à la connexion et quand elle est faible
+188|Batterie du portable
+189|FORME
+190|Encoche
+191|Île
+192|FINITION
+193|Verre
+194|Noir
+195|Transparence du verre
+196|Contour fin
+197|Rend le bord de l'île visible sur les fonds d'écran sombres
+198|COULEUR D'ACCENT
+199|TAILLE ET MOUVEMENT
+200|Largeur
+201|Échelle
+202|Marge en haut (île)
+203|Vitesse d'animation
+204|L'accueil contient jusqu'à trois widgets côte à côte. Modifiez la disposition directement dans l'île : retirer avec le moins rouge, ajouter avec une icône en dessous.
+205|Sur l'accueil actuellement
+206|Modifier la disposition
+207|Tous les widgets sont aussi sur la page « Widgets » (l'icône grille sous l'île).
+208|Musique uniquement
+209|Le lecteur affiche les applis musicales (Spotify, Apple Music, Yandex Music, Deezer, TIDAL, AIMP, foobar2000…) et les sites musicaux dans le navigateur (SoundCloud, YouTube Music, Spotify Web, VK, Bandcamp…). YouTube, vidéos, appels et autres sons ne sont pas affichés
+210|Égaliseur
+211|Couleur de la pochette
+212|Sinon les barres sont blanches
+213|Afficher le nouveau titre
+214|L'île se déplie brièvement au changement de morceau
+215|Durée d'affichage
+216| s
+217|Paroles
+218|Paroles synchronisées de la base ouverte lrclib.net. Recherchées seulement quand vous ouvrez les paroles ; le titre, l'artiste et la durée du morceau y sont envoyés
+219|BOUTONS DU LECTEUR
+220|Aléatoire
+221|Répéter
+222|Les boutons se placent aux bords du lecteur. Certains lecteurs (souvent les navigateurs) ne les prennent pas en charge — ils sont alors inactifs.
+223|Afficher les limites Claude
+224|Les limites de 5 heures et hebdomadaire de l'abonnement, comme dans /usage. L'île utilise la connexion Claude Code de cet ordinateur et n'interroge api.anthropic.com qu'une fois toutes les 5 minutes ; le jeton n'est envoyé nulle part ailleurs ni enregistré.
+225|Afficher l'activité des agents
+226|Étapes, fichiers et statut dans l'île, et la bulle de l'agent à côté
+227|Claude Code : « Connecter » ajoute dans ~/.claude/settings.json des hooks HTTP vers 127.0.0.1:47318 (cet ordinateur uniquement). Codex : l'île lit les journaux de session dans ~/.codex/sessions et ajoute notify dans ~/.codex/config.toml pour savoir exactement quand un tour se termine. Une copie de sauvegarde est enregistrée à côté une fois avant toute modification ; « Déconnecter » ne retire que ce qui a été ajouté. L'île observe seulement et ne répond jamais aux demandes d'autorisation. Fonctionne dans les nouvelles sessions.
+228|Changer de page
+229|Défilement
+230|Boutons
+231|Les deux
+232|Position des boutons
+233|Sous l'île
+234|Onglets en haut
+235|Défilement : la molette ou un balayage à deux doigts sur l'île fait défiler Accueil → Plateau → Widgets, une page par geste.
+236|RACCOURCIS CLAVIER
+237|Une île pour Windows : musique, minuteurs, un plateau de fichiers et des widgets juste en haut de l'écran.
+238|Réinitialiser les paramètres
+239|Quitter SnowyNotch
+240|Version {0}.{1}.{2}
+241|Langue, dépliage, masquage et lancement de l'île
+242|Langue du système
+243|Forme, finition, couleur et taille de l'île
+244|Ce qui se trouve sur l'accueil de l'île
+245|Lecteur, paroles et sources considérées comme musique
+246|Volume des applis, HUD, casque et batterie
+247|Claude Code et Codex : progression et limites
+248|Comment changer de page et tous les raccourcis
+249|Version et réinitialisation
+250|Déconnecter
+251|Connecté — l'île reçoit les événements de Claude Code
+252|Non connecté
+253|Connecté — progression, fin de tour et limites
+254|Connecté — progression et limites depuis les journaux (notify est utilisé ailleurs, fin de tour détectée par pause)
+255|Connecté. ~/.codex/config.toml a déjà son propre notify — on n'y touche pas ; la fin de tour est détectée par pause.
+256|Connecté sans notify : impossible de modifier ~/.codex/config.toml ({0})
+257|Impossible de modifier ~/.claude/settings.json : {0}
+258|Le volume de chaque appli séparément. Ouvrir de n'importe où : {0}
+259|Le volume de chaque appli séparément. Le raccourci est pris par une autre appli — ouvrez-le via « Widgets »
+260|Indique le branchement du chargeur et avertit à 20 % et 10 %
+261|Aucune batterie trouvée — ce n'est pas un portable, ce réglage est inutile
+262|Ouvrir ou fermer les paramètres
+263|Son : volume des applis
+264|Clic droit sur l'île
+265|Clic molette sur l'île
+266|Rendre transparente / rétablir
+267|Molette au-dessus de l'île
+268|Faire défiler Accueil → Plateau → Widgets
+269|Notes : titre
+270|Notes : liste de tâches
+271|Notes : gras, italique, souligné
+272|Fermer le panneau ouvert
+273|Son
+274|Volume
+275|Aucune appli ne joue de son en ce moment
+276|Muet
+277|muet
+278|S
+279|Retour
+280|La recherche de paroles est désactivée
+281|Recherche des paroles…
+282|Première ligne de test
+283|La deuxième ligne est un peu plus longue que la première pour passer à la ligne
+284|Troisième — en cours
+285|Quatrième ligne
+286|Cinquième ligne
+287|Sixième ligne
+288|Paroles introuvables
+289|Replier la pochette
+290|Paroles
+291|Ouvrir la pochette
+292|Lancez Spotify, SoundCloud ou une autre musique
+293|Ouvrir {0}
+294|Notes
+295|Pas encore de notes
+296|Markdown, listes, listes de tâches — copiées en texte propre
+297|Nouvelle note
+298|Toutes les notes
+299|Copier en Markdown
+300|Supprimer la note
+301|Gras (Ctrl+B)
+302|Italique (Ctrl+I)
+303|Souligner (Ctrl+U)
+304|Barrer (Ctrl+Shift+X)
+305|Surligner (Ctrl+Shift+H)
+306|Couleur du texte
+307|Titre 1 (Ctrl+1)
+308|Titre 2 (Ctrl+2)
+309|Titre 3 (Ctrl+3)
+310|Liste
+311|Liste numérotée
+312|Liste de tâches (Ctrl+Shift+L)
+313|Citation
+314|Supprimer
+315|Hier
+316|Enregistré
+317|Chronomètre
+318|Réinitialiser
+319|Minuteur
+320|Pomodoro
+321|Pomodoros du cycle : une longue pause après le quatrième
+322|Démarrer
+323|Étape suivante
+324|Pause
+325|Reprendre
+326|Pomodoro {0} sur {1} · 25 min
+327|5 min de pause, puis concentration
+328|Cycle terminé · 15 min de pause
+329|Réinitialiser l'étape
+330|Recommencer le cycle
+331|Musique
+332|Horloge
+333|Système
+334|La semaine est allée à : {0}

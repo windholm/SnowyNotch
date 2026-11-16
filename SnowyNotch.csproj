@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>SnowyNotch</RootNamespace>
+    <AssemblyName>SnowyNotch</AssemblyName>
+    <Version>0.3.0</Version>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\SnowyNotch.ico</ApplicationIcon>
+    <NoWarn>$(NoWarn);WFAC010</NoWarn>
+    <!-- Остров живёт в фоне весь день: экономный GC вместо фонового (меньше потоков и резерва памяти). -->
+    <ConcurrentGarbageCollection>false</ConcurrentGarbageCollection>
+    <TieredPGO>true</TieredPGO>
+    <!-- WinForms по умолчанию разрешает небезопасный BinaryFormatter; острову он не нужен
+         (трей и буфер обмена — стандартные форматы: список файлов, текст). -->
+    <EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\SnowyNotch.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Плотнее сжимать кучу ради меньшего расхода памяти (0–9, 5 — умеренно). -->
+    <RuntimeHostConfigurationOption Include="System.GC.ConserveMemory" Value="5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Переводы интерфейса: keys.txt (русские исходники) и по файлу на язык -->
+    <EmbeddedResource Include="Localization\*.txt" LogicalName="SnowyNotch.Localization.%(Filename).txt" WithCulture="false" />
+  </ItemGroup>
+
+</Project>

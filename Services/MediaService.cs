@@ -1,0 +1,490 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+using Windows.Foundation;
+using Windows.Media;
+using Windows.Media.Control;
+using Windows.Storage.Streams;
+
+namespace SnowyNotch.Services;
+
+using Session = GlobalSystemMediaTransportControlsSession;
+using PlaybackStatus = GlobalSystemMediaTransportControlsSessionPlaybackStatus;
+
+public sealed record MediaSnapshot(
+    string Title,
+    string Artist,
+    BitmapSource? Artwork,
+    Color Accent,
+    bool IsPlaying,
+    TimeSpan Position,
+    DateTimeOffset PositionAt,
+    TimeSpan Duration,
+    string SourceAppId,
+    bool CanShuffle,
+    bool IsShuffle,
+    bool CanRepeat,
+    MediaPlaybackAutoRepeatMode Repeat,
+    string SourceName = "")
+{
+    public TimeSpan CurrentPosition
+    {
+        get
+        {
+            var p = IsPlaying ? Position + (DateTimeOffset.Now - PositionAt) : Position;
+            if (p < TimeSpan.Zero) p = TimeSpan.Zero;
+            if (Duration > TimeSpan.Zero && p > Duration) p = Duration;
+            return p;
+        }
+    }
+}
+
+public sealed class MediaService : IDisposable
+{
+    private readonly Dispatcher _ui;
+    private readonly TypedEventHandler<Session, MediaPropertiesChangedEventArgs> _onProps;
+    private readonly TypedEventHandler<Session, PlaybackInfoChangedEventArgs> _onPlayback;
+    private readonly TypedEventHandler<Session, TimelinePropertiesChangedEventArgs> _onTimeline;
+
+    private GlobalSystemMediaTransportControlsSessionManager? _manager;
+    private Session? _session;
+    private int _propsVersion;
+
+    private string _title = "", _artist = "";
+    private BitmapSource? _art;
+    private Color _accent = ColorExtractor.Fallback;
+    private bool _playing;
+    private bool _canShuffle, _shuffle, _canRepeat;
+    private MediaPlaybackAutoRepeatMode _repeat;
+    private TimeSpan _pos, _dur;
+    private DateTimeOffset _posAt = DateTimeOffset.Now;
+
+    // Часы трека. Приложения шлют позицию редко (Spotify — раз в ~4.5 с), а событие TimelinePropertiesChanged
+    // приходит не всегда (смена трека, возобновление). Поэтому таймлайн опрашивается сам, а новое значение
+    // принимается, только когда приложение действительно прислало другую пару «позиция + время замера».
+    private readonly DispatcherTimer _sync = new() { Interval = TimeSpan.FromMilliseconds(400) };
+    private (TimeSpan Pos, DateTimeOffset At, TimeSpan End) _lastTimeline;
+    private DateTimeOffset _playSince = DateTimeOffset.UnixEpoch;
+    // Только музыка: решения «музыка или нет» по каждому треку и периодическая перепроверка
+    // (в браузере SoundCloud может смениться YouTube в той же медиасессии).
+    private readonly Dictionary<string, bool> _verdicts = new();
+    private readonly DispatcherTimer _rescan = new() { Interval = TimeSpan.FromSeconds(2) };
+    private bool _musicOnly = true;
+    private bool _selecting, _selectAgain;
+
+    public MediaService(Dispatcher ui)
+    {
+        _ui = ui;
+        _onProps = (_, _) => OnUi(ReadPropertiesAsync);
+        _onPlayback = (_, _) => OnUi(() => { ReadPlayback(); SelectSession(); Publish(); return Task.CompletedTask; });
+        _onTimeline = (_, _) => OnUi(() => { ReadTimeline(force: true); Publish(); return Task.CompletedTask; });
+        _rescan.Tick += (_, _) => { if (_musicOnly) SelectSession(); };
+        _sync.Tick += (_, _) => { if (ReadTimeline()) Publish(); };
+    }
+
+    public event Action<MediaSnapshot?>? Changed;
+
+    private bool _positionPolling;
+
+    /// <summary>
+    /// Опрашивать позицию трека, только пока её кто-то показывает (раскрытый остров: прогресс, текст песни).
+    /// События плеера приходят и без опроса; при включении позиция сразу перечитывается.
+    /// </summary>
+    public bool PositionPolling
+    {
+        get => _positionPolling;
+        set
+        {
+            if (value == _positionPolling) return;
+            _positionPolling = value;
+            if (value && _session != null)
+            {
+                // Не публиковать прямо отсюда: сеттер вызывают посреди смены состояния острова.
+                OnUi(() => { if (_positionPolling && ReadTimeline(force: true)) Publish(); return Task.CompletedTask; });
+                _sync.Start();
+            }
+            else _sync.Stop();
+        }
+    }
+
+    public MediaSnapshot? Current { get; private set; }
+
+    /// <summary>Показывать только музыку (музыкальные приложения и музыкальные сайты), а не любой звук.</summary>
+    public bool MusicOnly
+    {
+        get => _musicOnly;
+        set
+        {
+            if (_musicOnly == value) return;
+            _musicOnly = value;
+            SelectSession();
+        }
+    }
+
+    public async Task StartAsync()
+    {
+        _manager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
+        _manager.CurrentSessionChanged += (_, _) => OnUi(() => { SelectSession(); return Task.CompletedTask; });
+        _manager.SessionsChanged += (_, _) => OnUi(() => { SelectSession(); return Task.CompletedTask; });
+        _rescan.Start();
+        SelectSession();
+    }
+
+    public Task TogglePlayPauseAsync() => Try(s => s.TryTogglePlayPauseAsync().AsTask());
+    public Task NextAsync() => Try(s => s.TrySkipNextAsync().AsTask());
+    public Task PreviousAsync() => Try(s => s.TrySkipPreviousAsync().AsTask());
+
+    public Task ToggleShuffleAsync() => Try(s => s.TryChangeShuffleActiveAsync(!_shuffle).AsTask());
+
+    public Task CycleRepeatAsync()
+    {
+        var next = _repeat switch
+        {
+            MediaPlaybackAutoRepeatMode.None => MediaPlaybackAutoRepeatMode.List,
+            MediaPlaybackAutoRepeatMode.List => MediaPlaybackAutoRepeatMode.Track,
+            _ => MediaPlaybackAutoRepeatMode.None,
+        };
+        return Try(s => s.TryChangeAutoRepeatModeAsync(next).AsTask());
+    }
+
+    public Task SeekAsync(TimeSpan position)
+    {
+        _pos = position;
+        _posAt = DateTimeOffset.Now;
+        Publish();
+        return Try(s => s.TryChangePlaybackPositionAsync(position.Ticks).AsTask());
+    }
+
+    private async Task Try(Func<Session, Task> action)
+    {
+        var s = _session;
+        if (s == null) return;
+        try { await action(s); }
+        catch (Exception ex) { Debug.WriteLine($"[media] control failed: {ex.Message}"); }
+    }
+
+    private void SelectSession()
+    {
+        if (_selecting) { _selectAgain = true; return; }
+        OnUi(SelectSessionAsync);
+    }
+
+    private async Task SelectSessionAsync()
+    {
+        if (_manager == null || _selecting) return;
+        _selecting = true;
+        try
+        {
+            do
+            {
+                _selectAgain = false;
+                var sessions = _manager.GetSessions().ToList();
+                var current = _manager.GetCurrentSession();
+
+                var allowed = new List<Session>();
+                foreach (var s in sessions)
+                    if (await IsAllowedAsync(s)) allowed.Add(s);
+
+                bool Allowed(Session? s) => s != null && allowed.Any(a => a.SourceAppUserModelId == s.SourceAppUserModelId);
+                var playing = allowed.FirstOrDefault(IsPlayingSession);
+                Session? chosen;
+                if (current != null && Allowed(current) && IsPlayingSession(current)) chosen = current;
+                else if (playing != null) chosen = playing;
+                // Ничего не играет — остаёмся на текущей музыке (пауза), если она всё ещё подходит.
+                else if (Allowed(_session)) chosen = allowed.First(a => a.SourceAppUserModelId == _session!.SourceAppUserModelId);
+                else chosen = Allowed(current) ? current : allowed.FirstOrDefault();
+
+                if (chosen?.SourceAppUserModelId == _session?.SourceAppUserModelId && (chosen == null) == (_session == null))
+                    continue;
+                Attach(chosen);
+            }
+            while (_selectAgain);
+        }
+        finally
+        {
+            _selecting = false;
+        }
+    }
+
+    /// <summary>Подходит ли сессия: при «только музыка» — музыкальное приложение или музыкальный сайт.</summary>
+    private async Task<bool> IsAllowedAsync(Session s)
+    {
+        if (!_musicOnly) return true;
+        string app = s.SourceAppUserModelId ?? "";
+        var kind = MusicSources.Classify(app);
+        if (kind == MusicSources.Kind.Video) return false;
+
+        bool videoType = false, musicType = false;
+        try
+        {
+            var type = s.GetPlaybackInfo()?.PlaybackType;
+            videoType = type == MediaPlaybackType.Video;
+            musicType = type == MediaPlaybackType.Music;
+        }
+        catch { }
+        if (kind == MusicSources.Kind.Music) return !videoType;
+
+        try
+        {
+            var props = await s.TryGetMediaPropertiesAsync();
+            string title = props?.Title ?? "", artist = props?.Artist ?? "", album = props?.AlbumTitle ?? "";
+            if (title.Length == 0) return false;
+            string key = $"{app}\u0001{title}\u0001{artist}\u0001{album}\u0001{videoType}";
+            if (_verdicts.TryGetValue(key, out bool known)) return known;
+
+            double? aspect = null;
+            if (artist.Length > 0 && album.Length == 0 && props?.Thumbnail != null)
+            {
+                var art = await LoadThumbnailAsync(props.Thumbnail);
+                if (art != null && art.PixelHeight > 0) aspect = art.PixelWidth / (double)art.PixelHeight;
+            }
+            bool verdict = MusicSources.IsMusic(kind, videoType, musicType, artist, album, aspect);
+            if (_verdicts.Count > 300) _verdicts.Clear();
+            _verdicts[key] = verdict;
+            return verdict;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[media] classify failed: {ex.Message}");
+            return false;
+        }
+    }
+
+    private static bool IsPlayingSession(Session s)
+    {
+        try { return s.GetPlaybackInfo()?.PlaybackStatus == PlaybackStatus.Playing; }
+        catch { return false; }
+    }
+
+    private void Attach(Session? session)
+    {
+        if (_session != null)
+        {
+            _session.MediaPropertiesChanged -= _onProps;
+            _session.PlaybackInfoChanged -= _onPlayback;
+            _session.TimelinePropertiesChanged -= _onTimeline;
+        }
+
+        _session = session;
+        _propsVersion++;
+        _title = _artist = "";
+        _art = null;
+        _accent = ColorExtractor.Fallback;
+        _playing = false;
+        _pos = _dur = TimeSpan.Zero;
+        _posAt = DateTimeOffset.Now;
+        _lastTimeline = default;
+        _playSince = DateTimeOffset.UnixEpoch;
+
+        if (session == null)
+        {
+            _sync.Stop();
+            Publish();
+            return;
+        }
+
+        session.MediaPropertiesChanged += _onProps;
+        session.PlaybackInfoChanged += _onPlayback;
+        session.TimelinePropertiesChanged += _onTimeline;
+
+        ReadPlayback(initial: true);
+        ReadTimeline(force: true);
+        if (_positionPolling) _sync.Start();
+        OnUi(ReadPropertiesAsync);
+    }
+
+    private async Task ReadPropertiesAsync()
+    {
+        var s = _session;
+        if (s == null) return;
+        int version = ++_propsVersion;
+
+        var props = await s.TryGetMediaPropertiesAsync();
+        if (version != _propsVersion || s != _session) return;
+
+        string title = props?.Title ?? "";
+        string artist = props?.Artist ?? "";
+        if (string.IsNullOrWhiteSpace(artist)) artist = props?.AlbumArtist ?? "";
+
+        bool trackChanged = title != _title || artist != _artist;
+        _title = title;
+        _artist = artist;
+        if (trackChanged)
+        {
+            _art = null;
+            _accent = ColorExtractor.Fallback;
+            Publish();
+            // Новый трек в браузере может оказаться видео — перепроверяем, подходит ли сессия.
+            if (_musicOnly && MusicSources.Classify(s.SourceAppUserModelId ?? "") != MusicSources.Kind.Music) SelectSession();
+        }
+
+        if (props?.Thumbnail != null)
+        {
+            var art = await LoadThumbnailAsync(props.Thumbnail);
+            if (version != _propsVersion || s != _session) return;
+            if (art != null)
+            {
+                _art = art;
+                _accent = ColorExtractor.GetAccent(art);
+            }
+        }
+
+        Publish();
+    }
+
+    private void ReadPlayback(bool initial = false)
+    {
+        if (_session == null) return;
+        bool playing;
+        try
+        {
+            var info = _session.GetPlaybackInfo();
+            playing = info?.PlaybackStatus == PlaybackStatus.Playing;
+            _canShuffle = info?.Controls?.IsShuffleEnabled == true;
+            _canRepeat = info?.Controls?.IsRepeatEnabled == true;
+            _shuffle = info?.IsShuffleActive == true;
+            _repeat = info?.AutoRepeatMode ?? MediaPlaybackAutoRepeatMode.None;
+        }
+        catch { return; }
+
+        if (playing == _playing) return;
+        var now = DateTimeOffset.Now;
+        if (!playing) _pos = Extrapolate(now);
+        _posAt = now;
+        _playing = playing;
+        // Первое чтение после подключения — это не «запуск»: трек уже шёл, замеру приложения можно верить.
+        if (playing && !initial)
+        {
+            _playSince = now;
+            // Приложение могло прислать свежую позицию ещё до события о воспроизведении — применяем её сразу.
+            ReadTimeline(force: true);
+        }
+    }
+
+    /// <summary>Считать таймлайн. Без <paramref name="force"/> — только если приложение прислало новый замер.</summary>
+    private bool ReadTimeline(bool force = false)
+    {
+        if (_session == null) return false;
+        try
+        {
+            var tl = _session.GetTimelineProperties();
+            if (tl == null) return false;
+            var sample = (Pos: tl.Position - tl.StartTime, At: tl.LastUpdatedTime, End: tl.EndTime - tl.StartTime);
+            if (!force && sample == _lastTimeline) return false;
+            _lastTimeline = sample;
+
+            var now = DateTimeOffset.Now;
+            _dur = sample.End;
+            _pos = sample.Pos;
+            var at = sample.At;
+            if (at.Year < 2000 || at > now) at = now;
+            // Замер сделан ещё на паузе: с тех пор трек шёл только с момента запуска, а не с момента замера.
+            if (at < _playSince - TimeSpan.FromMilliseconds(150)) at = _playSince;
+            _posAt = _playing ? at : now;
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[media] timeline failed: {ex.Message}");
+            return false;
+        }
+    }
+
+    private TimeSpan Extrapolate(DateTimeOffset now) =>
+        _playing ? _pos + (now - _posAt) : _pos;
+
+    private static async Task<BitmapSource?> LoadThumbnailAsync(IRandomAccessStreamReference reference)
+    {
+        try
+        {
+            using var ras = await reference.OpenReadAsync();
+            using var stream = ras.AsStreamForRead();
+            var ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+            ms.Position = 0;
+
+            var bmp = new BitmapImage();
+            bmp.BeginInit();
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.DecodePixelWidth = 160;
+            bmp.StreamSource = ms;
+            bmp.EndInit();
+            bmp.Freeze();
+            return bmp;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[media] thumbnail failed: {ex.Message}");
+            return null;
+        }
+    }
+
+    private void Publish()
+    {
+        Current = _session == null || string.IsNullOrWhiteSpace(_title)
+            ? null
+            : new MediaSnapshot(_title, _artist, _art, _accent, _playing, _pos, _posAt, _dur,
+                _session.SourceAppUserModelId ?? "", _canShuffle, _shuffle, _canRepeat, _repeat,
+                MusicSources.AppName(_session.SourceAppUserModelId ?? "") ?? "");
+        Changed?.Invoke(Current);
+    }
+
+    private void OnUi(Func<Task> work) =>
+        _ui.InvokeAsync(async () =>
+        {
+            try { await work(); }
+            catch (Exception ex) { Debug.WriteLine($"[media] {ex}"); }
+        });
+
+    /// <summary>Вывести музыкальное приложение-источник на передний план (браузер не трогаем: вкладку не найти).</summary>
+    public void OpenSource()
+    {
+        string app = _session?.SourceAppUserModelId ?? "";
+        if (MusicSources.Classify(app) != MusicSources.Kind.Music) return;
+        // AUMID задаёт само приложение-источник; в командную строку explorer попадают только безопасные символы.
+        if (!System.Text.RegularExpressions.Regex.IsMatch(app, @"^[A-Za-z0-9._!\-]+$")) return;
+        try
+        {
+            if (app.Contains("spotify", StringComparison.OrdinalIgnoreCase))
+            {
+                // spotify: открывает Spotify или разворачивает уже запущенный (в том числе из трея).
+                Process.Start(new ProcessStartInfo("spotify:") { UseShellExecute = true });
+                return;
+            }
+            string exe = Path.GetFileNameWithoutExtension(app.Split('!')[0]);
+            var proc = Process.GetProcessesByName(exe).FirstOrDefault(p => p.MainWindowHandle != IntPtr.Zero);
+            if (proc != null)
+            {
+                ShowWindow(proc.MainWindowHandle, 9 /* SW_RESTORE */);
+                SetForegroundWindow(proc.MainWindowHandle);
+            }
+            else if (app.Contains('!'))
+            {
+                Process.Start(new ProcessStartInfo("explorer.exe", $"shell:AppsFolder\\{app}") { UseShellExecute = true });
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[media] open source failed: {ex.Message}");
+        }
+    }
+
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+    public void Dispose()
+    {
+        _rescan.Stop();
+        _sync.Stop();
+        Attach(null);
+    }
+}
