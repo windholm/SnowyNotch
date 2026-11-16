@@ -1,0 +1,335 @@
+001|Instellingen        Win + /
+002|Eiland tonen
+003|Afsluiten
+004|Verbonden
+005|Batterij bijna leeg
+006|Opladen
+007|Op batterij
+008|Geluid aan
+009|Dempen
+010|Batterij wordt opgeladen
+011|Sluit de oplader aan
+012|Laptop werkt op de batterij
+013|Batterij koptelefoon
+014|Verbonden
+015|{0} van {1}
+016|Selectie verwijderen
+017|Lade leegmaken
+018|Klaar
+019|Bestanden selecteren
+020|Bestand gekopieerd
+021|Gekopieerd: {0}
+022|Klik om de bestanden te kopiëren, sleep om ze in één keer te verplaatsen
+023|Widgets toevoegen
+024|Home is leeg
+025|Muziek, klok, timer — wat je maar wilt
+026|Verwijderen
+027|Er speelt niets
+028|{0} (gepauzeerd) · {1}
+029|Loopt · {0}
+030|Gepauzeerd · {0}
+031|Gereed
+032|Volume · {0}
+033|App-volume
+034|Leeg
+035|bezig
+036|{0} wacht op je
+037|{0} · klaar
+038| gebruikt
+039|Claude en Codex wachten op een taak
+040|Claude wacht op een taak
+041|Codex wacht op een taak
+042|Niet verbonden
+043|Op Home passen {0} widgets
+044|Aan Home toevoegen
+045|Alle widgets staan al op Home
+046|Koptelefoon (demo)
+047|Uit de lade verwijderen
+048|Home
+049|Lade
+050|Widgets
+051|Instellingen (Win + /)
+052|Annuleren
+053|Bestanden
+054|Zet bestanden hier neer
+055|Loslaten om toe te voegen
+056|Home bewerken
+057|Terug naar services
+058|Welkom bij SnowyNotch!
+059|Beweeg over het eiland, zet er een bestand op of druk op Win + /
+060|Aan de slag
+061|Instellingen
+062|Services
+063|{0} u
+064|Wacht op je
+065|Heeft je toestemming nodig
+066|Leest {0}
+067|Bewerkt {0}
+068|Maakt {0}
+069|Opdracht: {0}
+070|Zoekt “{0}”
+071|Zoekt bestanden {0}
+072|Opent {0}
+073|Zoekt op het web naar “{0}”
+074|Start een helper
+075|Werkt het plan bij
+076|Tool {0}
+077|Systeemgeluiden
+078|Claude-limieten staan uit
+079|Log in bij Claude Code (claude → /login)
+080|Claude Code-login is verlopen — open Claude Code om die te vernieuwen
+081|Claude weigerde de toegang — open Claude Code om opnieuw in te loggen
+082|Kon de limieten niet ophalen ({0})
+083|Limieten zijn niet beschikbaar voor dit abonnement
+084|Claude is niet bereikbaar
+085|Deze week
+086|Huidige sessie
+087|Limiet
+088|Gestopt
+089|Zoekt op het web
+090|Bekijkt een afbeelding
+091|Bezig
+092|Opdracht
+093|Leest een bestand
+094|Bladert door bestanden
+095|Voert {0} uit
+096|bestanden
+097|Maakt
+098|Bewerkt
+099|{0} {1} en nog {2}
+100|Codex is nog niet gestart
+101|Limieten verschijnen na je eerste Codex-verzoek
+102|Apparaat
+103|Mediaspeler
+104|Nieuwe notitie
+105|Pauze
+106|Lange pauze
+107|Focus
+108|Songtekst
+109|Limieten
+110|Voortgang van de taak
+111|Agentverbindingen
+112|Vernieuwen
+113|Verbinden
+114|Voortgang
+115|Verbind Claude Code of Codex
+116|Niet verbonden
+117|Verbind Claude Code: het eiland toont stappen en status en, met je toestemming, je abonnementslimieten.
+118|Verbind Codex: het eiland toont voortgang en limieten uit de Codex-logs op deze computer.
+119|Limieten verschijnen na het eerste verzoek
+121|Werkt aan een taak
+122|Wacht op je antwoord
+123|Inactief
+124|Geen actieve taken
+125|Geen limietgegevens
+126|Limiet gereset
+127|Bijgewerkt {0}
+128|Wacht op gegevens
+129|niet verbonden
+130|{0:0}% gebruikt
+131|geen gegevens
+132|op zondag
+133|op maandag
+134|op dinsdag
+135|op woensdag
+136|op donderdag
+137|op vrijdag
+138|op zaterdag
+139|Wordt gereset
+140|Reset om {0}
+141|Reset morgen om {0}
+142|Reset {0} om {1}
+143|Reset: {0}, {1}
+144|zojuist
+145|{0} min geleden
+146|{0} u geleden
+147|Sessies: {0}
+148|Agents
+149|Agents zijn even inactief
+150|Agents zijn niet verbonden
+151|Geef Claude Code of Codex een taak — stappen, bestanden en status verschijnen hier.
+152|Verbind Claude Code of Codex in Instellingen → Agents en het eiland laat zien hoe het werk vordert.
+153|Wacht op een taak
+154|Opslaan…
+155|Lezen…
+156|Bewerkt
+157|Gelezen
+158|ALGEMEEN
+159|Algemeen
+160|Uiterlijk
+161|SERVICES
+162|Media
+163|Geluid en apparaten
+164|MEER
+165|Bediening
+166|Over
+167|Sluiten (Esc)
+168|Taal
+169|Het eiland start opnieuw om de taal toe te passen
+170|Uitklappen bij aanwijzen
+171|Vertraging uitklappen
+172| ms
+173|Inklappen na
+174|Muiswiel — het eiland uit de weg halen
+175|Klik met het muiswiel op het eiland om het doorzichtig te maken en klikken door te laten; klik nogmaals met het wiel op dezelfde plek om het terug te halen. Houd het wiel lang ingedrukt om het helemaal te verbergen (en op dezelfde manier terug te halen)
+176|Verbergen in games en video's
+177|Als een app schermvullend is
+178|Verbergen als er niets gebeurt
+179|Starten met Windows
+180|Win + / opent deze instellingen. Rechtsklikken op het eiland ook. Alle sneltoetsen staan onder “Bediening”.
+181|Geluid per app
+182|Openen
+183|TONEN IN HET EILAND
+184|Volume en helderheid
+185|Wijzigingen verschijnen in het eiland en je kunt de schuifregelaar slepen
+186|Bluetooth-koptelefoon
+187|Een batterijbel bij verbinden en bij een bijna lege batterij
+188|Laptopbatterij
+189|VORM
+190|Notch
+191|Eiland
+192|AFWERKING
+193|Glas
+194|Zwart
+195|Glastransparantie
+196|Dunne rand
+197|Toont de rand van het eiland op donkere achtergronden
+198|ACCENTKLEUR
+199|GROOTTE EN BEWEGING
+200|Breedte
+201|Schaal
+202|Afstand tot boven (eiland)
+203|Animatiesnelheid
+204|Home bevat tot drie widgets naast elkaar. Wijzig de indeling direct in het eiland: verwijder met de rode min, voeg toe met een pictogram eronder.
+205|Nu op Home
+206|Indeling wijzigen
+207|Alle widgets staan ook op de pagina “Widgets” (het rasterpictogram onder het eiland).
+208|Alleen muziek
+209|De speler toont muziek-apps (Spotify, Apple Music, Yandex Music, Deezer, TIDAL, AIMP, foobar2000…) en muzieksites in de browser (SoundCloud, YouTube Music, Spotify Web, VK, Bandcamp…). YouTube, video's, gesprekken en ander geluid worden niet getoond
+210|Equalizer
+211|Kleur uit de albumhoes
+212|Anders zijn de balkjes wit
+213|Nieuw nummer tonen
+214|Het eiland klapt kort uit als het nummer wisselt
+215|Tonen gedurende
+216| s
+217|Songteksten
+218|Gesynchroniseerde teksten uit de open database lrclib.net. Er wordt alleen gezocht als je de tekst opent; titel, artiest en lengte van het nummer worden daarheen gestuurd
+219|SPELERKNOPPEN
+220|Shuffle
+221|Herhalen
+222|De knoppen staan aan de randen van de speler. Sommige spelers (vaak browsers) ondersteunen ze niet — dan zijn ze inactief.
+223|Claude-limieten tonen
+224|De 5-uurs- en weeklimieten van je abonnement, zoals in /usage. Het eiland gebruikt de Claude Code-login op deze computer en vraagt api.anthropic.com maar eens per 5 minuten; het token wordt nergens anders heen gestuurd en niet opgeslagen.
+225|Agentactiviteit tonen
+226|Stappen, bestanden en status in het eiland, met de agentbel ernaast
+227|Claude Code: “Verbinden” voegt HTTP-hooks naar 127.0.0.1:47318 (alleen deze computer) toe aan ~/.claude/settings.json. Codex: het eiland leest de sessielogs in ~/.codex/sessions en voegt notify toe aan ~/.codex/config.toml om precies te weten wanneer een beurt eindigt. Vóór de wijziging wordt één keer een reservekopie naast de bestanden opgeslagen; “Verbreken” verwijdert alleen wat het heeft toegevoegd. Het eiland kijkt alleen mee en beantwoordt nooit toestemmingsverzoeken. Werkt in nieuwe sessies.
+228|Pagina's wisselen
+229|Scrollen
+230|Knoppen
+231|Beide
+232|Positie van de knoppen
+233|Onder het eiland
+234|Tabbladen bovenaan
+235|Scrollen: het muiswiel of een veeg met twee vingers over het eiland bladert Home → Lade → Widgets, één pagina per gebaar.
+236|SNELTOETSEN
+237|Een eiland voor Windows: muziek, timers, een bestandslade en widgets direct aan de bovenrand van het scherm.
+238|Instellingen resetten
+239|SnowyNotch afsluiten
+240|Versie {0}.{1}.{2}
+241|Taal, uitklappen, verbergen en starten van het eiland
+242|Systeemstandaard
+243|Vorm, afwerking, kleur en grootte van het eiland
+244|Wat er op de Home-pagina van het eiland staat
+245|Speler, songteksten en welke bronnen als muziek tellen
+246|App-volume, HUD, koptelefoon en batterij
+247|Claude Code en Codex: voortgang en limieten
+248|Hoe je bladert en alle sneltoetsen
+249|Versie en instellingen resetten
+250|Verbreken
+251|Verbonden — het eiland ontvangt Claude Code-gebeurtenissen
+252|Niet verbonden
+253|Verbonden — voortgang, einde van de beurt en limieten
+254|Verbonden — voortgang en limieten uit de logs (notify wordt door iets anders gebruikt, einde van de beurt wordt herkend aan een pauze)
+255|Verbonden. ~/.codex/config.toml heeft al een eigen notify — die laten we met rust; einde van de beurt wordt herkend aan een pauze.
+256|Verbonden zonder notify: kon ~/.codex/config.toml niet wijzigen ({0})
+257|Kon ~/.claude/settings.json niet wijzigen: {0}
+258|Volume voor elke app apart. Overal te openen: {0}
+259|Volume voor elke app apart. De sneltoets is bezet door een andere app — open het via “Widgets”
+260|Verschijnt als de oplader wordt aangesloten en waarschuwt bij 20 % en 10 %
+261|Geen batterij gevonden — dit is geen laptop, dus je hebt dit niet nodig
+262|Instellingen openen of sluiten
+263|Geluid: app-volume
+264|Rechtsklik op het eiland
+265|Wielklik op het eiland
+266|Doorzichtig maken / terugzetten
+267|Muiswiel boven het eiland
+268|Bladeren Home → Lade → Widgets
+269|Notities: kop
+270|Notities: checklist
+271|Notities: vet, cursief, onderstreept
+272|Het open paneel sluiten
+273|Geluid
+274|Volume
+275|Er speelt nu geen app geluid af
+276|Dempen
+277|gedempt
+278|W
+279|Terug
+280|Zoeken naar songteksten staat uit
+281|Songtekst zoeken…
+282|Eerste regel om te testen
+283|De tweede regel is iets langer dan de eerste, zodat hij afbreekt
+284|Derde — speelt nu
+285|Vierde regel
+286|Vijfde regel
+287|Zesde regel
+288|Songtekst niet gevonden
+289|Albumhoes inklappen
+290|Songtekst
+291|Albumhoes openen
+292|Speel muziek af in Spotify, SoundCloud of een andere app
+293|{0} openen
+294|Notities
+295|Nog geen notities
+296|Markdown, lijsten, checklists — gekopieerd als nette tekst
+297|Nieuwe notitie
+298|Alle notities
+299|Kopiëren als Markdown
+300|Notitie verwijderen
+301|Vet (Ctrl+B)
+302|Cursief (Ctrl+I)
+303|Onderstrepen (Ctrl+U)
+304|Doorhalen (Ctrl+Shift+X)
+305|Markeren (Ctrl+Shift+H)
+306|Tekstkleur
+307|Kop 1 (Ctrl+1)
+308|Kop 2 (Ctrl+2)
+309|Kop 3 (Ctrl+3)
+310|Lijst
+311|Genummerde lijst
+312|Checklist (Ctrl+Shift+L)
+313|Citaat
+314|Verwijderen
+315|Gisteren
+316|Opgeslagen
+317|Stopwatch
+318|Resetten
+319|Timer
+320|Pomodoro
+321|Pomodoro's per cyclus: een lange pauze na de vierde
+322|Start
+323|Volgende fase
+324|Pauze
+325|Hervatten
+326|Pomodoro {0} van {1} · 25 min
+327|5 min pauze, daarna focus
+328|Cyclus voltooid · 15 min pauze
+329|Fase resetten
+330|Cyclus opnieuw starten
+331|Muziek
+332|Klok
+333|Systeem
+334|Deze week ging naar: {0}
+335|Tonen waar het vandaan speelt
+336|Spotify, SoundCloud, browser — naast de artiest. Klik erop om de app te openen

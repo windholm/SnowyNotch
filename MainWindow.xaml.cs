@@ -272,7 +272,8 @@ public partial class MainWindow : Window
         _leaveDelay.Interval = TimeSpan.FromMilliseconds(_settings.CollapseDelayMs);
 
         if (all || changed is nameof(AppSettings.ShowVisualizer) or nameof(AppSettings.AccentFromArtwork)
-                 or nameof(AppSettings.ShowShuffleButton) or nameof(AppSettings.ShowRepeatButton) or nameof(AppSettings.LyricsEnabled))
+                 or nameof(AppSettings.ShowShuffleButton) or nameof(AppSettings.ShowRepeatButton) or nameof(AppSettings.LyricsEnabled)
+                 or nameof(AppSettings.ShowSource))
         {
             CompactBars.Visibility = _settings.ShowVisualizer ? Visibility.Visible : Visibility.Collapsed;
             ApplyCompactAccent();

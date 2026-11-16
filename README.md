@@ -67,7 +67,7 @@ Want it every time you turn on the PC? Put the exe in a permanent folder (for ex
 - **Your home row**: by default it shows music only. Add up to 3 widgets side by side via **Widgets → Edit Home**.
 - **File tray**: drop files onto the island to keep them handy, then drag them out wherever you need them.
 - **Looks**: notch or floating island, glass or solid black, 12 accent colors, adjustable size and speed.
-- **10 languages**: English, Русский, Українська, Deutsch, Français, Español, Italiano, Polski, Português, Svenska.
+- **18 languages**: English, 简体中文, 日本語, Deutsch, Français, Español, Italiano, Português, Nederlands, Polski, Čeština, Türkçe, Svenska, Norsk, Dansk, Suomi, Українська, Русский. Picked automatically from your Windows language, or choose in Settings → General.
 
 ## Controls
 
@@ -90,6 +90,9 @@ The exe isn't signed with a paid certificate, so SmartScreen doesn't know it yet
 
 **Does it use the internet?**
 Only to look up song lyrics on [lrclib.net](https://lrclib.net) (can be turned off in Settings → Media). AI usage limits are fetched only if you turn that on yourself.
+
+**Can I hide "Spotify" / "SoundCloud" next to the artist name?**
+Yes: turn off **Settings → Media → Show where it's playing from**. Turn it back on the same way.
 
 **Where are my settings and notes?**
 In `%AppData%\SnowyNotch`. Paste that into the Explorer address bar to open it.

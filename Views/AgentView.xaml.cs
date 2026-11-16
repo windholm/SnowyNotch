@@ -365,7 +365,7 @@ public partial class AgentView : UserControl
         if (local.Date == today) return L.F("Сброс в {0}", time);
         if (local.Date == today.AddDays(1)) return L.F("Сброс завтра в {0}", time);
         if (local.Date < today.AddDays(7)) return L.F("Сброс {0} в {1}", OnDay[(int)local.DayOfWeek], time);
-        return L.F("Сброс: {0}, {1}", local.ToString("d MMMM", Ru), time);
+        return L.F("Сброс: {0}, {1}", L.MonthDay(local), time);
     }
 
     private static string Ago(DateTime atUtc)

@@ -135,7 +135,7 @@ public partial class NotesWidget : UserControl, IBackNavigable
         if (t.Date == d) return t.ToString("HH:mm", Ru);
         if (t.Date == d.AddDays(-1)) return L.T("Вчера");
         if (t > d.AddDays(-7)) return Ru.TextInfo.ToTitleCase(t.ToString("dddd", Ru));
-        return t.ToString("d MMM", Ru);
+        return L.MonthDay(t, shortMonth: true);
     }
 
     private static void Collapse(FrameworkElement row, Action done)

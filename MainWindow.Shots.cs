@@ -72,6 +72,8 @@ public partial class MainWindow
             files.Add(DemoFiles(Path.Combine(dir, "_files"), cover));
             await Take("tray", () => DebugPreview("tray"));
             await Take("settings", () => DebugPreview("look"));
+            await Take("settings-general", () => { EnsureSettingsView().ShowSection("general"); DebugPreview("settings"); });
+            await Take("settings-media", () => { EnsureSettingsView().ShowSection("media"); DebugPreview("settings"); });
 
             foreach (var (name, img) in shots) Save(Compose(img), Path.Combine(dir, name + ".png"));
         }

@@ -48,7 +48,8 @@ public partial class App : System.Windows.Application
         {
             ShotMode = true;
             // Главная как у нового пользователя: по умолчанию там только музыка.
-            _settings = new AppSettings { FirstRunDone = true, Language = "en", HideInFullscreen = false };
+            string lang = Array.Find(e.Args, a => a.StartsWith("--shot-lang="))?["--shot-lang=".Length..] ?? "en";
+            _settings = new AppSettings { FirstRunDone = true, Language = lang, HideInFullscreen = false };
             Localization.L.Init(_settings.Language);
             _island = new MainWindow(_settings, _tools, _files);
             _island.Show();

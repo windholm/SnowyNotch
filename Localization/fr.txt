@@ -331,3 +331,5 @@
 332|Horloge
 333|Système
 334|La semaine est allée à : {0}
+335|Afficher la source
+336|Spotify, SoundCloud, navigateur — à côté de l'artiste. Un clic ouvre l'application

@@ -331,3 +331,5 @@
 332|Reloj
 333|Sistema
 334|La semana se fue en: {0}
+335|Mostrar desde dónde suena
+336|Spotify, SoundCloud, navegador: junto al artista. Haz clic para abrir la app

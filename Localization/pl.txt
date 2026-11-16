@@ -331,3 +331,5 @@
 332|Zegar
 333|System
 334|Tydzień poszedł na: {0}
+335|Pokazuj, skąd gra
+336|Spotify, SoundCloud, przeglądarka — obok wykonawcy. Kliknięcie otwiera aplikację

@@ -1,0 +1,335 @@
+001|Nastavení        Win + /
+002|Zobrazit ostrov
+003|Ukončit
+004|Připojeno
+005|Slabá baterie
+006|Nabíjení
+007|Na baterii
+008|Zapnout zvuk
+009|Ztlumit
+010|Baterie se nabíjí
+011|Připojte nabíječku
+012|Notebook běží na baterii
+013|Baterie sluchátek
+014|Připojeno
+015|{0} z {1}
+016|Odebrat vybrané
+017|Vyprázdnit zásobník
+018|Hotovo
+019|Vybrat soubory
+020|Soubor zkopírován
+021|Zkopírováno: {0}
+022|Kliknutím soubory zkopírujete, přetažením je přesunete všechny najednou
+023|Přidat widgety
+024|Domů je prázdné
+025|Hudba, hodiny, časovač — cokoli chcete
+026|Odebrat
+027|Nic nehraje
+028|{0} (pozastaveno) · {1}
+029|Běží · {0}
+030|Pozastaveno · {0}
+031|Připraveno
+032|Hlasitost · {0}
+033|Hlasitost aplikací
+034|Prázdné
+035|pracuje
+036|{0} na vás čeká
+037|{0} · hotovo
+038| využito
+039|Claude a Codex čekají na úkol
+040|Claude čeká na úkol
+041|Codex čeká na úkol
+042|Nepřipojeno
+043|Na Domů se vejde {0} widgetů
+044|Přidat na Domů
+045|Všechny widgety už jsou na Domů
+046|Sluchátka (ukázka)
+047|Odebrat ze zásobníku
+048|Domů
+049|Zásobník
+050|Widgety
+051|Nastavení (Win + /)
+052|Zrušit
+053|Soubory
+054|Sem přetáhněte soubory
+055|Pusťte pro přidání
+056|Upravit Domů
+057|Zpět ke službám
+058|Vítejte v SnowyNotch!
+059|Najeďte myší na ostrov, přetáhněte na něj soubor nebo stiskněte Win + /
+060|Začít
+061|Nastavení
+062|Služby
+063|{0} h
+064|Čeká na vás
+065|Potřebuje vaše svolení
+066|Čte {0}
+067|Upravuje {0}
+068|Vytváří {0}
+069|Příkaz: {0}
+070|Hledá „{0}“
+071|Hledá soubory {0}
+072|Otevírá {0}
+073|Hledá na webu „{0}“
+074|Spouští pomocníka
+075|Aktualizuje plán
+076|Nástroj {0}
+077|Systémové zvuky
+078|Limity Claude jsou vypnuté
+079|Přihlaste se do Claude Code (claude → /login)
+080|Přihlášení do Claude Code vypršelo — otevřete Claude Code a obnoví se
+081|Claude odmítl přístup — otevřete Claude Code a obnovte přihlášení
+082|Nepodařilo se získat limity ({0})
+083|Pro tento tarif nejsou limity k dispozici
+084|Claude není dostupný
+085|Tento týden
+086|Aktuální relace
+087|Limit
+088|Zastaveno
+089|Hledá na webu
+090|Prohlíží obrázek
+091|Pracuje
+092|Příkaz
+093|Čte soubor
+094|Prochází soubory
+095|Spouští {0}
+096|souborů
+097|Vytváří
+098|Upravuje
+099|{0} {1} a další {2}
+100|Codex ještě nebyl spuštěn
+101|Limity se zobrazí po vašem prvním požadavku na Codex
+102|Zařízení
+103|Přehrávač médií
+104|Nová poznámka
+105|Pauza
+106|Dlouhá pauza
+107|Soustředění
+108|Text
+109|Limity
+110|Průběh úkolu
+111|Připojení agentů
+112|Obnovit
+113|Připojit
+114|Průběh
+115|Připojte Claude Code nebo Codex
+116|Nepřipojeno
+117|Připojte Claude Code: ostrov ukáže kroky a stav a s vaším souhlasem i limity předplatného.
+118|Připojte Codex: ostrov ukáže průběh a limity z protokolů Codexu na tomto počítači.
+119|Limity se zobrazí po prvním požadavku
+121|Pracuje na úkolu
+122|Čeká na vaši odpověď
+123|Nečinný
+124|Žádné aktivní úkoly
+125|Žádná data o limitech
+126|Obnovení limitu
+127|Aktualizováno {0}
+128|Čeká na data
+129|nepřipojeno
+130|využito {0:0} %
+131|žádná data
+132|v neděli
+133|v pondělí
+134|v úterý
+135|ve středu
+136|ve čtvrtek
+137|v pátek
+138|v sobotu
+139|Obnovuje se
+140|Obnoví se v {0}
+141|Obnoví se zítra v {0}
+142|Obnoví se {0} v {1}
+143|Obnovení: {0}, {1}
+144|právě teď
+145|před {0} min
+146|před {0} h
+147|Relace: {0}
+148|Agenti
+149|Agenti zatím odpočívají
+150|Agenti nejsou připojeni
+151|Zadejte úkol Claude Code nebo Codexu — kroky, soubory a stav se objeví tady.
+152|Připojte Claude Code nebo Codex v Nastavení → Agenti a ostrov ukáže, jak práce postupuje.
+153|Čeká na úkol
+154|Ukládání…
+155|Čtení…
+156|Upraveno
+157|Přečteno
+158|OBECNÉ
+159|Obecné
+160|Vzhled
+161|SLUŽBY
+162|Média
+163|Zvuk a zařízení
+164|DALŠÍ
+165|Ovládání
+166|O aplikaci
+167|Zavřít (Esc)
+168|Jazyk
+169|Ostrov se restartuje, aby se jazyk projevil
+170|Rozbalit při najetí myší
+171|Zpoždění rozbalení
+172| ms
+173|Sbalit po
+174|Kolečko myši — odklidit ostrov z cesty
+175|Klikněte kolečkem na ostrov a stane se průhledným a propustí kliknutí; dalším kliknutím kolečkem na stejné místo se vrátí. Dlouhým stiskem kolečka ho úplně skryjete (a stejně ho i vrátíte)
+176|Skrýt ve hrách a videích
+177|Když je aplikace na celé obrazovce
+178|Skrýt, když se nic neděje
+179|Spouštět s Windows
+180|Win + / otevře toto nastavení. Stejně tak kliknutí pravým tlačítkem na ostrov. Všechny zkratky najdete v sekci „Ovládání“.
+181|Zvuk podle aplikací
+182|Otevřít
+183|ZOBRAZIT V OSTROVĚ
+184|Hlasitost a jas
+185|Změny se zobrazí v ostrově a posuvník můžete táhnout
+186|Bluetooth sluchátka
+187|Bublina s baterií při připojení a při slabé baterii
+188|Baterie notebooku
+189|TVAR
+190|Výřez
+191|Ostrov
+192|POVRCH
+193|Sklo
+194|Černá
+195|Průhlednost skla
+196|Tenký obrys
+197|Ukáže okraj ostrova na tmavých tapetách
+198|BAREVNÝ AKCENT
+199|VELIKOST A POHYB
+200|Šířka
+201|Měřítko
+202|Odsazení shora (ostrov)
+203|Rychlost animací
+204|Na Domů se vejdou až tři widgety v řadě. Rozložení měňte přímo v ostrově: odeberte červeným mínusem, přidejte ikonou dole.
+205|Teď na Domů
+206|Změnit rozložení
+207|Všechny widgety jsou také na stránce „Widgety“ (ikona mřížky pod ostrovem).
+208|Jen hudba
+209|Přehrávač ukazuje hudební aplikace (Spotify, Apple Music, Yandex Music, Deezer, TIDAL, AIMP, foobar2000…) a hudební weby v prohlížeči (SoundCloud, YouTube Music, Spotify Web, VK, Bandcamp…). YouTube, videa, hovory a ostatní zvuky se nezobrazují
+210|Ekvalizér
+211|Barva z obalu
+212|Jinak jsou proužky bílé
+213|Ukázat novou skladbu
+214|Ostrov se při změně skladby krátce rozbalí
+215|Ukazovat po dobu
+216| s
+217|Texty písní
+218|Synchronizované texty z otevřené databáze lrclib.net. Hledá se jen při otevření textu; odesílá se tam název skladby, interpret a délka
+219|TLAČÍTKA PŘEHRÁVAČE
+220|Náhodně
+221|Opakovat
+222|Tlačítka jsou po stranách přehrávače. Některé přehrávače (často prohlížeče) je nepodporují — pak jsou neaktivní.
+223|Ukazovat limity Claude
+224|Pětihodinový a týdenní limit předplatného, jako v /usage. Ostrov používá přihlášení do Claude Code na tomto počítači a dotazuje se api.anthropic.com jen jednou za 5 minut; token se nikam jinam neposílá ani neukládá.
+225|Ukazovat činnost agentů
+226|Kroky, soubory a stav v ostrově a vedle něj bublina agenta
+227|Claude Code: „Připojit“ přidá do ~/.claude/settings.json HTTP háčky na 127.0.0.1:47318 (jen tento počítač). Codex: ostrov čte protokoly relací v ~/.codex/sessions a přidá notify do ~/.codex/config.toml, aby přesně věděl, kdy tah skončí. Před změnou se vedle souborů jednou uloží záloha; „Odpojit“ odstraní jen to, co přidalo. Ostrov jen sleduje a nikdy neodpovídá na žádosti o svolení. Funguje v nových relacích.
+228|Přepínání stránek
+229|Posouvání
+230|Tlačítka
+231|Obojí
+232|Umístění tlačítek
+233|Pod ostrovem
+234|Karty nahoře
+235|Posouvání: kolečko myši nebo tah dvěma prsty po ostrově přepíná Domů → Zásobník → Widgety, jedna stránka na gesto.
+236|KLÁVESOVÉ ZKRATKY
+237|Ostrov pro Windows: hudba, časovače, zásobník souborů a widgety přímo u horního okraje obrazovky.
+238|Obnovit nastavení
+239|Ukončit SnowyNotch
+240|Verze {0}.{1}.{2}
+241|Jazyk, rozbalování, skrývání a spouštění ostrova
+242|Podle systému
+243|Tvar, povrch, barva a velikost ostrova
+244|Co je na stránce Domů v ostrově
+245|Přehrávač, texty a které zdroje se počítají jako hudba
+246|Hlasitost aplikací, HUD, sluchátka a baterie
+247|Claude Code a Codex: průběh a limity
+248|Jak přepínat stránky a všechny klávesové zkratky
+249|Verze a obnovení nastavení
+250|Odpojit
+251|Připojeno — ostrov přijímá události Claude Code
+252|Nepřipojeno
+253|Připojeno — průběh, konec tahu a limity
+254|Připojeno — průběh a limity z protokolů (notify používá něco jiného, konec tahu se pozná podle pauzy)
+255|Připojeno. ~/.codex/config.toml už má vlastní notify — necháme ho být; konec tahu se pozná podle pauzy.
+256|Připojeno bez notify: nepodařilo se změnit ~/.codex/config.toml ({0})
+257|Nepodařilo se změnit ~/.claude/settings.json: {0}
+258|Hlasitost pro každou aplikaci zvlášť. Otevřete odkudkoli: {0}
+259|Hlasitost pro každou aplikaci zvlášť. Zkratku používá jiná aplikace — otevřete ji z „Widgetů“
+260|Ukáže se při připojení nabíječky a upozorní při 20 % a 10 %
+261|Baterie nenalezena — toto není notebook, takže to nepotřebujete
+262|Otevřít nebo zavřít nastavení
+263|Zvuk: hlasitost aplikací
+264|Pravé kliknutí na ostrov
+265|Kliknutí kolečkem na ostrov
+266|Zprůhlednit / vrátit
+267|Kolečko myši nad ostrovem
+268|Přepínat Domů → Zásobník → Widgety
+269|Poznámky: nadpis
+270|Poznámky: seznam úkolů
+271|Poznámky: tučně, kurzíva, podtržení
+272|Zavřít otevřený panel
+273|Zvuk
+274|Hlasitost
+275|Žádná aplikace teď nepřehrává zvuk
+276|Ztlumit
+277|ztlumeno
+278|T
+279|Zpět
+280|Hledání textů je vypnuté
+281|Hledám text…
+282|První řádek pro test
+283|Druhý řádek je o něco delší než první, aby se zalomil
+284|Třetí — právě hraje
+285|Čtvrtý řádek
+286|Pátý řádek
+287|Šestý řádek
+288|Text nenalezen
+289|Sbalit obal
+290|Text
+291|Otevřít obal
+292|Pusťte hudbu ve Spotify, SoundCloudu nebo jinde
+293|Otevřít {0}
+294|Poznámky
+295|Zatím žádné poznámky
+296|Markdown, seznamy, úkoly — kopírují se jako čistý text
+297|Nová poznámka
+298|Všechny poznámky
+299|Kopírovat jako Markdown
+300|Smazat poznámku
+301|Tučně (Ctrl+B)
+302|Kurzíva (Ctrl+I)
+303|Podtržení (Ctrl+U)
+304|Přeškrtnutí (Ctrl+Shift+X)
+305|Zvýraznění (Ctrl+Shift+H)
+306|Barva textu
+307|Nadpis 1 (Ctrl+1)
+308|Nadpis 2 (Ctrl+2)
+309|Nadpis 3 (Ctrl+3)
+310|Seznam
+311|Číslovaný seznam
+312|Seznam úkolů (Ctrl+Shift+L)
+313|Citace
+314|Smazat
+315|Včera
+316|Uloženo
+317|Stopky
+318|Vynulovat
+319|Časovač
+320|Pomodoro
+321|Pomodor v cyklu: po čtvrtém dlouhá pauza
+322|Start
+323|Další fáze
+324|Pauza
+325|Pokračovat
+326|Pomodoro {0} z {1} · 25 min
+327|5 min pauza, pak soustředění
+328|Cyklus dokončen · 15 min pauza
+329|Vynulovat fázi
+330|Začít cyklus znovu
+331|Hudba
+332|Hodiny
+333|Systém
+334|Tento týden padl na: {0}
+335|Ukazovat, odkud hraje
+336|Spotify, SoundCloud, prohlížeč — vedle interpreta. Kliknutím otevřete aplikaci

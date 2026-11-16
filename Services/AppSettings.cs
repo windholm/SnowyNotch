@@ -79,6 +79,7 @@ public sealed class AppSettings : INotifyPropertyChanged
     private bool _accentFromArtwork = true;
     private bool _showShuffleButton;
     private bool _showRepeatButton;
+    private bool _showSource = true;
 
     private bool _middleClickGhost = true;
     private bool _showHud = true;
@@ -129,6 +130,9 @@ public sealed class AppSettings : INotifyPropertyChanged
     public bool AccentFromArtwork { get => _accentFromArtwork; set => Set(ref _accentFromArtwork, value); }
     public bool ShowShuffleButton { get => _showShuffleButton; set => Set(ref _showShuffleButton, value); }
     public bool ShowRepeatButton { get => _showRepeatButton; set => Set(ref _showRepeatButton, value); }
+
+    /// <summary>Показывать рядом с исполнителем, откуда играет музыка (Spotify, SoundCloud, браузер).</summary>
+    public bool ShowSource { get => _showSource; set => Set(ref _showSource, value); }
 
     public bool MiddleClickGhost { get => _middleClickGhost; set => Set(ref _middleClickGhost, value); }
 

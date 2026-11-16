@@ -1,0 +1,335 @@
+001|Innstillinger        Win + /
+002|Vis øya
+003|Avslutt
+004|Tilkoblet
+005|Lavt batteri
+006|Lader
+007|På batteri
+008|Slå på lyd
+009|Demp
+010|Batteriet lades
+011|Koble til laderen
+012|Den bærbare går på batteri
+013|Batteri i hodetelefoner
+014|Tilkoblet
+015|{0} av {1}
+016|Fjern valgte
+017|Tøm skuffen
+018|Ferdig
+019|Velg filer
+020|Fil kopiert
+021|Kopiert: {0}
+022|Klikk for å kopiere filene, dra for å flytte alle på én gang
+023|Legg til moduler
+024|Hjem er tom
+025|Musikk, klokke, tidtaker — hva du vil
+026|Fjern
+027|Ingenting spilles
+028|{0} (satt på pause) · {1}
+029|Går · {0}
+030|Pause · {0}
+031|Klar
+032|Volum · {0}
+033|Appvolum
+034|Tom
+035|jobber
+036|{0} venter på deg
+037|{0} · ferdig
+038| brukt
+039|Claude og Codex venter på en oppgave
+040|Claude venter på en oppgave
+041|Codex venter på en oppgave
+042|Ikke tilkoblet
+043|Hjem har plass til {0} moduler
+044|Legg til på Hjem
+045|Alle moduler er allerede på Hjem
+046|Hodetelefoner (demo)
+047|Fjern fra skuffen
+048|Hjem
+049|Skuff
+050|Moduler
+051|Innstillinger (Win + /)
+052|Avbryt
+053|Filer
+054|Slipp filer her
+055|Slipp for å legge til
+056|Rediger Hjem
+057|Tilbake til tjenester
+058|Velkommen til SnowyNotch!
+059|Hold musen over øya, slipp en fil på den eller trykk Win + /
+060|Kom i gang
+061|Innstillinger
+062|Tjenester
+063|{0} t
+064|Venter på deg
+065|Trenger tillatelsen din
+066|Leser {0}
+067|Redigerer {0}
+068|Oppretter {0}
+069|Kommando: {0}
+070|Søker etter «{0}»
+071|Finner filer {0}
+072|Åpner {0}
+073|Søker på nettet etter «{0}»
+074|Starter en hjelper
+075|Oppdaterer planen
+076|Verktøy {0}
+077|Systemlyder
+078|Claude-grenser er slått av
+079|Logg inn på Claude Code (claude → /login)
+080|Innloggingen i Claude Code har utløpt — åpne Claude Code, så fornyes den
+081|Claude nektet tilgang — åpne Claude Code for å fornye innloggingen
+082|Kunne ikke hente grenser ({0})
+083|Grenser er ikke tilgjengelige for dette abonnementet
+084|Får ikke kontakt med Claude
+085|Denne uken
+086|Gjeldende økt
+087|Grense
+088|Stoppet
+089|Søker på nettet
+090|Ser på et bilde
+091|Jobber
+092|Kommando
+093|Leser en fil
+094|Blar i filer
+095|Kjører {0}
+096|filer
+097|Oppretter
+098|Redigerer
+099|{0} {1} og {2} til
+100|Codex er ikke kjørt ennå
+101|Grensene vises etter din første Codex-forespørsel
+102|Enhet
+103|Mediespiller
+104|Nytt notat
+105|Pause
+106|Lang pause
+107|Fokus
+108|Tekst
+109|Grenser
+110|Oppgavens fremdrift
+111|Agenttilkoblinger
+112|Oppdater
+113|Koble til
+114|Fremdrift
+115|Koble til Claude Code eller Codex
+116|Ikke tilkoblet
+117|Koble til Claude Code: øya viser trinn og status og, med ditt samtykke, abonnementsgrensene dine.
+118|Koble til Codex: øya viser fremdrift og grenser fra Codex-loggene på denne datamaskinen.
+119|Grensene vises etter første forespørsel
+121|Jobber med en oppgave
+122|Venter på svaret ditt
+123|Inaktiv
+124|Ingen aktive oppgaver
+125|Ingen data om grenser
+126|Grensen tilbakestilt
+127|Oppdatert {0}
+128|Venter på data
+129|ikke tilkoblet
+130|{0:0} % brukt
+131|ingen data
+132|på søndag
+133|på mandag
+134|på tirsdag
+135|på onsdag
+136|på torsdag
+137|på fredag
+138|på lørdag
+139|Tilbakestilles
+140|Tilbakestilles kl. {0}
+141|Tilbakestilles i morgen kl. {0}
+142|Tilbakestilles {0} kl. {1}
+143|Tilbakestilling: {0}, {1}
+144|akkurat nå
+145|for {0} min siden
+146|for {0} t siden
+147|Økter: {0}
+148|Agenter
+149|Agentene er inaktive for øyeblikket
+150|Agentene er ikke tilkoblet
+151|Gi Claude Code eller Codex en oppgave — trinn, filer og status vises her.
+152|Koble til Claude Code eller Codex under Innstillinger → Agenter, så viser øya hvordan arbeidet går.
+153|Venter på en oppgave
+154|Lagrer…
+155|Leser…
+156|Redigert
+157|Lest
+158|GENERELT
+159|Generelt
+160|Utseende
+161|TJENESTER
+162|Medier
+163|Lyd og enheter
+164|MER
+165|Kontroller
+166|Om
+167|Lukk (Esc)
+168|Språk
+169|Øya starter på nytt for å bruke språket
+170|Utvid når musen holdes over
+171|Forsinkelse før utviding
+172| ms
+173|Lukk etter
+174|Musehjul — flytt øya ut av veien
+175|Klikk med musehjulet på øya for å gjøre den gjennomsiktig og slippe klikk gjennom; klikk med hjulet på samme sted igjen for å få den tilbake. Hold hjulet inne lenge for å skjule den helt (og få den tilbake på samme måte)
+176|Skjul i spill og videoer
+177|Når en app er i fullskjerm
+178|Skjul når ingenting skjer
+179|Start med Windows
+180|Win + / åpner disse innstillingene. Det gjør også et høyreklikk på øya. Alle snarveier finner du under «Kontroller».
+181|Lyd per app
+182|Åpne
+183|VIS I ØYA
+184|Volum og lysstyrke
+185|Endringer vises i øya, og du kan dra glidebryteren
+186|Bluetooth-hodetelefoner
+187|En batteriboble når de kobles til og når batteriet er lavt
+188|Batteri i bærbar
+189|FORM
+190|Hakk
+191|Øy
+192|OVERFLATE
+193|Glass
+194|Svart
+195|Glassets gjennomsiktighet
+196|Tynn kontur
+197|Viser kanten av øya på mørke bakgrunner
+198|AKSENTFARGE
+199|STØRRELSE OG BEVEGELSE
+200|Bredde
+201|Skalering
+202|Avstand fra toppen (øy)
+203|Animasjonshastighet
+204|Hjem rommer opptil tre moduler på rad. Endre oppsettet rett i øya: fjern med det røde minuset, legg til med et ikon nedenfor.
+205|På Hjem nå
+206|Endre oppsett
+207|Alle moduler finnes også på siden «Moduler» (rutenettikonet under øya).
+208|Bare musikk
+209|Spilleren viser musikkapper (Spotify, Apple Music, Yandex Music, Deezer, TIDAL, AIMP, foobar2000…) og musikksider i nettleseren (SoundCloud, YouTube Music, Spotify Web, VK, Bandcamp…). YouTube, videoer, samtaler og andre lyder vises ikke
+210|Equalizer
+211|Farge fra omslaget
+212|Ellers er stolpene hvite
+213|Vis ny låt
+214|Øya utvides kort når låten bytter
+215|Vis i
+216| s
+217|Sangtekster
+218|Synkroniserte tekster fra den åpne databasen lrclib.net. Det søkes bare når du åpner teksten; låttittel, artist og lengde sendes dit
+219|SPILLERKNAPPER
+220|Tilfeldig rekkefølge
+221|Gjenta
+222|Knappene sitter i kantene av spilleren. Noen spillere (ofte nettlesere) støtter dem ikke — da er de inaktive.
+223|Vis Claude-grenser
+224|Abonnementets 5-timers- og ukegrenser, som i /usage. Øya bruker innloggingen i Claude Code på denne datamaskinen og spør api.anthropic.com bare én gang hvert 5. minutt; tokenet sendes ikke noe annet sted og lagres ikke.
+225|Vis agentaktivitet
+226|Trinn, filer og status i øya, og agentboblen ved siden av
+227|Claude Code: «Koble til» legger til HTTP-kroker til 127.0.0.1:47318 (bare denne datamaskinen) i ~/.claude/settings.json. Codex: øya leser øktloggene i ~/.codex/sessions og legger til notify i ~/.codex/config.toml for å vite nøyaktig når en tur slutter. Før endringen lagres en sikkerhetskopi ved siden av filene én gang; «Koble fra» fjerner bare det den la til. Øya bare følger med og svarer aldri på forespørsler om tillatelse. Fungerer i nye økter.
+228|Sidebytte
+229|Rull
+230|Knapper
+231|Begge
+232|Knappenes plassering
+233|Under øya
+234|Faner øverst
+235|Rull: musehjulet eller et sveip med to fingre over øya blar Hjem → Skuff → Moduler, én side per bevegelse.
+236|HURTIGTASTER
+237|En øy for Windows: musikk, tidtakere, en filskuff og moduler rett ved skjermens øvre kant.
+238|Tilbakestill innstillinger
+239|Avslutt SnowyNotch
+240|Versjon {0}.{1}.{2}
+241|Språk og utviding, skjuling og oppstart av øya
+242|Systemstandard
+243|Øyas form, overflate, farge og størrelse
+244|Hva som er på øyas Hjem-side
+245|Spiller, sangtekster og hvilke kilder som regnes som musikk
+246|Appvolum, HUD, hodetelefoner og batteri
+247|Claude Code og Codex: fremdrift og grenser
+248|Hvordan du blar og alle hurtigtaster
+249|Versjon og tilbakestilling av innstillinger
+250|Koble fra
+251|Tilkoblet — øya mottar hendelser fra Claude Code
+252|Ikke tilkoblet
+253|Tilkoblet — fremdrift, slutten av turen og grenser
+254|Tilkoblet — fremdrift og grenser fra loggene (notify brukes av noe annet, slutten av turen oppdages ved en pause)
+255|Tilkoblet. ~/.codex/config.toml har allerede sin egen notify — den lar vi være; slutten av turen oppdages ved en pause.
+256|Tilkoblet uten notify: kunne ikke endre ~/.codex/config.toml ({0})
+257|Kunne ikke endre ~/.claude/settings.json: {0}
+258|Volum for hver app for seg. Åpne fra hvor som helst: {0}
+259|Volum for hver app for seg. Hurtigtasten brukes av en annen app — åpne den fra «Moduler»
+260|Vises når laderen kobles til, og varsler ved 20 % og 10 %
+261|Fant ikke noe batteri — dette er ikke en bærbar, så du trenger ikke dette
+262|Åpne eller lukk innstillinger
+263|Lyd: appvolum
+264|Høyreklikk på øya
+265|Klikk med musehjulet på øya
+266|Gjør gjennomsiktig / gjenopprett
+267|Musehjul over øya
+268|Bla Hjem → Skuff → Moduler
+269|Notater: overskrift
+270|Notater: sjekkliste
+271|Notater: fet, kursiv, understreket
+272|Lukk det åpne panelet
+273|Lyd
+274|Volum
+275|Ingen app spiller av lyd akkurat nå
+276|Demp
+277|dempet
+278|U
+279|Tilbake
+280|Søk etter sangtekster er slått av
+281|Leter etter sangtekst…
+282|Første linje for test
+283|Andre linje er litt lengre enn den første, så den brytes
+284|Tredje — spilles nå
+285|Fjerde linje
+286|Femte linje
+287|Sjette linje
+288|Fant ikke sangtekst
+289|Lukk omslaget
+290|Sangtekst
+291|Åpne omslaget
+292|Spill musikk i Spotify, SoundCloud eller et annet sted
+293|Åpne {0}
+294|Notater
+295|Ingen notater ennå
+296|Markdown, lister, sjekklister — kopieres som ren tekst
+297|Nytt notat
+298|Alle notater
+299|Kopier som Markdown
+300|Slett notat
+301|Fet (Ctrl+B)
+302|Kursiv (Ctrl+I)
+303|Understreket (Ctrl+U)
+304|Gjennomstreket (Ctrl+Shift+X)
+305|Uthev (Ctrl+Shift+H)
+306|Tekstfarge
+307|Overskrift 1 (Ctrl+1)
+308|Overskrift 2 (Ctrl+2)
+309|Overskrift 3 (Ctrl+3)
+310|Liste
+311|Nummerert liste
+312|Sjekkliste (Ctrl+Shift+L)
+313|Sitat
+314|Slett
+315|I går
+316|Lagret
+317|Stoppeklokke
+318|Tilbakestill
+319|Tidtaker
+320|Pomodoro
+321|Pomodoroer i syklusen: en lang pause etter den fjerde
+322|Start
+323|Neste fase
+324|Pause
+325|Fortsett
+326|Pomodoro {0} av {1} · 25 min
+327|5 min pause, deretter fokus
+328|Syklus fullført · 15 min pause
+329|Tilbakestill fase
+330|Start syklusen på nytt
+331|Musikk
+332|Klokke
+333|System
+334|Denne uken gikk til: {0}
+335|Vis hvor det spilles fra
+336|Spotify, SoundCloud, nettleser — ved siden av artisten. Klikk for å åpne appen

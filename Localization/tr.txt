@@ -1,0 +1,335 @@
+001|Ayarlar        Win + /
+002|Adayı göster
+003|Çıkış
+004|Bağlandı
+005|Pil zayıf
+006|Şarj oluyor
+007|Pilde
+008|Sesi aç
+009|Sessiz
+010|Pil şarj oluyor
+011|Şarj cihazını takın
+012|Dizüstü bilgisayar pille çalışıyor
+013|Kulaklık pili
+014|Bağlandı
+015|{0} / {1}
+016|Seçilenleri kaldır
+017|Tepsiyi temizle
+018|Bitti
+019|Dosya seç
+020|Dosya kopyalandı
+021|Kopyalandı: {0}
+022|Dosyaları kopyalamak için tıklayın, hepsini birden taşımak için sürükleyin
+023|Widget ekle
+024|Ana sayfa boş
+025|Müzik, saat, zamanlayıcı — ne isterseniz
+026|Kaldır
+027|Hiçbir şey çalmıyor
+028|{0} (duraklatıldı) · {1}
+029|Çalışıyor · {0}
+030|Duraklatıldı · {0}
+031|Hazır
+032|Ses · {0}
+033|Uygulama sesi
+034|Boş
+035|çalışıyor
+036|{0} sizi bekliyor
+037|{0} · bitti
+038| kullanıldı
+039|Claude ve Codex görev bekliyor
+040|Claude görev bekliyor
+041|Codex görev bekliyor
+042|Bağlı değil
+043|Ana sayfaya {0} widget sığar
+044|Ana sayfaya ekle
+045|Tüm widget'lar zaten ana sayfada
+046|Kulaklık (demo)
+047|Tepsiden kaldır
+048|Ana sayfa
+049|Tepsi
+050|Widget'lar
+051|Ayarlar (Win + /)
+052|İptal
+053|Dosyalar
+054|Dosyaları buraya bırakın
+055|Eklemek için bırakın
+056|Ana sayfayı düzenle
+057|Hizmetlere dön
+058|SnowyNotch'a hoş geldiniz!
+059|Fareyle adanın üzerine gelin, üzerine bir dosya bırakın veya Win + / tuşlarına basın
+060|Başlayın
+061|Ayarlar
+062|Hizmetler
+063|{0} sa
+064|Sizi bekliyor
+065|İzninize ihtiyaç var
+066|{0} okunuyor
+067|{0} düzenleniyor
+068|{0} oluşturuluyor
+069|Komut: {0}
+070|“{0}” aranıyor
+071|Dosyalar bulunuyor {0}
+072|{0} açılıyor
+073|Web'de “{0}” aranıyor
+074|Yardımcı başlatılıyor
+075|Plan güncelleniyor
+076|Araç {0}
+077|Sistem sesleri
+078|Claude limitleri kapalı
+079|Claude Code'a giriş yapın (claude → /login)
+080|Claude Code oturumunun süresi doldu — Claude Code'u açın, yenilenecek
+081|Claude erişimi reddetti — oturumu yenilemek için Claude Code'u açın
+082|Limitler alınamadı ({0})
+083|Bu plan için limitler mevcut değil
+084|Claude'a ulaşılamıyor
+085|Bu hafta
+086|Geçerli oturum
+087|Limit
+088|Durduruldu
+089|Web'de aranıyor
+090|Bir görsel görüntüleniyor
+091|Çalışıyor
+092|Komut
+093|Bir dosya okunuyor
+094|Dosyalara göz atılıyor
+095|{0} çalıştırılıyor
+096|dosya
+097|Oluşturuluyor
+098|Düzenleniyor
+099|{0} {1} ve {2} tane daha
+100|Codex henüz çalıştırılmadı
+101|Limitler ilk Codex isteğinizden sonra görünecek
+102|Cihaz
+103|Medya Oynatıcı
+104|Yeni not
+105|Mola
+106|Uzun mola
+107|Odak
+108|Söz
+109|Limitler
+110|Görev ilerlemesi
+111|Ajan bağlantıları
+112|Yenile
+113|Bağlan
+114|İlerleme
+115|Claude Code veya Codex'i bağlayın
+116|Bağlı değil
+117|Claude Code'u bağlayın: ada adımları ve durumu, izninizle de abonelik limitlerinizi gösterir.
+118|Codex'i bağlayın: ada, bu bilgisayardaki Codex günlüklerinden ilerlemeyi ve limitleri gösterir.
+119|Limitler ilk istekten sonra görünecek
+121|Bir görev üzerinde çalışıyor
+122|Yanıtınızı bekliyor
+123|Boşta
+124|Etkin görev yok
+125|Limit verisi yok
+126|Limit sıfırlandı
+127|{0} güncellendi
+128|Veri bekleniyor
+129|bağlı değil
+130|%{0:0} kullanıldı
+131|veri yok
+132|pazar günü
+133|pazartesi günü
+134|salı günü
+135|çarşamba günü
+136|perşembe günü
+137|cuma günü
+138|cumartesi günü
+139|Sıfırlanıyor
+140|{0} sıfırlanır
+141|Yarın {0} sıfırlanır
+142|{0} {1} sıfırlanır
+143|Sıfırlama: {0}, {1}
+144|az önce
+145|{0} dk önce
+146|{0} sa önce
+147|Oturumlar: {0}
+148|Ajanlar
+149|Ajanlar şimdilik boşta
+150|Ajanlar bağlı değil
+151|Claude Code veya Codex'e bir görev verin — adımlar, dosyalar ve durum burada görünür.
+152|Ayarlar → Ajanlar bölümünden Claude Code veya Codex'i bağlayın, ada işin nasıl gittiğini göstersin.
+153|Görev bekleniyor
+154|Kaydediliyor…
+155|Okunuyor…
+156|Düzenlendi
+157|Okundu
+158|GENEL
+159|Genel
+160|Görünüm
+161|HİZMETLER
+162|Medya
+163|Ses ve cihazlar
+164|DAHA FAZLA
+165|Kontroller
+166|Hakkında
+167|Kapat (Esc)
+168|Dil
+169|Dilin uygulanması için ada yeniden başlatılacak
+170|Üzerine gelince genişlet
+171|Genişletme gecikmesi
+172| ms
+173|Daraltma süresi
+174|Fare tekerleği — adayı yoldan çekin
+175|Adaya tekerlekle tıklayın: saydam olur ve tıklamaları alttakine geçirir; aynı yere tekrar tekerlekle tıklayınca geri gelir. Tekerleğe uzun basınca tamamen gizlenir (aynı şekilde geri getirilir)
+176|Oyunlarda ve videolarda gizle
+177|Bir uygulama tam ekrandayken
+178|Bir şey olmadığında gizle
+179|Windows ile başlat
+180|Win + / bu ayarları açar. Adaya sağ tıklamak da açar. Tüm kısayollar “Kontroller” altında.
+181|Uygulama başına ses
+182|Aç
+183|ADADA GÖSTER
+184|Ses ve parlaklık
+185|Değişiklikler adada görünür, kaydırıcıyı sürükleyebilirsiniz
+186|Bluetooth kulaklık
+187|Bağlandığında ve pil azaldığında pil balonu
+188|Dizüstü pili
+189|ŞEKİL
+190|Çentik
+191|Ada
+192|YÜZEY
+193|Cam
+194|Siyah
+195|Cam saydamlığı
+196|İnce kenar çizgisi
+197|Koyu duvar kâğıtlarında adanın kenarını gösterir
+198|VURGU RENGİ
+199|BOYUT VE HAREKET
+200|Genişlik
+201|Ölçek
+202|Üstten boşluk (ada)
+203|Animasyon hızı
+204|Ana sayfa bir satırda en fazla üç widget alır. Düzeni doğrudan adada değiştirin: kırmızı eksiyle kaldırın, alttaki simgeyle ekleyin.
+205|Şu an ana sayfada
+206|Düzeni değiştir
+207|Tüm widget'lar “Widget'lar” sayfasında da var (adanın altındaki ızgara simgesi).
+208|Yalnızca müzik
+209|Oynatıcı müzik uygulamalarını (Spotify, Apple Music, Yandex Music, Deezer, TIDAL, AIMP, foobar2000…) ve tarayıcıdaki müzik sitelerini (SoundCloud, YouTube Music, Spotify Web, VK, Bandcamp…) gösterir. YouTube, videolar, aramalar ve diğer sesler gösterilmez
+210|Ekolayzır
+211|Kapaktan renk
+212|Aksi halde çubuklar beyazdır
+213|Yeni parçayı göster
+214|Şarkı değişince ada kısa süre genişler
+215|Gösterme süresi
+216| sn
+217|Şarkı sözleri
+218|Açık lrclib.net veritabanından senkronize sözler. Yalnızca sözleri açtığınızda aranır; parça adı, sanatçı ve süre oraya gönderilir
+219|OYNATICI DÜĞMELERİ
+220|Karıştır
+221|Tekrarla
+222|Düğmeler oynatıcının kenarlarındadır. Bazı oynatıcılar (çoğunlukla tarayıcılar) desteklemez — o zaman etkin olmazlar.
+223|Claude limitlerini göster
+224|/usage'daki gibi aboneliğin 5 saatlik ve haftalık limitleri. Ada bu bilgisayardaki Claude Code oturumunu kullanır ve api.anthropic.com'a 5 dakikada yalnızca bir kez sorar; token başka hiçbir yere gönderilmez ve saklanmaz.
+225|Ajan etkinliğini göster
+226|Adada adımlar, dosyalar ve durum, yanında da ajan balonu
+227|Claude Code: “Bağlan”, ~/.claude/settings.json dosyasına 127.0.0.1:47318 adresine (yalnızca bu bilgisayar) HTTP kancaları ekler. Codex: ada ~/.codex/sessions içindeki oturum günlüklerini okur ve bir turun tam olarak ne zaman bittiğini bilmek için ~/.codex/config.toml dosyasına notify ekler. Değiştirmeden önce dosyaların yanına bir kez yedek kaydedilir; “Bağlantıyı kes” yalnızca eklediklerini kaldırır. Ada yalnızca izler, izin isteklerine asla yanıt vermez. Yeni oturumlarda çalışır.
+228|Sayfa değiştirme
+229|Kaydırma
+230|Düğmeler
+231|İkisi de
+232|Düğme konumu
+233|Adanın altında
+234|Üstte sekmeler
+235|Kaydırma: adanın üzerinde fare tekerleği veya iki parmakla kaydırma Ana sayfa → Tepsi → Widget'lar arasında, her harekette bir sayfa geçer.
+236|KLAVYE KISAYOLLARI
+237|Windows için bir ada: müzik, zamanlayıcılar, dosya tepsisi ve widget'lar ekranın tam üst kenarında.
+238|Ayarları sıfırla
+239|SnowyNotch'tan çık
+240|Sürüm {0}.{1}.{2}
+241|Dil ve adanın genişlemesi, gizlenmesi ve başlatılması
+242|Sistem varsayılanı
+243|Adanın şekli, yüzeyi, rengi ve boyutu
+244|Adanın ana sayfasında ne var
+245|Oynatıcı, sözler ve hangi kaynakların müzik sayıldığı
+246|Uygulama sesi, HUD, kulaklık ve pil
+247|Claude Code ve Codex: ilerleme ve limitler
+248|Sayfalar nasıl değiştirilir ve tüm klavye kısayolları
+249|Sürüm ve ayarları sıfırlama
+250|Bağlantıyı kes
+251|Bağlandı — ada Claude Code olaylarını alıyor
+252|Bağlı değil
+253|Bağlandı — ilerleme, tur sonu ve limitler
+254|Bağlandı — günlüklerden ilerleme ve limitler (notify başka bir şey tarafından kullanılıyor, tur sonu duraklamadan anlaşılır)
+255|Bağlandı. ~/.codex/config.toml dosyasında zaten kendi notify'ı var — ona dokunmuyoruz; tur sonu duraklamadan anlaşılır.
+256|notify olmadan bağlandı: ~/.codex/config.toml değiştirilemedi ({0})
+257|~/.claude/settings.json değiştirilemedi: {0}
+258|Her uygulama için ayrı ses. Her yerden açın: {0}
+259|Her uygulama için ayrı ses. Kısayol başka bir uygulama tarafından kullanılıyor — “Widget'lar”dan açın
+260|Şarj cihazı takılınca görünür, %20 ve %10'da uyarır
+261|Pil bulunamadı — bu bir dizüstü değil, buna ihtiyacınız yok
+262|Ayarları aç veya kapat
+263|Ses: uygulama sesi
+264|Adaya sağ tıklayın
+265|Adaya tekerlekle tıklayın
+266|Saydam yap / geri getir
+267|Adanın üzerinde fare tekerleği
+268|Ana sayfa → Tepsi → Widget'lar arasında geçiş
+269|Notlar: başlık
+270|Notlar: yapılacaklar listesi
+271|Notlar: kalın, italik, altı çizili
+272|Açık paneli kapat
+273|Ses
+274|Ses düzeyi
+275|Şu anda ses çalan uygulama yok
+276|Sessiz
+277|sessiz
+278|H
+279|Geri
+280|Söz arama kapalı
+281|Sözler aranıyor…
+282|Test için ilk satır
+283|İkinci satır, alt satıra geçmesi için ilkinden biraz daha uzun
+284|Üçüncü — şimdi çalıyor
+285|Dördüncü satır
+286|Beşinci satır
+287|Altıncı satır
+288|Söz bulunamadı
+289|Kapağı daralt
+290|Sözler
+291|Kapağı aç
+292|Spotify, SoundCloud veya başka bir yerde müzik çalın
+293|{0} uygulamasını aç
+294|Notlar
+295|Henüz not yok
+296|Markdown, listeler, yapılacaklar — temiz metin olarak kopyalanır
+297|Yeni not
+298|Tüm notlar
+299|Markdown olarak kopyala
+300|Notu sil
+301|Kalın (Ctrl+B)
+302|İtalik (Ctrl+I)
+303|Altı çizili (Ctrl+U)
+304|Üstü çizili (Ctrl+Shift+X)
+305|Vurgula (Ctrl+Shift+H)
+306|Metin rengi
+307|Başlık 1 (Ctrl+1)
+308|Başlık 2 (Ctrl+2)
+309|Başlık 3 (Ctrl+3)
+310|Liste
+311|Numaralı liste
+312|Yapılacaklar listesi (Ctrl+Shift+L)
+313|Alıntı
+314|Sil
+315|Dün
+316|Kaydedildi
+317|Kronometre
+318|Sıfırla
+319|Zamanlayıcı
+320|Pomodoro
+321|Döngüdeki pomodoro sayısı: dördüncüden sonra uzun mola
+322|Başlat
+323|Sonraki aşama
+324|Duraklat
+325|Devam et
+326|Pomodoro {0} / {1} · 25 dk
+327|5 dk mola, sonra odak
+328|Döngü tamamlandı · 15 dk mola
+329|Aşamayı sıfırla
+330|Döngüyü yeniden başlat
+331|Müzik
+332|Saat
+333|Sistem
+334|Bu hafta şuna gitti: {0}
+335|Nereden çaldığını göster
+336|Spotify, SoundCloud, tarayıcı — sanatçının yanında. Uygulamayı açmak için tıklayın

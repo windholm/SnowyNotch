@@ -1,0 +1,335 @@
+001|Asetukset        Win + /
+002|Näytä saari
+003|Lopeta
+004|Yhdistetty
+005|Akku vähissä
+006|Latautuu
+007|Akkuvirralla
+008|Poista mykistys
+009|Mykistä
+010|Akku latautuu
+011|Liitä laturi
+012|Kannettava toimii akulla
+013|Kuulokkeiden akku
+014|Yhdistetty
+015|{0}/{1}
+016|Poista valitut
+017|Tyhjennä tarjotin
+018|Valmis
+019|Valitse tiedostot
+020|Tiedosto kopioitu
+021|Kopioitu: {0}
+022|Kopioi tiedostot napsauttamalla, siirrä ne kaikki kerralla vetämällä
+023|Lisää widgettejä
+024|Koti on tyhjä
+025|Musiikki, kello, ajastin — mitä haluat
+026|Poista
+027|Mitään ei soi
+028|{0} (tauolla) · {1}
+029|Käynnissä · {0}
+030|Tauolla · {0}
+031|Valmiina
+032|Äänenvoimakkuus · {0}
+033|Sovellusten äänenvoimakkuus
+034|Tyhjä
+035|työskentelee
+036|{0} odottaa sinua
+037|{0} · valmis
+038| käytetty
+039|Claude ja Codex odottavat tehtävää
+040|Claude odottaa tehtävää
+041|Codex odottaa tehtävää
+042|Ei yhdistetty
+043|Kotiin mahtuu {0} widgettiä
+044|Lisää kotiin
+045|Kaikki widgetit ovat jo kodissa
+046|Kuulokkeet (demo)
+047|Poista tarjottimelta
+048|Koti
+049|Tarjotin
+050|Widgetit
+051|Asetukset (Win + /)
+052|Peruuta
+053|Tiedostot
+054|Pudota tiedostot tähän
+055|Lisää päästämällä irti
+056|Muokkaa kotia
+057|Takaisin palveluihin
+058|Tervetuloa SnowyNotchiin!
+059|Vie hiiri saaren päälle, pudota siihen tiedosto tai paina Win + /
+060|Aloita
+061|Asetukset
+062|Palvelut
+063|{0} t
+064|Odottaa sinua
+065|Tarvitsee luvan
+066|Lukee: {0}
+067|Muokkaa: {0}
+068|Luo: {0}
+069|Komento: {0}
+070|Hakee ”{0}”
+071|Etsii tiedostoja {0}
+072|Avaa: {0}
+073|Hakee verkosta ”{0}”
+074|Käynnistää apuria
+075|Päivittää suunnitelmaa
+076|Työkalu {0}
+077|Järjestelmän äänet
+078|Clauden rajat ovat pois päältä
+079|Kirjaudu Claude Codeen (claude → /login)
+080|Claude Coden kirjautuminen on vanhentunut — avaa Claude Code, niin se uusitaan
+081|Claude esti pääsyn — avaa Claude Code ja uusi kirjautuminen
+082|Rajojen haku epäonnistui ({0})
+083|Rajat eivät ole saatavilla tälle tilaukselle
+084|Claudeen ei saada yhteyttä
+085|Tällä viikolla
+086|Nykyinen istunto
+087|Raja
+088|Pysäytetty
+089|Hakee verkosta
+090|Katsoo kuvaa
+091|Työskentelee
+092|Komento
+093|Lukee tiedostoa
+094|Selaa tiedostoja
+095|Suorittaa: {0}
+096|tiedostoa
+097|Luo
+098|Muokkaa
+099|{0} {1} ja {2} muuta
+100|Codexia ei ole vielä käytetty
+101|Rajat näkyvät ensimmäisen Codex-pyyntösi jälkeen
+102|Laite
+103|Mediasoitin
+104|Uusi muistiinpano
+105|Tauko
+106|Pitkä tauko
+107|Keskittyminen
+108|Sanat
+109|Rajat
+110|Tehtävän edistyminen
+111|Agenttiyhteydet
+112|Päivitä
+113|Yhdistä
+114|Edistyminen
+115|Yhdistä Claude Code tai Codex
+116|Ei yhdistetty
+117|Yhdistä Claude Code: saari näyttää vaiheet ja tilan sekä luvallasi tilauksesi rajat.
+118|Yhdistä Codex: saari näyttää edistymisen ja rajat tämän tietokoneen Codex-lokeista.
+119|Rajat näkyvät ensimmäisen pyynnön jälkeen
+121|Työstää tehtävää
+122|Odottaa vastaustasi
+123|Joutilas
+124|Ei aktiivisia tehtäviä
+125|Ei rajatietoja
+126|Raja nollautui
+127|Päivitetty {0}
+128|Odottaa tietoja
+129|ei yhdistetty
+130|{0:0} % käytetty
+131|ei tietoja
+132|sunnuntaina
+133|maanantaina
+134|tiistaina
+135|keskiviikkona
+136|torstaina
+137|perjantaina
+138|lauantaina
+139|Nollautuu
+140|Nollautuu klo {0}
+141|Nollautuu huomenna klo {0}
+142|Nollautuu {0} klo {1}
+143|Nollaus: {0}, {1}
+144|juuri nyt
+145|{0} min sitten
+146|{0} t sitten
+147|Istunnot: {0}
+148|Agentit
+149|Agentit ovat toistaiseksi joutilaina
+150|Agentteja ei ole yhdistetty
+151|Anna Claude Codelle tai Codexille tehtävä — vaiheet, tiedostot ja tila näkyvät täällä.
+152|Yhdistä Claude Code tai Codex kohdassa Asetukset → Agentit, niin saari näyttää, miten työ etenee.
+153|Odottaa tehtävää
+154|Tallennetaan…
+155|Luetaan…
+156|Muokattu
+157|Luettu
+158|YLEISET
+159|Yleiset
+160|Ulkoasu
+161|PALVELUT
+162|Media
+163|Ääni ja laitteet
+164|LISÄÄ
+165|Ohjaus
+166|Tietoja
+167|Sulje (Esc)
+168|Kieli
+169|Saari käynnistyy uudelleen kielen käyttöönottamiseksi
+170|Laajenna, kun hiiri on päällä
+171|Laajennuksen viive
+172| ms
+173|Pienennä kun on kulunut
+174|Hiiren rulla — saari pois tieltä
+175|Napsauta saarta hiiren rullalla, niin se muuttuu läpinäkyväksi ja päästää napsautukset läpi; napsauta rullalla samaa kohtaa uudelleen, niin se palaa. Pitkä painallus rullalla piilottaa sen kokonaan (ja palauttaa samalla tavalla)
+176|Piilota peleissä ja videoissa
+177|Kun sovellus on koko näytöllä
+178|Piilota, kun mitään ei tapahdu
+179|Käynnistä Windowsin mukana
+180|Win + / avaa nämä asetukset. Samoin saaren napsauttaminen hiiren oikealla painikkeella. Kaikki pikanäppäimet ovat kohdassa ”Ohjaus”.
+181|Sovelluskohtainen ääni
+182|Avaa
+183|NÄYTÄ SAARESSA
+184|Äänenvoimakkuus ja kirkkaus
+185|Muutokset näkyvät saaressa, ja liukusäädintä voi vetää
+186|Bluetooth-kuulokkeet
+187|Akkukupla yhdistettäessä ja kun akku on vähissä
+188|Kannettavan akku
+189|MUOTO
+190|Lovi
+191|Saari
+192|PINTA
+193|Lasi
+194|Musta
+195|Lasin läpinäkyvyys
+196|Ohut ääriviiva
+197|Näyttää saaren reunan tummilla taustakuvilla
+198|KOROSTUSVÄRI
+199|KOKO JA LIIKE
+200|Leveys
+201|Skaalaus
+202|Etäisyys yläreunasta (saari)
+203|Animaatioiden nopeus
+204|Kotiin mahtuu enintään kolme widgettiä rivissä. Muuta asettelua suoraan saaressa: poista punaisella miinuksella, lisää alla olevalla kuvakkeella.
+205|Nyt kodissa
+206|Muuta asettelua
+207|Kaikki widgetit löytyvät myös sivulta ”Widgetit” (ruudukkokuvake saaren alla).
+208|Vain musiikki
+209|Soitin näyttää musiikkisovellukset (Spotify, Apple Music, Yandex Music, Deezer, TIDAL, AIMP, foobar2000…) ja selaimen musiikkisivustot (SoundCloud, YouTube Music, Spotify Web, VK, Bandcamp…). YouTubea, videoita, puheluita ja muita ääniä ei näytetä
+210|Taajuuskorjain
+211|Väri kansikuvasta
+212|Muuten palkit ovat valkoisia
+213|Näytä uusi kappale
+214|Saari laajenee hetkeksi, kun kappale vaihtuu
+215|Näytä ajan
+216| s
+217|Sanoitukset
+218|Synkronoidut sanat avoimesta lrclib.net-tietokannasta. Haetaan vain, kun avaat sanat; sinne lähetetään kappaleen nimi, esittäjä ja kesto
+219|SOITTIMEN PAINIKKEET
+220|Satunnaistoisto
+221|Jatkuva toisto
+222|Painikkeet ovat soittimen reunoilla. Jotkin soittimet (usein selaimet) eivät tue niitä — silloin ne eivät ole käytössä.
+223|Näytä Clauden rajat
+224|Tilauksen 5 tunnin ja viikon rajat, kuten komennossa /usage. Saari käyttää tämän tietokoneen Claude Code -kirjautumista ja kysyy api.anthropic.com-palvelulta vain kerran 5 minuutissa; tunnusta ei lähetetä muualle eikä tallenneta.
+225|Näytä agenttien toiminta
+226|Vaiheet, tiedostot ja tila saaressa sekä agenttikupla sen vieressä
+227|Claude Code: ”Yhdistä” lisää tiedostoon ~/.claude/settings.json HTTP-koukut osoitteeseen 127.0.0.1:47318 (vain tämä tietokone). Codex: saari lukee istuntolokit kansiosta ~/.codex/sessions ja lisää notify-asetuksen tiedostoon ~/.codex/config.toml tietääkseen tarkalleen, milloin vuoro päättyy. Ennen muutosta tiedostojen viereen tallennetaan kerran varmuuskopio; ”Katkaise yhteys” poistaa vain sen, mitä se lisäsi. Saari vain seuraa eikä koskaan vastaa lupapyyntöihin. Toimii uusissa istunnoissa.
+228|Sivujen vaihto
+229|Vieritys
+230|Painikkeet
+231|Molemmat
+232|Painikkeiden sijainti
+233|Saaren alla
+234|Välilehdet ylhäällä
+235|Vieritys: hiiren rulla tai kahden sormen pyyhkäisy saaren päällä vaihtaa Koti → Tarjotin → Widgetit, yksi sivu eleellä.
+236|PIKANÄPPÄIMET
+237|Saari Windowsille: musiikki, ajastimet, tiedostotarjotin ja widgetit suoraan näytön yläreunassa.
+238|Palauta asetukset
+239|Lopeta SnowyNotch
+240|Versio {0}.{1}.{2}
+241|Kieli sekä saaren laajentaminen, piilottaminen ja käynnistys
+242|Järjestelmän oletus
+243|Saaren muoto, pinta, väri ja koko
+244|Mitä saaren Koti-sivulla on
+245|Soitin, sanoitukset ja mitkä lähteet lasketaan musiikiksi
+246|Sovellusten äänenvoimakkuus, HUD, kuulokkeet ja akku
+247|Claude Code ja Codex: edistyminen ja rajat
+248|Miten sivuja vaihdetaan ja kaikki pikanäppäimet
+249|Versio ja asetusten palautus
+250|Katkaise yhteys
+251|Yhdistetty — saari vastaanottaa Claude Coden tapahtumia
+252|Ei yhdistetty
+253|Yhdistetty — edistyminen, vuoron loppu ja rajat
+254|Yhdistetty — edistyminen ja rajat lokeista (notify on muun käytössä, vuoron loppu tunnistetaan tauosta)
+255|Yhdistetty. Tiedostossa ~/.codex/config.toml on jo oma notify — emme koske siihen; vuoron loppu tunnistetaan tauosta.
+256|Yhdistetty ilman notifya: tiedostoa ~/.codex/config.toml ei voitu muuttaa ({0})
+257|Tiedostoa ~/.claude/settings.json ei voitu muuttaa: {0}
+258|Äänenvoimakkuus jokaiselle sovellukselle erikseen. Avaa mistä tahansa: {0}
+259|Äänenvoimakkuus jokaiselle sovellukselle erikseen. Pikanäppäin on toisen sovelluksen käytössä — avaa se kohdasta ”Widgetit”
+260|Näkyy, kun laturi liitetään, ja varoittaa 20 %:n ja 10 %:n kohdalla
+261|Akkua ei löytynyt — tämä ei ole kannettava, joten et tarvitse tätä
+262|Avaa tai sulje asetukset
+263|Ääni: sovellusten äänenvoimakkuus
+264|Napsauta saarta oikealla painikkeella
+265|Napsauta saarta rullalla
+266|Tee läpinäkyväksi / palauta
+267|Hiiren rulla saaren päällä
+268|Vaihda Koti → Tarjotin → Widgetit
+269|Muistiinpanot: otsikko
+270|Muistiinpanot: tarkistuslista
+271|Muistiinpanot: lihavointi, kursiivi, alleviivaus
+272|Sulje avoin paneeli
+273|Ääni
+274|Äänenvoimakkuus
+275|Mikään sovellus ei toista ääntä juuri nyt
+276|Mykistä
+277|mykistetty
+278|V
+279|Takaisin
+280|Sanoitusten haku on pois päältä
+281|Etsitään sanoja…
+282|Ensimmäinen rivi testiä varten
+283|Toinen rivi on hieman ensimmäistä pidempi, jotta se rivittyy
+284|Kolmas — soi nyt
+285|Neljäs rivi
+286|Viides rivi
+287|Kuudes rivi
+288|Sanoja ei löytynyt
+289|Pienennä kansikuva
+290|Sanat
+291|Avaa kansikuva
+292|Soita musiikkia Spotifyssa, SoundCloudissa tai muualla
+293|Avaa {0}
+294|Muistiinpanot
+295|Ei vielä muistiinpanoja
+296|Markdown, luettelot, tarkistuslistat — kopioidaan siistinä tekstinä
+297|Uusi muistiinpano
+298|Kaikki muistiinpanot
+299|Kopioi Markdownina
+300|Poista muistiinpano
+301|Lihavointi (Ctrl+B)
+302|Kursiivi (Ctrl+I)
+303|Alleviivaus (Ctrl+U)
+304|Yliviivaus (Ctrl+Shift+X)
+305|Korostus (Ctrl+Shift+H)
+306|Tekstin väri
+307|Otsikko 1 (Ctrl+1)
+308|Otsikko 2 (Ctrl+2)
+309|Otsikko 3 (Ctrl+3)
+310|Luettelo
+311|Numeroitu luettelo
+312|Tarkistuslista (Ctrl+Shift+L)
+313|Lainaus
+314|Poista
+315|Eilen
+316|Tallennettu
+317|Sekuntikello
+318|Nollaa
+319|Ajastin
+320|Pomodoro
+321|Pomodoroja syklissä: pitkä tauko neljännen jälkeen
+322|Aloita
+323|Seuraava vaihe
+324|Tauko
+325|Jatka
+326|Pomodoro {0}/{1} · 25 min
+327|5 min tauko, sitten keskittyminen
+328|Sykli valmis · 15 min tauko
+329|Nollaa vaihe
+330|Aloita sykli alusta
+331|Musiikki
+332|Kello
+333|Järjestelmä
+334|Tämä viikko meni: {0}
+335|Näytä, mistä musiikki soi
+336|Spotify, SoundCloud, selain — esittäjän vieressä. Avaa sovellus napsauttamalla

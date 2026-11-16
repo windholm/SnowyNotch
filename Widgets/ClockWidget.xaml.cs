@@ -53,7 +53,7 @@ public partial class ClockWidget : UserControl, IIslandWidget, IBackNavigable
         DayNumText.Text = now.Day.ToString(Ru);
         WeekText.Text = L.T("Н") + ISOWeek.GetWeekOfYear(now);
         TimeText.Text = now.ToString("HH:mm", Ru);
-        DateText.Text = now.ToString("d MMMM", Ru);
+        DateText.Text = L.MonthDay(now);
         if (CalendarPage.Visibility == Visibility.Visible && now.Date != _builtToday) BuildCalendar(0);
     }
 

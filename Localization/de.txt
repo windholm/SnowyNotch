@@ -331,3 +331,5 @@
 332|Uhr
 333|System
 334|Die Woche ging an: {0}
+335|Quelle anzeigen
+336|Spotify, SoundCloud, Browser – neben dem Interpreten. Ein Klick darauf öffnet die App

@@ -331,3 +331,5 @@
 332|Klocka
 333|System
 334|Veckan gick till: {0}
+335|Visa varifrån det spelas
+336|Spotify, SoundCloud, webbläsare – bredvid artisten. Klicka för att öppna appen

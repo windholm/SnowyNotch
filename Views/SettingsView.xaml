@@ -404,6 +404,15 @@
                                 <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding LyricsEnabled}"/>
                             </Grid>
                         </Border>
+                        <Border Style="{StaticResource Card}" Margin="0,10,0,0">
+                            <Grid Style="{StaticResource Row}">
+                                <StackPanel Margin="0,0,46,0">
+                                    <TextBlock Text="{l:T 'Показывать, откуда играет'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Text="{l:T 'Spotify, SoundCloud, браузер — рядом с исполнителем. Клик по названию открывает приложение'}" Style="{StaticResource Hint}"/>
+                                </StackPanel>
+                                <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding ShowSource}"/>
+                            </Grid>
+                        </Border>
                         <TextBlock Text="{l:T 'КНОПКИ ПЛЕЕРА'}" Style="{StaticResource GroupLabel}"/>
                         <Border Style="{StaticResource Card}">
                             <StackPanel>

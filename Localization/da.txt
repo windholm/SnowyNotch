@@ -1,0 +1,335 @@
+001|Indstillinger        Win + /
+002|Vis øen
+003|Afslut
+004|Forbundet
+005|Lavt batteri
+006|Oplader
+007|På batteri
+008|Slå lyd til
+009|Slå lyd fra
+010|Batteriet oplades
+011|Tilslut opladeren
+012|Den bærbare kører på batteri
+013|Batteri i hovedtelefoner
+014|Forbundet
+015|{0} af {1}
+016|Fjern valgte
+017|Tøm bakken
+018|Færdig
+019|Vælg filer
+020|Fil kopieret
+021|Kopieret: {0}
+022|Klik for at kopiere filerne, træk for at flytte dem alle på én gang
+023|Tilføj widgets
+024|Hjem er tom
+025|Musik, ur, timer — hvad du har lyst til
+026|Fjern
+027|Der afspilles intet
+028|{0} (sat på pause) · {1}
+029|Kører · {0}
+030|Pause · {0}
+031|Klar
+032|Lydstyrke · {0}
+033|Lydstyrke for apps
+034|Tom
+035|arbejder
+036|{0} venter på dig
+037|{0} · færdig
+038| brugt
+039|Claude og Codex venter på en opgave
+040|Claude venter på en opgave
+041|Codex venter på en opgave
+042|Ikke forbundet
+043|Der er plads til {0} widgets på Hjem
+044|Føj til Hjem
+045|Alle widgets er allerede på Hjem
+046|Hovedtelefoner (demo)
+047|Fjern fra bakken
+048|Hjem
+049|Bakke
+050|Widgets
+051|Indstillinger (Win + /)
+052|Annuller
+053|Filer
+054|Slip filer her
+055|Slip for at tilføje
+056|Rediger Hjem
+057|Tilbage til tjenester
+058|Velkommen til SnowyNotch!
+059|Hold musen over øen, slip en fil på den, eller tryk på Win + /
+060|Kom i gang
+061|Indstillinger
+062|Tjenester
+063|{0} t
+064|Venter på dig
+065|Har brug for din tilladelse
+066|Læser {0}
+067|Redigerer {0}
+068|Opretter {0}
+069|Kommando: {0}
+070|Søger efter “{0}”
+071|Finder filer {0}
+072|Åbner {0}
+073|Søger på nettet efter “{0}”
+074|Starter en hjælper
+075|Opdaterer planen
+076|Værktøj {0}
+077|Systemlyde
+078|Claude-grænser er slået fra
+079|Log ind på Claude Code (claude → /login)
+080|Login til Claude Code er udløbet — åbn Claude Code, så fornyes det
+081|Claude afviste adgang — åbn Claude Code for at forny login
+082|Kunne ikke hente grænser ({0})
+083|Grænser er ikke tilgængelige for dette abonnement
+084|Kan ikke nå Claude
+085|Denne uge
+086|Aktuel session
+087|Grænse
+088|Stoppet
+089|Søger på nettet
+090|Ser et billede
+091|Arbejder
+092|Kommando
+093|Læser en fil
+094|Gennemser filer
+095|Kører {0}
+096|filer
+097|Opretter
+098|Redigerer
+099|{0} {1} og {2} mere
+100|Codex er ikke kørt endnu
+101|Grænser vises efter din første Codex-forespørgsel
+102|Enhed
+103|Medieafspiller
+104|Ny note
+105|Pause
+106|Lang pause
+107|Fokus
+108|Tekst
+109|Grænser
+110|Opgavens fremskridt
+111|Agentforbindelser
+112|Opdater
+113|Forbind
+114|Fremskridt
+115|Forbind Claude Code eller Codex
+116|Ikke forbundet
+117|Forbind Claude Code: øen viser trin og status og, med dit samtykke, dine abonnementsgrænser.
+118|Forbind Codex: øen viser fremskridt og grænser fra Codex-logfilerne på denne computer.
+119|Grænser vises efter første forespørgsel
+121|Arbejder på en opgave
+122|Venter på dit svar
+123|Inaktiv
+124|Ingen aktive opgaver
+125|Ingen data om grænser
+126|Grænse nulstillet
+127|Opdateret {0}
+128|Venter på data
+129|ikke forbundet
+130|{0:0} % brugt
+131|ingen data
+132|på søndag
+133|på mandag
+134|på tirsdag
+135|på onsdag
+136|på torsdag
+137|på fredag
+138|på lørdag
+139|Nulstilles
+140|Nulstilles kl. {0}
+141|Nulstilles i morgen kl. {0}
+142|Nulstilles {0} kl. {1}
+143|Nulstilling: {0}, {1}
+144|lige nu
+145|for {0} min. siden
+146|for {0} t siden
+147|Sessioner: {0}
+148|Agenter
+149|Agenterne holder pause lige nu
+150|Agenterne er ikke forbundet
+151|Giv Claude Code eller Codex en opgave — trin, filer og status vises her.
+152|Forbind Claude Code eller Codex under Indstillinger → Agenter, så viser øen, hvordan arbejdet går.
+153|Venter på en opgave
+154|Gemmer…
+155|Læser…
+156|Redigeret
+157|Læst
+158|GENERELT
+159|Generelt
+160|Udseende
+161|TJENESTER
+162|Medier
+163|Lyd og enheder
+164|MERE
+165|Betjening
+166|Om
+167|Luk (Esc)
+168|Sprog
+169|Øen genstarter for at anvende sproget
+170|Fold ud ved hover
+171|Forsinkelse før udfoldning
+172| ms
+173|Fold sammen efter
+174|Musehjul — flyt øen af vejen
+175|Klik med musehjulet på øen for at gøre den gennemsigtig og lade klik gå igennem; klik med hjulet samme sted igen for at få den tilbage. Hold hjulet nede længe for at skjule den helt (og få den tilbage på samme måde)
+176|Skjul i spil og videoer
+177|Når en app er i fuld skærm
+178|Skjul, når der ikke sker noget
+179|Start med Windows
+180|Win + / åbner disse indstillinger. Det gør et højreklik på øen også. Alle genveje findes under “Betjening”.
+181|Lyd pr. app
+182|Åbn
+183|VIS PÅ ØEN
+184|Lydstyrke og lysstyrke
+185|Ændringer vises på øen, og du kan trække i skyderen
+186|Bluetooth-hovedtelefoner
+187|En batteriboble, når de forbindes, og når batteriet er lavt
+188|Batteri i bærbar
+189|FORM
+190|Notch
+191|Ø
+192|OVERFLADE
+193|Glas
+194|Sort
+195|Glassets gennemsigtighed
+196|Tynd kontur
+197|Viser øens kant på mørke baggrunde
+198|ACCENTFARVE
+199|STØRRELSE OG BEVÆGELSE
+200|Bredde
+201|Skalering
+202|Afstand fra toppen (ø)
+203|Animationshastighed
+204|Hjem rummer op til tre widgets på række. Skift layoutet direkte på øen: fjern med det røde minus, tilføj med et ikon nedenfor.
+205|På Hjem nu
+206|Skift layout
+207|Alle widgets findes også på siden “Widgets” (gitterikonet under øen).
+208|Kun musik
+209|Afspilleren viser musikapps (Spotify, Apple Music, Yandex Music, Deezer, TIDAL, AIMP, foobar2000…) og musiksider i browseren (SoundCloud, YouTube Music, Spotify Web, VK, Bandcamp…). YouTube, videoer, opkald og andre lyde vises ikke
+210|Equalizer
+211|Farve fra coveret
+212|Ellers er bjælkerne hvide
+213|Vis nyt nummer
+214|Øen folder kort ud, når sangen skifter
+215|Vis i
+216| s
+217|Sangtekster
+218|Synkroniserede tekster fra den åbne database lrclib.net. Der søges kun, når du åbner teksten; titel, kunstner og længde på nummeret sendes dertil
+219|AFSPILLERKNAPPER
+220|Bland
+221|Gentag
+222|Knapperne sidder i afspillerens kanter. Nogle afspillere (ofte browsere) understøtter dem ikke — så er de inaktive.
+223|Vis Claude-grænser
+224|Abonnementets 5-timers- og ugegrænser, som i /usage. Øen bruger login til Claude Code på denne computer og spørger kun api.anthropic.com én gang hvert 5. minut; tokenet sendes ikke andre steder hen og gemmes ikke.
+225|Vis agentaktivitet
+226|Trin, filer og status på øen og agentboblen ved siden af
+227|Claude Code: “Forbind” tilføjer HTTP-hooks til 127.0.0.1:47318 (kun denne computer) i ~/.claude/settings.json. Codex: øen læser sessionslogfilerne i ~/.codex/sessions og tilføjer notify til ~/.codex/config.toml for at vide præcis, hvornår en tur slutter. Før ændringen gemmes en sikkerhedskopi ved siden af filerne én gang; “Afbryd” fjerner kun det, den tilføjede. Øen ser kun med og svarer aldrig på anmodninger om tilladelse. Virker i nye sessioner.
+228|Sideskift
+229|Rul
+230|Knapper
+231|Begge
+232|Knappernes placering
+233|Under øen
+234|Faner øverst
+235|Rul: musehjulet eller et stryg med to fingre over øen bladrer Hjem → Bakke → Widgets, én side pr. bevægelse.
+236|TASTATURGENVEJE
+237|En ø til Windows: musik, timere, en filbakke og widgets lige ved skærmens øverste kant.
+238|Nulstil indstillinger
+239|Afslut SnowyNotch
+240|Version {0}.{1}.{2}
+241|Sprog samt udfoldning, skjul og start af øen
+242|Systemstandard
+243|Øens form, overflade, farve og størrelse
+244|Hvad der er på øens Hjem-side
+245|Afspiller, tekster og hvilke kilder der tæller som musik
+246|Lydstyrke for apps, HUD, hovedtelefoner og batteri
+247|Claude Code og Codex: fremskridt og grænser
+248|Sådan bladrer du og alle tastaturgenveje
+249|Version og nulstilling af indstillinger
+250|Afbryd
+251|Forbundet — øen modtager hændelser fra Claude Code
+252|Ikke forbundet
+253|Forbundet — fremskridt, turens afslutning og grænser
+254|Forbundet — fremskridt og grænser fra logfilerne (notify bruges af noget andet, turens afslutning registreres ved en pause)
+255|Forbundet. ~/.codex/config.toml har allerede sin egen notify — den lader vi være; turens afslutning registreres ved en pause.
+256|Forbundet uden notify: kunne ikke ændre ~/.codex/config.toml ({0})
+257|Kunne ikke ændre ~/.claude/settings.json: {0}
+258|Lydstyrke for hver app for sig. Åbn den hvor som helst fra: {0}
+259|Lydstyrke for hver app for sig. Genvejen bruges af en anden app — åbn den fra “Widgets”
+260|Vises, når opladeren tilsluttes, og advarer ved 20 % og 10 %
+261|Intet batteri fundet — det er ikke en bærbar, så du har ikke brug for det
+262|Åbn eller luk indstillinger
+263|Lyd: lydstyrke for apps
+264|Højreklik på øen
+265|Klik med musehjulet på øen
+266|Gør gennemsigtig / gendan
+267|Musehjul over øen
+268|Bladr Hjem → Bakke → Widgets
+269|Noter: overskrift
+270|Noter: tjekliste
+271|Noter: fed, kursiv, understreget
+272|Luk det åbne panel
+273|Lyd
+274|Lydstyrke
+275|Ingen app afspiller lyd lige nu
+276|Slå lyd fra
+277|lyd slået fra
+278|U
+279|Tilbage
+280|Søgning efter sangtekster er slået fra
+281|Leder efter sangtekst…
+282|Første linje til test
+283|Anden linje er lidt længere end den første, så den ombrydes
+284|Tredje — spiller nu
+285|Fjerde linje
+286|Femte linje
+287|Sjette linje
+288|Sangtekst ikke fundet
+289|Fold coveret sammen
+290|Sangtekst
+291|Åbn coveret
+292|Afspil musik i Spotify, SoundCloud eller et andet sted
+293|Åbn {0}
+294|Noter
+295|Ingen noter endnu
+296|Markdown, lister, tjeklister — kopieres som ren tekst
+297|Ny note
+298|Alle noter
+299|Kopiér som Markdown
+300|Slet note
+301|Fed (Ctrl+B)
+302|Kursiv (Ctrl+I)
+303|Understreget (Ctrl+U)
+304|Gennemstreget (Ctrl+Shift+X)
+305|Fremhæv (Ctrl+Shift+H)
+306|Tekstfarve
+307|Overskrift 1 (Ctrl+1)
+308|Overskrift 2 (Ctrl+2)
+309|Overskrift 3 (Ctrl+3)
+310|Liste
+311|Nummereret liste
+312|Tjekliste (Ctrl+Shift+L)
+313|Citat
+314|Slet
+315|I går
+316|Gemt
+317|Stopur
+318|Nulstil
+319|Timer
+320|Pomodoro
+321|Pomodoroer i cyklussen: en lang pause efter den fjerde
+322|Start
+323|Næste fase
+324|Pause
+325|Fortsæt
+326|Pomodoro {0} af {1} · 25 min
+327|5 min pause, derefter fokus
+328|Cyklus fuldført · 15 min pause
+329|Nulstil fase
+330|Start cyklussen forfra
+331|Musik
+332|Ur
+333|System
+334|Denne uge gik til: {0}
+335|Vis, hvor det spiller fra
+336|Spotify, SoundCloud, browser — ved siden af kunstneren. Klik for at åbne appen

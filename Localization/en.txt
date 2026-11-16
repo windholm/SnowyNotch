@@ -331,3 +331,5 @@
 332|Clock
 333|System
 334|This week went to: {0}
+335|Show where it's playing from
+336|Spotify, SoundCloud, browser — next to the artist. Click it to open the app

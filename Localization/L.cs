@@ -18,19 +18,27 @@ public static class L
 {
     public sealed record Lang(string Code, string Native);
 
-    /// <summary>Языки интерфейса — основные, без перебора; по алфавиту самоназваний (латиница, затем кириллица).</summary>
+    /// <summary>Языки интерфейса; по алфавиту самоназваний (латиница, затем кириллица, затем японский и китайский).</summary>
     public static readonly Lang[] Languages =
     {
+        new("cs", "Čeština"),
+        new("da", "Dansk"),
         new("de", "Deutsch"),
         new("en", "English"),
         new("es", "Español"),
         new("fr", "Français"),
         new("it", "Italiano"),
+        new("nl", "Nederlands"),
+        new("nb", "Norsk"),
         new("pl", "Polski"),
         new("pt", "Português"),
+        new("fi", "Suomi"),
         new("sv", "Svenska"),
+        new("tr", "Türkçe"),
         new("ru", "Русский"),
         new("uk", "Українська"),
+        new("ja", "日本語"),
+        new("zh", "简体中文"),
     };
 
     private static Dictionary<string, string> _map = new();
@@ -49,7 +57,9 @@ public static class L
         Culture = CultureInfo.GetCultureInfo(Code switch
         {
             "en" => "en-US", "ru" => "ru-RU", "uk" => "uk-UA", "sv" => "sv-SE", "de" => "de-DE",
-            "fr" => "fr-FR", "es" => "es-ES", "pt" => "pt-PT", "pl" => "pl-PL", "it" => "it-IT", _ => "en-US",
+            "fr" => "fr-FR", "es" => "es-ES", "pt" => "pt-PT", "pl" => "pl-PL", "it" => "it-IT",
+            "nl" => "nl-NL", "cs" => "cs-CZ", "tr" => "tr-TR", "da" => "da-DK", "fi" => "fi-FI", "nb" => "nb-NO",
+            "ja" => "ja-JP", "zh" => "zh-CN", _ => "en-US",
         });
         if (Code == "ru") { _map = new(); _fallback = new(); return; }
 
@@ -62,13 +72,21 @@ public static class L
     {
         if (!string.IsNullOrWhiteSpace(setting) && Languages.Any(l => l.Code == setting)) return setting!;
         string sys = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-        if (sys == "nb" || sys == "nn" || sys == "no") sys = "sv"; // ближе всего из поддерживаемых
+        if (sys == "nn" || sys == "no") sys = "nb"; // нюношк и общий «норвежский» — на букмол
         return Languages.Any(l => l.Code == sys) ? sys : "en";
     }
 
     /// <summary>Перевод строки.</summary>
     public static string T(string ru) =>
         _map.TryGetValue(ru, out var s) ? s : _fallback.TryGetValue(ru, out var f) ? f : ru;
+
+    /// <summary>«16 ноября», «November 16», «11月16日» — день и месяц в порядке, принятом в языке.</summary>
+    public static string MonthDay(DateTime d, bool shortMonth = false)
+    {
+        string pattern = Culture.DateTimeFormat.MonthDayPattern;
+        if (shortMonth) pattern = pattern.Replace("MMMM", "MMM");
+        return d.ToString(pattern, Culture);
+    }
 
     /// <summary>Перевод шаблона с подстановками {0}, {1}…</summary>
     public static string F(string ru, params object?[] args)

@@ -38,8 +38,12 @@ public partial class MediaWidget : UserControl, IMediaView
         LyricsButton.Visibility = _settings.LyricsEnabled ? Visibility.Visible : Visibility.Collapsed;
         ShuffleButton.Visibility = _settings.ShowShuffleButton ? Visibility.Visible : Visibility.Collapsed;
         RepeatButton.Visibility = _settings.ShowRepeatButton ? Visibility.Visible : Visibility.Collapsed;
+        if (_snap != null) Update(_snap); // источник рядом с исполнителем включают и выключают на лету
         ApplyAccent();
     }
+
+    /// <summary>Откуда играет («Spotify»), или пусто, если источник выключен в настройках.</summary>
+    private string Source => _settings.ShowSource && _snap != null ? _snap.SourceName : "";
 
     public void Update(MediaSnapshot? snap)
     {
@@ -54,11 +58,12 @@ public partial class MediaWidget : UserControl, IMediaView
 
         TitleText.Text = snap.Title;
         // «Исполнитель · Spotify» — клик выводит приложение вперёд.
-        ArtistText.Text = snap.SourceName.Length > 0
-            ? (snap.Artist.Length > 0 ? $"{snap.Artist} · {snap.SourceName}" : snap.SourceName)
+        string source = Source;
+        ArtistText.Text = source.Length > 0
+            ? (snap.Artist.Length > 0 ? $"{snap.Artist} · {source}" : source)
             : snap.Artist;
-        ArtistText.Cursor = snap.SourceName.Length > 0 ? Cursors.Hand : null;
-        ArtistText.ToolTip = snap.SourceName.Length > 0 ? L.F("Открыть {0}", snap.SourceName) : null;
+        ArtistText.Cursor = source.Length > 0 ? Cursors.Hand : null;
+        ArtistText.ToolTip = source.Length > 0 ? L.F("Открыть {0}", source) : null;
         Art.Background = MediaVisuals.ArtBrush(snap);
 
         Bars.IsPlaying = snap.IsPlaying;
@@ -110,7 +115,7 @@ public partial class MediaWidget : UserControl, IMediaView
 
     private void Source_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
-        if (_snap is not { SourceName.Length: > 0 }) return;
+        if (Source.Length == 0) return;
         e.Handled = true;
         _media.OpenSource();
     }
