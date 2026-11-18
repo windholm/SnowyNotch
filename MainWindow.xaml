@@ -344,16 +344,18 @@
                                 </Grid>
                             </Grid>
 
-                            <StackPanel x:Name="WidgetsView" Width="586" Visibility="Hidden" Opacity="0">
-                                <WrapPanel x:Name="WidgetTiles" Margin="16,14,16,4" HorizontalAlignment="Center"/>
-                                <Button Style="{StaticResource PillButton}" HorizontalAlignment="Right" Margin="0,4,22,14" Padding="11,6"
-                                        Click="EditHome_Click">
-                                    <StackPanel Orientation="Horizontal">
-                                        <c:IconGlyph Data="{StaticResource IconPencil}" Width="15" Height="15"/>
-                                        <TextBlock Text="{l:T 'Изменить главную'}" FontSize="12" Margin="6,0,0,0" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
+                            <!-- Сервисы: одна строка-док с прокруткой; справа — правка главной. -->
+                            <Grid x:Name="WidgetsView" Visibility="Hidden" Opacity="0">
+                                <StackPanel Orientation="Horizontal" Margin="12,2,16,4">
+                                    <c:ServiceDock x:Name="Dock" Width="440"/>
+                                    <Border Width="1" Height="38" Background="#1FFFFFFF" Margin="8,0,12,22" VerticalAlignment="Center"/>
+                                    <Button Style="{StaticResource IconButton}" Width="38" Height="38" Background="#1FFFFFFF"
+                                            VerticalAlignment="Center" Margin="0,0,0,22"
+                                            Click="EditHome_Click" ToolTip="{l:T 'Изменить главную'}">
+                                        <c:IconGlyph Data="{StaticResource IconPencil}" Width="17" Height="17"/>
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
 
                             <Grid x:Name="FocusView" Visibility="Hidden" Opacity="0">
                                 <Grid.RowDefinitions>
@@ -366,8 +368,8 @@
                                             Click="FocusBack_Click" ToolTip="{l:T 'Назад к сервисам'}">
                                         <c:IconGlyph Data="{StaticResource IconChevronLeft}" Width="17" Height="17" StrokeWidth="2.2"/>
                                     </Button>
-                                    <c:IconGlyph x:Name="FocusIcon" VerticalAlignment="Center" Foreground="#B3FFFFFF" Width="19" Height="19"/>
-                                    <TextBlock x:Name="FocusTitle" FontSize="15" FontWeight="SemiBold" Foreground="#B3FFFFFF" Margin="8,0,0,0"
+                                    <ContentControl x:Name="FocusIconHost" VerticalAlignment="Center" Focusable="False" Width="26" Height="26"/>
+                                    <TextBlock x:Name="FocusTitle" FontSize="15.5" FontWeight="SemiBold" Foreground="White" Margin="9,0,0,0"
                                                VerticalAlignment="Center"/>
                                 </StackPanel>
                                 <ContentControl x:Name="FocusHost" Grid.Row="1" Margin="22,10,22,14" Focusable="False"/>

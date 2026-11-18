@@ -1,22 +1,28 @@
 ﻿using System.Linq;
 using System.Windows.Media;
+using SnowyNotch.Controls;
 using SnowyNotch.Localization;
 
 namespace SnowyNotch.Widgets;
 
-/// <summary>Как выглядит иконка сервиса на панели: глиф, градиент плитки и градиент глифа.</summary>
-public sealed record AppIconStyle(string Glyph, Color Top, Color Bottom, Color GlyphTop, Color GlyphBottom)
+/// <summary>Как выглядит иконка сервиса: двухтонный глиф и диагональный градиент плитки.</summary>
+public sealed record AppIconStyle(Geometry Main, Geometry? Tone, Color Top, Color Bottom)
 {
-    private static readonly Color White = Colors.White;
-    private static readonly Color Pearl = Color.FromRgb(0xEE, 0xEE, 0xF4);
-    private static readonly Color DarkTop = Color.FromRgb(0x3C, 0x3C, 0x41);
-    private static readonly Color DarkBottom = Color.FromRgb(0x1A, 0x1A, 0x1D);
+    /// <summary>Цвет сплошной части глифа (по умолчанию белый).</summary>
+    public Color Glyph { get; init; } = Colors.White;
 
-    /// <summary>Цветная плитка, белый глиф.</summary>
-    public static AppIconStyle Bright(string glyph, Color top, Color bottom) => new(glyph, top, bottom, White, Pearl);
+    /// <summary>Цвет и непрозрачность подложки глифа.</summary>
+    public Color ToneColor { get; init; } = Colors.White;
+    public double ToneOpacity { get; init; } = 0.42;
 
-    /// <summary>Тёмная плитка, цветной глиф.</summary>
-    public static AppIconStyle Dark(string glyph, Color glyphTop, Color glyphBottom) => new(glyph, DarkTop, DarkBottom, glyphTop, glyphBottom);
+    /// <summary>Готовая иконка нужного размера.</summary>
+    public AppIcon Create(double size, bool glow = true) => new()
+    {
+        Width = size, Height = size,
+        Glyph = Main, Tone = Tone, Top = Top, Bottom = Bottom,
+        GlyphTop = Glyph, GlyphBottom = Glyph, ToneColor = ToneColor, ToneOpacity = ToneOpacity,
+        ShadowColor = glow ? Bottom : Colors.Transparent,
+    };
 }
 
 public sealed record WidgetInfo(string Id, string Title, string IconKey, Color Tint, AppIconStyle Icon);
@@ -25,16 +31,26 @@ public static class WidgetCatalog
 {
     private static Color C(uint rgb) => Color.FromRgb((byte)(rgb >> 16), (byte)(rgb >> 8), (byte)rgb);
 
+    // Порядок — по цветовому кругу (розовый → оранжевый → жёлтый → зелёный → бирюзовый → синий → индиго → фиолетовый):
+    // в одной строке сервисы читаются как плавная радуга, а самые частые (музыка, таймер, заметки) стоят первыми.
     public static readonly WidgetInfo[] All =
     {
-        new("media", L.T("Музыка"), "IconMusic", C(0xFF375F), AppIconStyle.Bright("AppGlyphMusic", C(0xFF7092), C(0xE2134A))),
-        new("audio", L.T("Звук"), "IconSpeakerHigh", C(0x0A84FF), AppIconStyle.Bright("AppGlyphSpeaker", C(0x4FB2FF), C(0x0057D9))),
-        new("clock", L.T("Время"), "IconClock", C(0x5E5CE6), AppIconStyle.Bright("AppGlyphClock", C(0x8C8AFF), C(0x3936C9))),
-        new("timer", L.T("Таймер"), "IconTimer", C(0xFF9F0A), AppIconStyle.Bright("AppGlyphTimer", C(0xFFC14D), C(0xF57300))),
-        new("stopwatch", L.T("Секундомер"), "IconStopwatch", C(0x32ADE6), AppIconStyle.Bright("AppGlyphStopwatch", C(0x5EE3F5), C(0x0B91C9))),
-        new("system", L.T("Система"), "IconCpu", C(0x30D158), AppIconStyle.Dark("AppGlyphGauge", C(0x8AF5A6), C(0x24B84C))),
-        new("notes", L.T("Заметки"), "IconNote", C(0xF5B700), AppIconStyle.Dark("AppGlyphNotes", C(0xFFE57A), C(0xFFB300))),
-        new("agents", "Agents", "IconAgents", C(0x8B7CF6), AppIconStyle.Dark("AppGlyphAgents", C(0xD2C6FF), C(0x7B5BFF))),
+        new("media", L.T("Музыка"), "IconMusic", C(0xFF4B84),
+            new(ServiceGlyphs.MusicMain, null, C(0xFF86AB), C(0xFF2468))),
+        new("timer", L.T("Таймер"), "IconTimer", C(0xFF9B21),
+            new(ServiceGlyphs.TimerMain, ServiceGlyphs.TimerTone, C(0xFFC062), C(0xFF7A0A))),
+        new("notes", L.T("Заметки"), "IconNote", C(0xF7BC0E),
+            new(ServiceGlyphs.NotesMain, ServiceGlyphs.NotesTone, C(0xFFE873), C(0xFFB703)) { Glyph = C(0xE68A00), ToneOpacity = 0.97 }),
+        new("system", L.T("Система"), "IconCpu", C(0x34C766),
+            new(ServiceGlyphs.SystemMain, ServiceGlyphs.SystemTone, C(0x7EF2A2), C(0x14AE4D))),
+        new("stopwatch", L.T("Секундомер"), "IconStopwatch", C(0x22BFC9),
+            new(ServiceGlyphs.StopwatchMain, ServiceGlyphs.StopwatchTone, C(0x74EBE2), C(0x0CA3B5))),
+        new("audio", L.T("Звук"), "IconSpeakerHigh", C(0x2A8BFF),
+            new(ServiceGlyphs.SoundMain, ServiceGlyphs.SoundTone, C(0x74BEFF), C(0x0A66F5))),
+        new("clock", L.T("Время"), "IconClock", C(0x6C63F2),
+            new(ServiceGlyphs.ClockMain, ServiceGlyphs.ClockTone, C(0xA3A0FF), C(0x4A3CE6))),
+        new("agents", "Agents", "IconAgents", C(0xA862F7),
+            new(ServiceGlyphs.AgentsMain, ServiceGlyphs.AgentsTone, C(0xD6A2FF), C(0x8638F2))),
     };
 
     public static WidgetInfo? Find(string id) => All.FirstOrDefault(w => w.Id == id);

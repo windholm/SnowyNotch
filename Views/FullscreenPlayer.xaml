@@ -1,0 +1,191 @@
+<Window x:Class="SnowyNotch.Views.FullscreenPlayer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:l="clr-namespace:SnowyNotch.Localization"
+        xmlns:c="clr-namespace:SnowyNotch.Controls"
+        Title="SnowyNotch" WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True"
+        Background="Black" Foreground="White" UseLayoutRounding="True"
+        FontFamily="Segoe UI Variable Display, Segoe UI"
+        WindowStartupLocation="Manual" Left="0" Top="0" Width="800" Height="600">
+    <Grid x:Name="Root" ClipToBounds="True" Background="Black">
+
+        <!-- Фон: размытая обложка (два слоя для плавной смены трека), цветные пятна в тон обложке, затемнение. -->
+        <Grid x:Name="Backdrop" Opacity="0" IsHitTestVisible="False">
+            <Border x:Name="BackArtA" Margin="-260" RenderTransformOrigin="0.5,0.5" CacheMode="BitmapCache">
+                <Border.Effect><BlurEffect Radius="160" RenderingBias="Performance" KernelType="Gaussian"/></Border.Effect>
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform x:Name="DriftScale" ScaleX="1.12" ScaleY="1.12"/>
+                        <RotateTransform x:Name="DriftRotate"/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+            </Border>
+            <Border x:Name="BackArtB" Margin="-260" Opacity="0" RenderTransformOrigin="0.5,0.5" CacheMode="BitmapCache">
+                <Border.Effect><BlurEffect Radius="160" RenderingBias="Performance" KernelType="Gaussian"/></Border.Effect>
+            </Border>
+
+            <Canvas x:Name="Aurora" Opacity="0.55">
+                <Ellipse x:Name="BlobA" Width="900" Height="900">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop x:Name="BlobAIn" Color="#B0FF4080" Offset="0"/>
+                            <GradientStop x:Name="BlobAOut" Color="#00FF4080" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                    <Ellipse.RenderTransform><TranslateTransform x:Name="BlobAMove"/></Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse x:Name="BlobB" Width="1100" Height="1100">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop x:Name="BlobBIn" Color="#A04060FF" Offset="0"/>
+                            <GradientStop x:Name="BlobBOut" Color="#004060FF" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                    <Ellipse.RenderTransform><TranslateTransform x:Name="BlobBMove"/></Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse x:Name="BlobC" Width="760" Height="760">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop x:Name="BlobCIn" Color="#9040E0C0" Offset="0"/>
+                            <GradientStop x:Name="BlobCOut" Color="#0040E0C0" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                    <Ellipse.RenderTransform><TranslateTransform x:Name="BlobCMove"/></Ellipse.RenderTransform>
+                </Ellipse>
+            </Canvas>
+
+            <Rectangle>
+                <Rectangle.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#59000000" Offset="0"/>
+                        <GradientStop Color="#33000000" Offset="0.45"/>
+                        <GradientStop Color="#B3000000" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Rectangle>
+                <Rectangle.Fill>
+                    <RadialGradientBrush RadiusX="0.75" RadiusY="0.8">
+                        <GradientStop Color="#00000000" Offset="0.55"/>
+                        <GradientStop Color="#99000000" Offset="1"/>
+                    </RadialGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Grid>
+
+        <!-- Сцена -->
+        <Grid x:Name="Stage" RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform><ScaleTransform x:Name="StageScale"/></Grid.RenderTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftColDef" Width="*"/>
+                <ColumnDefinition x:Name="RightColDef" Width="1.15*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel x:Name="LeftCol" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel.RenderTransform><TranslateTransform/></StackPanel.RenderTransform>
+                <!-- Обложка: свечение в цвет трека, тень, «дыхание» и уменьшение на паузе. -->
+                <Grid x:Name="CoverHost" Width="420" Height="420" RenderTransformOrigin="0.5,0.5" Opacity="0">
+                    <Grid.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="FlyScale"/>
+                            <TranslateTransform x:Name="FlyShift"/>
+                        </TransformGroup>
+                    </Grid.RenderTransform>
+                    <Ellipse x:Name="CoverGlow" Margin="-90" IsHitTestVisible="False" Opacity="0.85">
+                        <Ellipse.Fill>
+                            <RadialGradientBrush>
+                                <GradientStop x:Name="CoverGlowIn" Color="#807FD8FF" Offset="0.35"/>
+                                <GradientStop x:Name="CoverGlowOut" Color="#007FD8FF" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform><ScaleTransform x:Name="PauseScale"/></Grid.RenderTransform>
+                        <Border x:Name="Cover" CornerRadius="28" Background="#2A2A2E">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="70" ShadowDepth="22" Direction="270" Opacity="0.6" Color="Black" RenderingBias="Performance"/>
+                            </Border.Effect>
+                        </Border>
+                        <Border x:Name="CoverNext" CornerRadius="28" Opacity="0"/>
+                        <Border CornerRadius="28" BorderThickness="1" BorderBrush="#26FFFFFF" IsHitTestVisible="False"/>
+                    </Grid>
+                </Grid>
+
+                <Grid x:Name="TitleRow" Margin="0,40,0,0" Opacity="0">
+                    <Grid.RenderTransform><TranslateTransform/></Grid.RenderTransform>
+                    <StackPanel Margin="0,0,44,0">
+                        <TextBlock x:Name="TitleText" FontSize="32" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock x:Name="ArtistText" FontSize="20" Foreground="#B3FFFFFF" Margin="0,4,0,0" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                    <c:AudioBars x:Name="Bars" Width="28" Height="22" BarCount="6" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid x:Name="ProgressRow" Margin="0,26,0,0" Opacity="0">
+                    <Grid.RenderTransform><TranslateTransform/></Grid.RenderTransform>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="Track" Height="26" Background="Transparent" Cursor="Hand" MouseLeftButtonDown="Track_MouseLeftButtonDown">
+                        <c:WaveProgress x:Name="Wave" Thickness="6" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="0,4,0,0">
+                        <TextBlock x:Name="ElapsedText" FontSize="13.5" Foreground="#99FFFFFF"/>
+                        <TextBlock x:Name="RemainingText" FontSize="13.5" Foreground="#99FFFFFF" HorizontalAlignment="Right"/>
+                    </Grid>
+                </Grid>
+
+                <StackPanel x:Name="ControlsRow" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,18,0,0" Opacity="0">
+                    <StackPanel.RenderTransform><TranslateTransform/></StackPanel.RenderTransform>
+                    <Button Style="{StaticResource IconButton}" Width="72" Height="64" Click="Prev_Click">
+                        <c:IconGlyph Data="{StaticResource GlyphPrev}" Filled="True" Width="40" Height="40"/>
+                    </Button>
+                    <Button Style="{StaticResource IconButton}" Width="84" Height="84" Margin="30,0" Click="PlayPause_Click">
+                        <Grid Width="84" Height="84">
+                            <Ellipse Fill="White"/>
+                            <c:IconGlyph x:Name="PlayGlyph" Data="{StaticResource GlyphPlay}" Filled="True" Width="40" Height="40"
+                                         Foreground="Black" Margin="4,0,0,0"/>
+                            <c:IconGlyph x:Name="PauseGlyph" Data="{StaticResource GlyphPause}" Filled="True" Width="40" Height="40"
+                                         Foreground="Black" Visibility="Collapsed"/>
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource IconButton}" Width="72" Height="64" Click="Next_Click">
+                        <c:IconGlyph Data="{StaticResource GlyphNext}" Filled="True" Width="40" Height="40"/>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Текст песни: строки на холсте, затухание сверху и снизу. -->
+            <Grid x:Name="LyricsPane" Grid.Column="1" ClipToBounds="True" Opacity="0" Margin="0,0,80,0">
+                <Grid.RenderTransform><TranslateTransform x:Name="LyricsShift"/></Grid.RenderTransform>
+                <Grid.OpacityMask>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#00000000" Offset="0"/>
+                        <GradientStop Color="#FF000000" Offset="0.16"/>
+                        <GradientStop Color="#FF000000" Offset="0.82"/>
+                        <GradientStop Color="#00000000" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.OpacityMask>
+                <Canvas x:Name="LinesCanvas"/>
+                <ScrollViewer x:Name="PlainScroll" Visibility="Collapsed" VerticalScrollBarVisibility="Hidden" Focusable="False" Padding="0,120,0,120">
+                    <TextBlock x:Name="PlainText" FontSize="26" FontWeight="SemiBold" Foreground="#D9FFFFFF" TextWrapping="Wrap" LineHeight="40"/>
+                </ScrollViewer>
+                <TextBlock x:Name="LyricsStatus" FontSize="22" FontWeight="SemiBold" Foreground="#80FFFFFF"
+                           VerticalAlignment="Center" Visibility="Collapsed"/>
+            </Grid>
+        </Grid>
+
+        <!-- Верхняя панель: выход. Прячется вместе с курсором, когда мышь не двигается. -->
+        <StackPanel x:Name="TopBar" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,32,0,0" Opacity="0">
+            <Button Style="{StaticResource IconButton}" Width="48" Height="48" Background="#2EFFFFFF" Click="Close_Click"
+                    ToolTip="{l:T 'Выйти (Esc)'}">
+                <c:IconGlyph Data="{StaticResource IconChevronLeft}" Width="22" Height="22" StrokeWidth="2.3" RenderTransformOrigin="0.5,0.5">
+                    <c:IconGlyph.RenderTransform><RotateTransform Angle="-90"/></c:IconGlyph.RenderTransform>
+                </c:IconGlyph>
+            </Button>
+            <Border Background="#24FFFFFF" CornerRadius="8" Padding="9,4" Margin="14,0,0,0" VerticalAlignment="Center">
+                <TextBlock Text="Esc" FontSize="12.5" FontWeight="SemiBold" Foreground="#B3FFFFFF"/>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>

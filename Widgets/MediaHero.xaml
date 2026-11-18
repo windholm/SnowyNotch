@@ -21,7 +21,7 @@
                 </Ellipse.Fill>
             </Ellipse>
             <Border x:Name="BigArt" CornerRadius="20" Background="#2A2A2E" Cursor="Hand" ToolTip="{l:T 'Свернуть обложку'}"
-                    RenderTransformOrigin="0.15,0.2" MouseLeftButtonUp="BigArt_MouseLeftButtonUp">
+                    RenderTransformOrigin="0.15,0.2">
                 <Border.RenderTransform>
                     <ScaleTransform x:Name="BigArtScale"/>
                 </Border.RenderTransform>
@@ -34,13 +34,19 @@
             </StackPanel.RenderTransform>
             <Grid Margin="0,0,0,10">
                 <c:AudioBars x:Name="Bars" Width="22" Height="16" BarCount="6" HorizontalAlignment="Left"/>
-                <Button x:Name="LyricsButton" Style="{StaticResource PillButton}" HorizontalAlignment="Right" Padding="9,4"
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="FullscreenButton" Style="{StaticResource IconButton}" Width="30" Height="28" Background="#1FFFFFFF"
+                            Margin="0,0,8,0" Click="Fullscreen_Click" ToolTip="{l:T 'Во весь экран'}">
+                        <c:IconGlyph Data="{StaticResource IconExpand}" Width="15" Height="15" StrokeWidth="1.8"/>
+                    </Button>
+                <Button x:Name="LyricsButton" Style="{StaticResource PillButton}" Padding="9,4"
                         Click="Lyrics_Click" ToolTip="{l:T 'Текст песни'}">
                     <StackPanel Orientation="Horizontal">
                         <c:IconGlyph Data="{StaticResource IconLyrics}" Width="15" Height="15"/>
                         <TextBlock Text="{l:T 'Текст'}" FontSize="11.5" Margin="5,0,0,0" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
+                </StackPanel>
             </Grid>
             <TextBlock x:Name="TitleText" FontSize="21" FontWeight="SemiBold" TextWrapping="Wrap" MaxHeight="56"
                        TextTrimming="CharacterEllipsis" LineHeight="27"/>
@@ -52,11 +58,9 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Grid x:Name="Track" Height="16" Background="Transparent" Cursor="Hand"
+                <Grid x:Name="Track" Height="22" Background="Transparent" Cursor="Hand"
                       MouseLeftButtonDown="Track_MouseLeftButtonDown">
-                    <Border Height="5" CornerRadius="2.5" Background="#29FFFFFF" VerticalAlignment="Center"/>
-                    <Border x:Name="Fill" Height="5" CornerRadius="2.5" Width="0" Background="#E6FFFFFF"
-                            HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <c:WaveProgress x:Name="Wave" Thickness="5" VerticalAlignment="Center"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <TextBlock x:Name="ElapsedText" FontSize="11" Foreground="{StaticResource TextSecondary}"/>

@@ -333,3 +333,8 @@
 334|La settimana è andata a: {0}
 335|Mostra da dove viene la musica
 336|Spotify, SoundCloud, browser: accanto all'artista. Clic per aprire l'app
+337|Barra di avanzamento ondulata
+338|Come su Android: l'onda scorre mentre suona la musica e si appiattisce in pausa
+339|Schermo intero
+340|Esci (Esc)
+341|Trascina la copertina fuori dall'isola con il mouse per aprire il player a schermo intero con il testo. Esc per uscire

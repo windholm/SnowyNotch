@@ -333,3 +333,8 @@
 334|Veckan gick till: {0}
 335|Visa varifrån det spelas
 336|Spotify, SoundCloud, webbläsare – bredvid artisten. Klicka för att öppna appen
+337|Vågig förloppsindikator
+338|Som i Android: vågen rör sig när musiken spelar och planar ut vid paus
+339|Helskärm
+340|Avsluta (Esc)
+341|Dra omslaget ut ur ön med musen för att öppna spelaren i helskärm med låttext. Esc för att avsluta

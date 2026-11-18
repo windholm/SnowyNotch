@@ -18,10 +18,14 @@ public partial class MediaWidget : UserControl, IMediaView
     private readonly MediaService _media;
     private readonly AppSettings _settings;
     private MediaSnapshot? _snap;
+    private readonly Controls.ArtworkDrag _artDrag;
 
     public MediaWidget(MediaService media, AppSettings settings)
     {
         InitializeComponent();
+        // Обложку можно вытащить из острова — откроется полноэкранный плеер; клик — как раньше, большая обложка.
+        _artDrag = new Controls.ArtworkDrag(Art, () => _snap != null ? Art.Background : null);
+        _artDrag.Click += () => { if (_snap != null) ArtworkClicked?.Invoke(); };
         _media = media;
         _settings = settings;
         ApplySettings();
@@ -32,12 +36,16 @@ public partial class MediaWidget : UserControl, IMediaView
 
     public event Action? LyricsClicked;
 
+    /// <summary>Обложку отпустили вне своего места: (точка, прямоугольник копии) в пикселях экрана → открыть плеер во весь экран?</summary>
+    public Func<Point, Rect, bool>? ArtworkDropped { get => _artDrag.Drop; set => _artDrag.Drop = value; }
+
     public void ApplySettings()
     {
         Bars.Visibility = _settings.ShowVisualizer ? Visibility.Visible : Visibility.Collapsed;
         LyricsButton.Visibility = _settings.LyricsEnabled ? Visibility.Visible : Visibility.Collapsed;
         ShuffleButton.Visibility = _settings.ShowShuffleButton ? Visibility.Visible : Visibility.Collapsed;
         RepeatButton.Visibility = _settings.ShowRepeatButton ? Visibility.Visible : Visibility.Collapsed;
+        Wave.IsWavy = _settings.WavyProgress;
         if (_snap != null) Update(_snap); // источник рядом с исполнителем включают и выключают на лету
         ApplyAccent();
     }
@@ -67,6 +75,7 @@ public partial class MediaWidget : UserControl, IMediaView
         Art.Background = MediaVisuals.ArtBrush(snap);
 
         Bars.IsPlaying = snap.IsPlaying;
+        Wave.IsPlaying = snap.IsPlaying;
         PlayGlyph.Visibility = snap.IsPlaying ? Visibility.Collapsed : Visibility.Visible;
         PauseGlyph.Visibility = snap.IsPlaying ? Visibility.Visible : Visibility.Collapsed;
 
@@ -86,7 +95,7 @@ public partial class MediaWidget : UserControl, IMediaView
         var dur = _snap.Duration;
         var pos = _snap.CurrentPosition;
         bool has = dur > TimeSpan.Zero;
-        Fill.Width = has ? Math.Clamp(pos.TotalSeconds / dur.TotalSeconds, 0, 1) * Track.ActualWidth : 0;
+        Wave.Progress = has ? Math.Clamp(pos.TotalSeconds / dur.TotalSeconds, 0, 1) : 0;
         ElapsedText.Text = has ? MediaVisuals.Format(pos) : "";
         RemainingText.Text = has ? "-" + MediaVisuals.Format(dur - pos) : "";
     }
@@ -102,13 +111,6 @@ public partial class MediaWidget : UserControl, IMediaView
         var anim = new DoubleAnimation(to, TimeSpan.FromMilliseconds(220)) { EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut } };
         ArtScale.BeginAnimation(ScaleTransform.ScaleXProperty, anim);
         ArtScale.BeginAnimation(ScaleTransform.ScaleYProperty, anim);
-    }
-
-    private void Art_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-        if (_snap == null) return;
-        e.Handled = true;
-        ArtworkClicked?.Invoke();
     }
 
     private void Lyrics_Click(object sender, RoutedEventArgs e) => LyricsClicked?.Invoke();

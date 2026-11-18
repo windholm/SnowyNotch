@@ -151,6 +151,8 @@ public partial class MainWindow : Window
         if (msg == WM_MOUSEHWHEEL && (Island.IsMouseOver || NavHitArea.IsMouseOver))
         {
             int delta = unchecked((short)((long)wParam >> 16));
+            // Над доком сервисов горизонтальный жест листает сам док; у его края — страницы острова.
+            if (_view == View.Widgets && Dock.IsMouseOver && Dock.ScrollBy(delta * 0.9)) { handled = true; return IntPtr.Zero; }
             OnSwipe(-delta);
             handled = true;
         }
@@ -273,7 +275,7 @@ public partial class MainWindow : Window
 
         if (all || changed is nameof(AppSettings.ShowVisualizer) or nameof(AppSettings.AccentFromArtwork)
                  or nameof(AppSettings.ShowShuffleButton) or nameof(AppSettings.ShowRepeatButton) or nameof(AppSettings.LyricsEnabled)
-                 or nameof(AppSettings.ShowSource))
+                 or nameof(AppSettings.ShowSource) or nameof(AppSettings.WavyProgress))
         {
             CompactBars.Visibility = _settings.ShowVisualizer ? Visibility.Visible : Visibility.Collapsed;
             ApplyCompactAccent();
@@ -428,14 +430,17 @@ public partial class MainWindow : Window
     {
         double s = _settings.AnimationSpeed;
         double fast = 560 * s * s, slow = 330 * s * s, mid = 420 * s * s;
-        Configure(_w, growing ? fast : slow);
-        Configure(_h, growing ? slow : fast);
-        foreach (var sp in new[] { _topR, _bottomR, _ear, _top }) Configure(sp, mid);
+        // Раскрытие — упругое: остров чуть «перелетает» размер и садится на место (как Dynamic Island).
+        // Схлопывание — плотнее, с едва заметной отдачей: маленькая пилюля не должна дрожать.
+        double zeta = growing ? 0.7 : 0.82;
+        Configure(_w, growing ? fast : slow, zeta);
+        Configure(_h, growing ? slow : fast, zeta);
+        foreach (var sp in new[] { _topR, _bottomR, _ear, _top }) Configure(sp, mid, 0.86);
 
-        static void Configure(Spring sp, double k)
+        static void Configure(Spring sp, double k, double zeta)
         {
             sp.Stiffness = k;
-            sp.Damping = 2 * 0.86 * Math.Sqrt(k);
+            sp.Damping = 2 * zeta * Math.Sqrt(k);
         }
     }
 

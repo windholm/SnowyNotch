@@ -21,15 +21,18 @@ public partial class MainWindow
     {
         _tools.Timer.PropertyChanged += (_, e) =>
         {
-            if (e.PropertyName == nameof(TimerTool.IsActive)) { UpdateBubbles(); ApplyIdleVisibility(); }
+            if (e.PropertyName == nameof(TimerTool.IsActive)) {
+        UpdateDockStatus(); UpdateBubbles(); ApplyIdleVisibility(); }
             if (e.PropertyName == nameof(TimerTool.IsBreak)) OnTimerSideChanged();
         };
         _tools.Stopwatch.PropertyChanged += (_, e) =>
         {
+        UpdateDockStatus();
             if (e.PropertyName == nameof(StopwatchTool.IsActive)) { UpdateBubbles(); ApplyIdleVisibility(); }
         };
         _tools.Timer.Finished += () =>
         {
+        UpdateDockStatus();
             SystemSounds.Exclamation.Play();
             if (!_pinned && !_hoverActive && !IsGhosted)
             {
@@ -42,6 +45,7 @@ public partial class MainWindow
 
     private void UpdateBubbles()
     {
+        UpdateDockStatus();
         bool collapsed = _state != IslandState.Expanded;
         SetBubble(StopwatchBubble, StopwatchBubbleScale, ref _stopwatchBubbleShown, collapsed && _tools.Stopwatch.IsActive);
         SetBubble(TimerBubble, TimerBubbleScale, ref _timerBubbleShown, collapsed && _tools.Timer.IsActive);

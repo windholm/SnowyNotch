@@ -14,7 +14,7 @@
 
             <Border x:Name="Art" Width="48" Height="48" CornerRadius="11" HorizontalAlignment="Left" Background="#2A2A2E"
                     Cursor="Hand" ToolTip="{l:T 'Открыть обложку'}" RenderTransformOrigin="0.5,0.5"
-                    MouseLeftButtonUp="Art_MouseLeftButtonUp" MouseEnter="Art_MouseEnter" MouseLeave="Art_MouseLeave">
+                    MouseEnter="Art_MouseEnter" MouseLeave="Art_MouseLeave">
                 <Border.RenderTransform>
                     <ScaleTransform x:Name="ArtScale"/>
                 </Border.RenderTransform>
@@ -42,9 +42,7 @@
                 <TextBlock x:Name="ElapsedText" FontSize="11" Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"/>
                 <Grid x:Name="Track" Grid.Column="1" Height="16" Background="Transparent" Cursor="Hand"
                       MouseLeftButtonDown="Track_MouseLeftButtonDown">
-                    <Border Height="4" CornerRadius="2" Background="#29FFFFFF" VerticalAlignment="Center"/>
-                    <Border x:Name="Fill" Height="4" CornerRadius="2" Width="0" Background="#E6FFFFFF"
-                            HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <c:WaveProgress x:Name="Wave" Thickness="4" VerticalAlignment="Center"/>
                 </Grid>
                 <TextBlock x:Name="RemainingText" Grid.Column="2" FontSize="11" Foreground="{StaticResource TextSecondary}"
                            VerticalAlignment="Center" TextAlignment="Right"/>

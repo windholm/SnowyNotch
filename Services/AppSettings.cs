@@ -80,6 +80,7 @@ public sealed class AppSettings : INotifyPropertyChanged
     private bool _showShuffleButton;
     private bool _showRepeatButton;
     private bool _showSource = true;
+    private bool _wavyProgress;
 
     private bool _middleClickGhost = true;
     private bool _showHud = true;
@@ -133,6 +134,9 @@ public sealed class AppSettings : INotifyPropertyChanged
 
     /// <summary>Показывать рядом с исполнителем, откуда играет музыка (Spotify, SoundCloud, браузер).</summary>
     public bool ShowSource { get => _showSource; set => Set(ref _showSource, value); }
+
+    /// <summary>Волнистая полоса прогресса (как в Android / Material You) вместо прямой.</summary>
+    public bool WavyProgress { get => _wavyProgress; set => Set(ref _wavyProgress, value); }
 
     public bool MiddleClickGhost { get => _middleClickGhost; set => Set(ref _middleClickGhost, value); }
 

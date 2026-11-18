@@ -333,3 +333,8 @@
 334|Die Woche ging an: {0}
 335|Quelle anzeigen
 336|Spotify, SoundCloud, Browser – neben dem Interpreten. Ein Klick darauf öffnet die App
+337|Wellige Fortschrittsleiste
+338|Wie bei Android: Die Welle läuft, solange Musik spielt, und glättet sich bei Pause
+339|Vollbild
+340|Beenden (Esc)
+341|Ziehe das Cover mit der Maus aus der Insel, um den Player im Vollbild mit Songtext zu öffnen. Mit Esc beenden

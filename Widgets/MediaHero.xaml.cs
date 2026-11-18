@@ -13,10 +13,13 @@ public partial class MediaHero : UserControl, IMediaView
     private readonly MediaService _media;
     private readonly AppSettings _settings;
     private MediaSnapshot? _snap;
+    private readonly Controls.ArtworkDrag _artDrag;
 
     public MediaHero(MediaService media, AppSettings settings)
     {
         InitializeComponent();
+        _artDrag = new Controls.ArtworkDrag(BigArt, () => _snap != null ? BigArt.Background : null);
+        _artDrag.Click += () => CloseRequested?.Invoke();
         _media = media;
         _settings = settings;
         ApplySettings();
@@ -26,10 +29,16 @@ public partial class MediaHero : UserControl, IMediaView
 
     public event Action? LyricsClicked;
 
+    /// <summary>Кнопка «во весь экран»: прямоугольник большой обложки в пикселях экрана — оттуда полетит обложка.</summary>
+    public event Action<Rect>? FullscreenRequested;
+
+    public Func<Point, Rect, bool>? ArtworkDropped { get => _artDrag.Drop; set => _artDrag.Drop = value; }
+
     public void ApplySettings()
     {
         Bars.Visibility = _settings.ShowVisualizer ? Visibility.Visible : Visibility.Collapsed;
         LyricsButton.Visibility = _settings.LyricsEnabled ? Visibility.Visible : Visibility.Collapsed;
+        Wave.IsWavy = _settings.WavyProgress;
         ApplyAccent();
     }
 
@@ -45,6 +54,7 @@ public partial class MediaHero : UserControl, IMediaView
         ArtistText.Text = snap.Artist;
         BigArt.Background = MediaVisuals.ArtBrush(snap);
         Bars.IsPlaying = snap.IsPlaying;
+        Wave.IsPlaying = snap.IsPlaying;
         PlayGlyph.Visibility = snap.IsPlaying ? Visibility.Collapsed : Visibility.Visible;
         PauseGlyph.Visibility = snap.IsPlaying ? Visibility.Visible : Visibility.Collapsed;
         ApplyAccent();
@@ -57,7 +67,7 @@ public partial class MediaHero : UserControl, IMediaView
         var dur = _snap.Duration;
         var pos = _snap.CurrentPosition;
         bool has = dur > TimeSpan.Zero;
-        Fill.Width = has ? Math.Clamp(pos.TotalSeconds / dur.TotalSeconds, 0, 1) * Track.ActualWidth : 0;
+        Wave.Progress = has ? Math.Clamp(pos.TotalSeconds / dur.TotalSeconds, 0, 1) : 0;
         ElapsedText.Text = has ? MediaVisuals.Format(pos) : "";
         RemainingText.Text = has ? "-" + MediaVisuals.Format(dur - pos) : "";
     }
@@ -89,13 +99,14 @@ public partial class MediaHero : UserControl, IMediaView
         GlowOuter.Color = Color.FromArgb(0x00, c.R, c.G, c.B);
     }
 
-    private void BigArt_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-        e.Handled = true;
-        CloseRequested?.Invoke();
-    }
-
     private void Lyrics_Click(object sender, RoutedEventArgs e) => LyricsClicked?.Invoke();
+
+    private void Fullscreen_Click(object sender, RoutedEventArgs e)
+    {
+        var tl = BigArt.PointToScreen(new Point(0, 0));
+        var br = BigArt.PointToScreen(new Point(BigArt.ActualWidth, BigArt.ActualHeight));
+        FullscreenRequested?.Invoke(new Rect(tl, br));
+    }
 
     private async void PlayPause_Click(object sender, RoutedEventArgs e) => await _media.TogglePlayPauseAsync();
     private async void Next_Click(object sender, RoutedEventArgs e) => await _media.NextAsync();

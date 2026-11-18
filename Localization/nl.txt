@@ -333,3 +333,8 @@
 334|Deze week ging naar: {0}
 335|Tonen waar het vandaan speelt
 336|Spotify, SoundCloud, browser — naast de artiest. Klik erop om de app te openen
+337|Golvende voortgangsbalk
+338|Zoals op Android: de golf loopt terwijl er muziek speelt en vlakt af bij pauze
+339|Volledig scherm
+340|Sluiten (Esc)
+341|Sleep de albumhoes met de muis uit het eiland om de speler schermvullend te openen met songtekst. Esc om te sluiten

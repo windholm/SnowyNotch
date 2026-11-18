@@ -333,3 +333,8 @@
 334|Tydzień poszedł na: {0}
 335|Pokazuj, skąd gra
 336|Spotify, SoundCloud, przeglądarka — obok wykonawcy. Kliknięcie otwiera aplikację
+337|Falisty pasek postępu
+338|Jak w Androidzie: fala biegnie, gdy gra muzyka, i wygładza się po pauzie
+339|Pełny ekran
+340|Wyjdź (Esc)
+341|Przeciągnij okładkę myszą poza wyspę, aby otworzyć odtwarzacz na pełnym ekranie z tekstem. Esc — wyjście

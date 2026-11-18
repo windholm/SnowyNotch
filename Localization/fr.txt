@@ -333,3 +333,8 @@
 334|La semaine est allée à : {0}
 335|Afficher la source
 336|Spotify, SoundCloud, navigateur — à côté de l'artiste. Un clic ouvre l'application
+337|Barre de progression ondulée
+338|Comme sur Android : l'onde avance pendant la lecture et s'aplatit en pause
+339|Plein écran
+340|Quitter (Échap)
+341|Faites glisser la pochette hors de l'île avec la souris pour ouvrir le lecteur en plein écran avec les paroles. Échap pour quitter

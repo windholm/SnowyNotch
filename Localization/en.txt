@@ -333,3 +333,8 @@
 334|This week went to: {0}
 335|Show where it's playing from
 336|Spotify, SoundCloud, browser — next to the artist. Click it to open the app
+337|Wavy progress bar
+338|Like on Android: the wave runs while music plays and flattens on pause
+339|Full screen
+340|Exit (Esc)
+341|Drag the artwork out of the island with the mouse to open the player in full screen with lyrics. Press Esc to exit

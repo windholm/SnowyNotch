@@ -23,7 +23,7 @@ public partial class MainWindow
     private const double MinExpandedWidth = 300;
     private static readonly TimeSpan LeaveGrace = TimeSpan.FromMilliseconds(1300);
     private DateTime _leaveGraceUntil;
-    private const double SlideDistance = 26;
+    private const double SlideDistance = 38;
 
     private SettingsView? _settingsView;
     private View _view = View.Home;
@@ -41,8 +41,12 @@ public partial class MainWindow
 
     private void InitViews()
     {
+        // У каждой страницы — масштаб и сдвиг: переходы едут, слегка «дышат» размером и пружинят.
         foreach (FrameworkElement v in ViewHost.Children)
-            v.RenderTransform = new TranslateTransform();
+        {
+            v.RenderTransform = new TransformGroup { Children = { new ScaleTransform(1, 1), new TranslateTransform() } };
+            v.RenderTransformOrigin = new Point(0.5, 0.5);
+        }
 
         _wheelUnlock.Tick += (_, _) => { _wheelUnlock.Stop(); _wheelLocked = false; _wheelAccum = 0; };
 
@@ -71,7 +75,7 @@ public partial class MainWindow
     private void EnsureLazyView(View v)
     {
         if (v == View.Settings) EnsureSettingsView();
-        else if (v == View.Widgets && WidgetTiles.Children.Count == 0) BuildWidgetsGrid();
+        else if (v == View.Widgets && !Dock.HasItems) BuildServiceDock();
     }
 
     private FrameworkElement ElementOf(View v) => v switch
@@ -120,7 +124,9 @@ public partial class MainWindow
         }
 
         if (v == View.Widgets && _state == IslandState.Expanded && prev != next)
-            PlayCardsEntrance();
+            PlayDockEntrance();
+        if (v == View.Home && _state == IslandState.Expanded && prev != next)
+            PlayHomeEntrance();
 
         SyncNav();
         ApplyNavigationChrome();
@@ -138,7 +144,8 @@ public partial class MainWindow
     private void RevealActiveView(double delayMs)
     {
         if (_activeEl != null) AnimateIn(_activeEl, 0, delayMs);
-        if (_view == View.Widgets) PlayCardsEntrance();
+        if (_view == View.Widgets) PlayDockEntrance();
+        if (_view == View.Home) PlayHomeEntrance(delayMs);
     }
 
     private void ConcealActiveView()
@@ -153,24 +160,43 @@ public partial class MainWindow
         if (_view != View.Home && !_welcome) ShowView(View.Home);
     }
 
+    private static ScaleTransform ScaleOf(FrameworkElement el) => (ScaleTransform)((TransformGroup)el.RenderTransform).Children[0];
+    private static TranslateTransform ShiftOf(FrameworkElement el) => (TranslateTransform)((TransformGroup)el.RenderTransform).Children[1];
+
+    /// <summary>Откуда «вырастает» следующая страница (доля ширины, 0…1): сервис раскрывается из своей иконки в доке.</summary>
+    private double? _zoomOriginX;
+
     private void AnimateIn(FrameworkElement el, int dir, double delayMs)
     {
         el.Visibility = Visibility.Visible;
         el.IsHitTestVisible = true;
-        var tt = (TranslateTransform)el.RenderTransform;
-        var ease = new CubicEase { EasingMode = EasingMode.EaseOut };
+        var tt = ShiftOf(el);
+        var st = ScaleOf(el);
         var begin = TimeSpan.FromMilliseconds(delayMs);
+        var fadeEase = new CubicEase { EasingMode = EasingMode.EaseOut };
 
-        el.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(Ms(230))) { BeginTime = begin, EasingFunction = ease });
-        tt.BeginAnimation(TranslateTransform.XProperty, new DoubleAnimation(dir * SlideDistance, 0, TimeSpan.FromMilliseconds(Ms(300))) { BeginTime = begin, EasingFunction = ease });
-        tt.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(dir == 0 ? -6 : 0, 0, TimeSpan.FromMilliseconds(Ms(300))) { BeginTime = begin, EasingFunction = ease });
+        // Раскрытие из иконки: страница растёт из точки, где была иконка. Обычный переход: едет сбоку
+        // и чуть подрастает; при раскрытии острова — опускается сверху.
+        bool zoom = _zoomOriginX != null;
+        double fromScale = zoom ? 0.72 : dir == 0 ? 0.94 : 0.965;
+        el.RenderTransformOrigin = new Point(zoom ? _zoomOriginX!.Value : 0.5, zoom ? 0.62 : dir == 0 ? 0 : 0.5);
+        _zoomOriginX = null;
 
-        // Проявление из размытия — для лёгких страниц. Панель сервисов с её иконками размывать каждый кадр
-        // слишком дорого (рывки), там хватает плавного сдвига с затуханием.
+        var move = TimeSpan.FromMilliseconds(Ms(zoom ? 520 : 460));
+        var spring = zoom ? SnowyNotch.Animation.SpringEase.Lively : SnowyNotch.Animation.SpringEase.Soft;
+        el.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(Ms(220))) { BeginTime = begin, EasingFunction = fadeEase });
+        tt.BeginAnimation(TranslateTransform.XProperty, new DoubleAnimation(zoom ? 0 : dir * SlideDistance, 0, move) { BeginTime = begin, EasingFunction = spring });
+        tt.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(dir == 0 && !zoom ? -8 : 0, 0, move) { BeginTime = begin, EasingFunction = spring });
+        var grow = new DoubleAnimation(fromScale, 1, move) { BeginTime = begin, EasingFunction = spring };
+        st.BeginAnimation(ScaleTransform.ScaleXProperty, grow);
+        st.BeginAnimation(ScaleTransform.ScaleYProperty, grow);
+
+        // Проявление из размытия — для лёгких страниц. Док сервисов размывать каждый кадр слишком дорого
+        // (иконки с градиентами), у него своё каскадное появление.
         if (el == WidgetsView) { el.Effect = null; return; }
-        var blur = new BlurEffect { Radius = 14, RenderingBias = RenderingBias.Performance };
+        var blur = new BlurEffect { Radius = 16, RenderingBias = RenderingBias.Performance };
         el.Effect = blur;
-        var unblur = new DoubleAnimation(14, 0, TimeSpan.FromMilliseconds(Ms(240))) { BeginTime = begin, EasingFunction = ease };
+        var unblur = new DoubleAnimation(16, 0, TimeSpan.FromMilliseconds(Ms(260))) { BeginTime = begin, EasingFunction = fadeEase };
         unblur.Completed += (_, _) => { if (el.Effect == blur) el.Effect = null; };
         blur.BeginAnimation(BlurEffect.RadiusProperty, unblur);
     }
@@ -178,12 +204,14 @@ public partial class MainWindow
     private void AnimateOut(FrameworkElement el, int dir, bool fast = false)
     {
         el.IsHitTestVisible = false;
-        var tt = (TranslateTransform)el.RenderTransform;
+        var tt = ShiftOf(el);
+        var st = ScaleOf(el);
         var blur = new BlurEffect { Radius = 0, RenderingBias = RenderingBias.Performance };
         el.Effect = el == WidgetsView ? null : blur;
-        double ms = Ms(fast ? 90 : 130);
+        var dur = TimeSpan.FromMilliseconds(Ms(fast ? 90 : 150));
+        var ease = new CubicEase { EasingMode = EasingMode.EaseIn };
 
-        var fade = new DoubleAnimation(0, TimeSpan.FromMilliseconds(ms));
+        var fade = new DoubleAnimation(0, dur);
         fade.Completed += (_, _) =>
         {
             if (_activeEl == el && _state == IslandState.Expanded) return;
@@ -191,8 +219,11 @@ public partial class MainWindow
             if (el.Effect == blur) el.Effect = null;
         };
         el.BeginAnimation(OpacityProperty, fade);
-        tt.BeginAnimation(TranslateTransform.XProperty, new DoubleAnimation(-dir * SlideDistance, TimeSpan.FromMilliseconds(ms)));
-        blur.BeginAnimation(BlurEffect.RadiusProperty, new DoubleAnimation(10, TimeSpan.FromMilliseconds(ms)));
+        tt.BeginAnimation(TranslateTransform.XProperty, new DoubleAnimation(-dir * SlideDistance * 0.7, dur) { EasingFunction = ease });
+        var shrink = new DoubleAnimation(dir == 0 ? 0.97 : 0.955, dur) { EasingFunction = ease };
+        st.BeginAnimation(ScaleTransform.ScaleXProperty, shrink);
+        st.BeginAnimation(ScaleTransform.ScaleYProperty, shrink);
+        blur.BeginAnimation(BlurEffect.RadiusProperty, new DoubleAnimation(12, dur));
     }
 
     private static void HideInstantly(FrameworkElement el)
@@ -266,8 +297,8 @@ public partial class MainWindow
         }
         else
         {
-            var ease = new QuinticEase { EasingMode = EasingMode.EaseOut };
-            var dur = TimeSpan.FromMilliseconds(Ms(340));
+            var ease = SnowyNotch.Animation.SpringEase.Lively;
+            var dur = TimeSpan.FromMilliseconds(Ms(520));
             NavIndicatorShift.BeginAnimation(TranslateTransform.XProperty, new DoubleAnimation(x, dur) { EasingFunction = ease });
             NavIndicator.BeginAnimation(WidthProperty, new DoubleAnimation(w, dur) { EasingFunction = ease });
         }
@@ -374,6 +405,7 @@ public partial class MainWindow
             case "media":
                 var mw = new MediaWidget(_media, _settings);
                 mw.ArtworkClicked += OpenArtwork;
+                mw.ArtworkDropped = ArtworkDropped;
                 mw.LyricsClicked += OpenLyrics;
                 return mw;
             case "notes":
@@ -402,6 +434,7 @@ public partial class MainWindow
         if (_focusWidget is IMediaView fm) yield return fm;
         if (_hero != null) yield return _hero;
         if (_lyricsView != null) yield return _lyricsView;
+        if (_fullscreenPlayer != null) yield return _fullscreenPlayer;
     }
 
     private MediaHero? _hero;
@@ -415,6 +448,8 @@ public partial class MainWindow
             _hero = new MediaHero(_media, _settings);
             _hero.CloseRequested += CloseArtwork;
             _hero.LyricsClicked += OpenLyrics;
+            _hero.ArtworkDropped = ArtworkDropped;
+            _hero.FullscreenRequested += rect => OpenFullscreen(new Point(rect.X + rect.Width / 2, rect.Y + rect.Height / 2), rect);
             ArtworkHost.Content = _hero;
         }
         _hero.Update(_snap);
@@ -521,73 +556,55 @@ public partial class MainWindow
         return slot;
     }
 
-    private void BuildWidgetsGrid()
+    private void BuildServiceDock()
     {
-        WidgetTiles.Children.Clear();
         foreach (var info in WidgetCatalog.All)
+            Dock.Add(info.Id, info.Title, info.Icon.Create(SnowyNotch.Controls.ServiceDock.IconSize), info.Icon.Top);
+        Dock.Invoked += (id, centerX) =>
         {
-            var card = MakeCard(info);
-            card.Click += (_, _) => { if (info.Id == "agents") OpenAgents(); else OpenFocus(info.Id); };
-            WidgetTiles.Children.Add(card);
-        }
+            // Сервис раскрывается из своей иконки.
+            double left = Dock.TranslatePoint(new Point(centerX, 0), WidgetsView).X;
+            _zoomOriginX = WidgetsView.ActualWidth > 0 ? Math.Clamp(left / WidgetsView.ActualWidth, 0, 1) : 0.5;
+            if (id == "agents") OpenAgents(); else OpenFocus(id);
+        };
+        UpdateDockStatus();
     }
 
-    /// <summary>
-    /// Плитка сервиса: большая иконка в стиле Apple (сквиркл, градиент, блик, цветная тень) и название.
-    /// Живых подписей-предпросмотров (нагрузка ПК, время, таймер…) нет намеренно: они опрашивались
-    /// по таймеру, пока открыта панель, и тратили ресурсы ради строчки, на которую не смотрят.
-    /// </summary>
-    private Button MakeCard(WidgetInfo info)
+    /// <summary>Точки под иконками: какие сервисы сейчас работают.</summary>
+    private void UpdateDockStatus()
     {
-        var st = info.Icon;
-        var icon = new SnowyNotch.Controls.AppIcon
-        {
-            Width = 74, Height = 74,
-            Glyph = (Geometry)FindResource(st.Glyph),
-            Top = st.Top, Bottom = st.Bottom, GlyphTop = st.GlyphTop, GlyphBottom = st.GlyphBottom,
-            HorizontalAlignment = HorizontalAlignment.Center,
-            // Цветные плитки отбрасывают тень своего цвета, тёмные — чёрную.
-            ShadowColor = st.Bottom.R + st.Bottom.G + st.Bottom.B < 120 ? Colors.Black : st.Bottom,
-        };
-        var title = new TextBlock
-        {
-            Text = info.Title, FontSize = 13.5, FontWeight = FontWeights.SemiBold, Foreground = Brushes.White,
-            HorizontalAlignment = HorizontalAlignment.Center, Margin = new Thickness(0, 11, 0, 0),
-        };
-        return new Button
-        {
-            Style = (Style)FindResource("AppTile"),
-            Width = 134,
-            Content = new StackPanel { Margin = new Thickness(0, 6, 0, 8), Children = { icon, title } },
-            RenderTransform = new TranslateTransform(),
-            ToolTip = info.Title,
-        };
+        if (!Dock.HasItems) return;
+        Dock.SetActive("media", _snap?.IsPlaying == true);
+        Dock.SetActive("timer", _tools.Timer.IsActive);
+        Dock.SetActive("stopwatch", _tools.Stopwatch.IsActive);
+        Dock.SetActive("agents", _claudeBubbleWanted);
     }
 
-    /// <summary>
-    /// Появление иконок — едва заметное, как в iOS: короткое проявление и масштаб 0.97 → 1 с маленьким каскадом.
-    /// Страница при этом уже въезжает целиком, поэтому карточки не прыгают и не «летят» по отдельности.
-    /// </summary>
-    private void PlayCardsEntrance()
+    private void PlayDockEntrance()
     {
-        var ease = new CubicEase { EasingMode = EasingMode.EaseOut };
+        UpdateDockStatus();
+        Dock.ResetScroll();
+        Dock.PlayEntrance();
+    }
+
+    /// <summary>Виджеты главной появляются по очереди: каждый чуть поднимается и проявляется.</summary>
+    private void PlayHomeEntrance(double delayMs = 0)
+    {
+        if (_customizing) return;
         int i = 0;
-        foreach (FrameworkElement card in WidgetTiles.Children)
+        foreach (FrameworkElement child in HomeRow.Children)
         {
-            var begin = TimeSpan.FromMilliseconds(Ms(40 + i * 14));
-            if (card.RenderTransform is not ScaleTransform st)
+            if (child.RenderTransform is not TranslateTransform tt)
             {
-                st = new ScaleTransform(1, 1);
-                card.RenderTransform = st;
-                card.RenderTransformOrigin = new Point(0.5, 0.42);
+                tt = new TranslateTransform();
+                child.RenderTransform = tt;
             }
-            // Стартовые значения сразу, иначе до начала каскада карточка мигнёт в конечном виде.
-            card.Opacity = 0;
-            st.ScaleX = st.ScaleY = 0.97;
-            card.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(Ms(240))) { BeginTime = begin, EasingFunction = ease });
-            var grow = new DoubleAnimation(0.97, 1, TimeSpan.FromMilliseconds(Ms(380))) { BeginTime = begin, EasingFunction = ease };
-            st.BeginAnimation(ScaleTransform.ScaleXProperty, grow);
-            st.BeginAnimation(ScaleTransform.ScaleYProperty, grow);
+            var begin = TimeSpan.FromMilliseconds(delayMs + Ms(40 + i * 55));
+            child.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(Ms(260))) { BeginTime = begin });
+            tt.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(12, 0, TimeSpan.FromMilliseconds(Ms(520)))
+            {
+                BeginTime = begin, EasingFunction = SnowyNotch.Animation.SpringEase.Lively,
+            });
             i++;
         }
     }
@@ -618,7 +635,7 @@ public partial class MainWindow
         FocusHost.Content = _focusWidget;
         var info = WidgetCatalog.Find(id);
         FocusTitle.Text = info?.Title ?? "";
-        FocusIcon.Data = info != null && TryFindResource(info.IconKey) is Geometry g ? g : null;
+        FocusIconHost.Content = info?.Icon.Create(26, glow: false);
         if (_focusWidget is MediaWidget mw) mw.Update(_snap);
         if (_focusWidget is ClockWidget cw) cw.EnableCalendar();
         ShowView(View.Focus, 1);

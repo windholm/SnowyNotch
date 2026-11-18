@@ -26,3 +26,13 @@ public sealed class BoolToVisibilityConverter : IValueConverter
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
         Binding.DoNothing;
 }
+
+/// <summary>Высота → скругление «пилюлей» (половина высоты): круглые кнопки остаются круглыми при любом размере.</summary>
+public sealed class PillRadiusConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        new CornerRadius(value is double h && h > 0 ? h / 2 : 22);
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        Binding.DoNothing;
+}

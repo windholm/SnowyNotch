@@ -148,7 +148,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <c:AppIcon Width="36" Height="36" Glyph="{StaticResource AppGlyphSpeaker}" Top="#4FB2FF" Bottom="#0057D9"
+                                <c:AppIcon Width="36" Height="36" Glyph="{x:Static c:ServiceGlyphs.SoundMain}" Tone="{x:Static c:ServiceGlyphs.SoundTone}" Top="#74BEFF" Bottom="#0A66F5"
                                            VerticalAlignment="Center"/>
                                 <StackPanel Grid.Column="1" Margin="11,0,12,0" VerticalAlignment="Center">
                                     <TextBlock Text="{l:T 'Звук по программам'}" Style="{StaticResource Label}"/>
@@ -412,6 +412,27 @@
                                 </StackPanel>
                                 <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding ShowSource}"/>
                             </Grid>
+                        </Border>
+                        <Border Style="{StaticResource Card}" Margin="0,10,0,0">
+                            <StackPanel>
+                                <Grid Style="{StaticResource Row}">
+                                    <StackPanel Margin="0,0,46,0">
+                                        <TextBlock Text="{l:T 'Волнистая полоса прогресса'}" Style="{StaticResource Label}"/>
+                                        <TextBlock Text="{l:T 'Как в Android: волна бежит, пока играет музыка, и разглаживается на паузе'}" Style="{StaticResource Hint}"/>
+                                    </StackPanel>
+                                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding WavyProgress}"/>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <Grid Style="{StaticResource Row}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <c:IconGlyph Data="{StaticResource IconExpand}" Width="18" Height="18" VerticalAlignment="Top" Margin="0,2,10,0"/>
+                                        <StackPanel>
+                                            <TextBlock Text="{l:T 'Во весь экран'}" Style="{StaticResource Label}"/>
+                                            <TextBlock Text="{l:T 'Вытащите обложку из острова мышью — плеер откроется на весь экран с текстом песни. Выход — Esc'}" Style="{StaticResource Hint}" MaxWidth="420"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
                         </Border>
                         <TextBlock Text="{l:T 'КНОПКИ ПЛЕЕРА'}" Style="{StaticResource GroupLabel}"/>
                         <Border Style="{StaticResource Card}">

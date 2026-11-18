@@ -333,3 +333,8 @@
 334|Denne uge gik til: {0}
 335|Vis, hvor det spiller fra
 336|Spotify, SoundCloud, browser — ved siden af kunstneren. Klik for at åbne appen
+337|Bølget statuslinje
+338|Som på Android: bølgen løber, mens musikken spiller, og flader ud ved pause
+339|Fuld skærm
+340|Afslut (Esc)
+341|Træk coveret ud af øen med musen for at åbne afspilleren i fuld skærm med sangtekst. Esc for at afslutte

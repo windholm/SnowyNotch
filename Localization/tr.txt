@@ -333,3 +333,8 @@
 334|Bu hafta şuna gitti: {0}
 335|Nereden çaldığını göster
 336|Spotify, SoundCloud, tarayıcı — sanatçının yanında. Uygulamayı açmak için tıklayın
+337|Dalgalı ilerleme çubuğu
+338|Android'deki gibi: müzik çalarken dalga akar, duraklatınca düzleşir
+339|Tam ekran
+340|Çıkış (Esc)
+341|Oynatıcıyı şarkı sözleriyle tam ekranda açmak için kapağı fareyle adanın dışına sürükleyin. Çıkmak için Esc

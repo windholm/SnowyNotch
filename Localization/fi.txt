@@ -333,3 +333,8 @@
 334|Tämä viikko meni: {0}
 335|Näytä, mistä musiikki soi
 336|Spotify, SoundCloud, selain — esittäjän vieressä. Avaa sovellus napsauttamalla
+337|Aaltoileva edistymispalkki
+338|Kuten Androidissa: aalto liikkuu musiikin soidessa ja tasoittuu tauolla
+339|Koko näyttö
+340|Poistu (Esc)
+341|Vedä kansikuva hiirellä ulos saaresta, niin soitin avautuu koko näytölle sanoituksineen. Poistu Esc-näppäimellä

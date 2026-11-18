@@ -333,3 +333,8 @@
 334|Tento týden padl na: {0}
 335|Ukazovat, odkud hraje
 336|Spotify, SoundCloud, prohlížeč — vedle interpreta. Kliknutím otevřete aplikaci
+337|Vlnitý ukazatel průběhu
+338|Jako v Androidu: vlna běží, když hraje hudba, a při pauze se vyhladí
+339|Celá obrazovka
+340|Ukončit (Esc)
+341|Vytáhněte obal myší z ostrova a přehrávač se otevře na celou obrazovku s textem písně. Esc — ukončit

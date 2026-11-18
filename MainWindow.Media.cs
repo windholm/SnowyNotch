@@ -24,6 +24,7 @@ public partial class MainWindow
         ApplyCompactAccent();
 
         foreach (var mw in MediaWidgets()) mw.Update(snap);
+        UpdateDockStatus();
 
         bool newTrack = snap != null && prev != null && (prev.Title != snap.Title || prev.Artist != snap.Artist);
         if (newTrack && _settings.PeekOnTrackChange && _state != IslandState.Expanded && !IsGhosted)

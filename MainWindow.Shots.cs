@@ -43,17 +43,32 @@ public partial class MainWindow
                 Repeat: Windows.Media.MediaPlaybackAutoRepeatMode.None));
             await Task.Delay(600);
 
+            // «--shot-only=a,b» — снять только названные кадры (быстрее при доводке дизайна).
+            string? onlyArg = Array.Find(Environment.GetCommandLineArgs(), a => a.StartsWith("--shot-only="));
+            var only = onlyArg?["--shot-only=".Length..].Split(',');
+            bool Wanted(string name) => only == null || Array.IndexOf(only, name) >= 0;
+
             var shots = new List<(string Name, BitmapSource Image)>();
-            async Task Take(string name, Action show)
+            async Task Take(string name, Action show, int waitMs = 2400, Action? beforeRender = null)
             {
+                if (!Wanted(name)) return;
                 show();
-                await Task.Delay(2400);
+                await Task.Delay(waitMs);
+                beforeRender?.Invoke();
+                if (beforeRender != null) await Task.Delay(120);
                 var img = RenderIsland();
                 Save(img, Path.Combine(raw, name + ".png"));
                 shots.Add((name, img));
             }
 
+            if (Wanted("icons")) Save(IconSheet(), Path.Combine(dir, "icons.png"));
+
             await Take("home", () => DebugPreview("home"));
+            await Take("widgets-hover", () => DebugPreview("widgets"), beforeRender: () => Dock.DebugSettle(210));
+            await Take("widgets-end", () => DebugPreview("widgets"), beforeRender: () => Dock.DebugSettle(null, 9999));
+            // Кадры посреди анимаций: появление дока и раскрытие сервиса из иконки.
+            await Take("anim-dock", () => { DebugPreview("home"); }, 900, () => DebugPreview("widgets"));
+            await Take("anim-zoom", () => DebugPreview("widgets"), 1500, () => { _zoomOriginX = 0.2; OpenFocus("timer"); _peeking = true; UpdateState(); });
             await Take("artwork", () => DebugPreview("artwork"));
             await Take("lyrics", () =>
             {
@@ -75,6 +90,20 @@ public partial class MainWindow
             await Take("settings-general", () => { EnsureSettingsView().ShowSection("general"); DebugPreview("settings"); });
             await Take("settings-media", () => { EnsureSettingsView().ShowSection("media"); DebugPreview("settings"); });
 
+            if (Wanted("fullscreen"))
+            {
+                var player = DebugOpenFullscreen(DemoLyrics, 2);
+                await Task.Delay(3200);
+                if (player != null)
+                {
+                    var root = (FrameworkElement)player.Content;
+                    var rtb = new RenderTargetBitmap((int)root.ActualWidth, (int)root.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+                    rtb.Render(root);
+                    Save(rtb, Path.Combine(dir, "fullscreen.png"));
+                    player.Close();
+                }
+            }
+
             foreach (var (name, img) in shots) Save(Compose(img), Path.Combine(dir, name + ".png"));
         }
         catch (Exception ex)
@@ -86,6 +115,34 @@ public partial class MainWindow
             try { Directory.Delete(Path.Combine(dir, "_files"), true); } catch { }
             Application.Current.Shutdown();
         }
+    }
+
+    /// <summary>Все иконки сервисов крупно и в размере дока — на тёмном фоне, как в острове.</summary>
+    private static BitmapSource IconSheet()
+    {
+        var big = new System.Windows.Controls.StackPanel { Orientation = System.Windows.Controls.Orientation.Horizontal, Margin = new Thickness(24, 28, 24, 20) };
+        var small = new System.Windows.Controls.StackPanel { Orientation = System.Windows.Controls.Orientation.Horizontal, Margin = new Thickness(24, 8, 24, 32) };
+        foreach (var info in WidgetCatalog.All)
+        {
+            var a = info.Icon.Create(128);
+            a.Margin = new Thickness(14);
+            big.Children.Add(a);
+            var b = info.Icon.Create(50);
+            b.Margin = new Thickness(53, 14, 53, 14);
+            small.Children.Add(b);
+        }
+        var root = new System.Windows.Controls.Border
+        {
+            Background = new SolidColorBrush(Color.FromRgb(0x0B, 0x0B, 0x0D)),
+            Child = new System.Windows.Controls.StackPanel { Children = { big, small } },
+        };
+        root.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+        root.Arrange(new Rect(root.DesiredSize));
+        root.UpdateLayout();
+        var rtb = new RenderTargetBitmap((int)root.DesiredSize.Width, (int)root.DesiredSize.Height, 96, 96, PixelFormats.Pbgra32);
+        rtb.Render(root);
+        rtb.Freeze();
+        return rtb;
     }
 
     /// <summary>Окно целиком в 2× и обрезка по непрозрачным пикселям.</summary>
