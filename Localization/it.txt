@@ -338,3 +338,10 @@
 339|Schermo intero
 340|Esci (Esc)
 341|Trascina la copertina fuori dall'isola con il mouse per aprire il player a schermo intero con il testo. Esc per uscire
+342|Stile del player a schermo intero
+343|Classico
+344|Cinema
+345|Al centro
+346|Vinile
+347|Cambia stile direttamente nel player: pulsante in alto a destra o tasto S
+348|Cambia stile (S)

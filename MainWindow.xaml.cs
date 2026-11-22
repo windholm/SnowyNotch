@@ -151,9 +151,9 @@ public partial class MainWindow : Window
         if (msg == WM_MOUSEHWHEEL && (Island.IsMouseOver || NavHitArea.IsMouseOver))
         {
             int delta = unchecked((short)((long)wParam >> 16));
-            // Над доком сервисов горизонтальный жест листает сам док; у его края — страницы острова.
-            if (_view == View.Widgets && Dock.IsMouseOver && Dock.ScrollBy(delta * 0.9)) { handled = true; return IntPtr.Zero; }
-            OnSwipe(-delta);
+            // Над сервисами горизонтальный жест листает только сервисы (у края — отскок, страница не меняется).
+            if (_view == View.Widgets && WidgetsView.IsMouseOver && _state == IslandState.Expanded) Dock.ScrollBy(delta * 0.9);
+            else OnSwipe(-delta);
             handled = true;
         }
         return IntPtr.Zero;
@@ -275,7 +275,7 @@ public partial class MainWindow : Window
 
         if (all || changed is nameof(AppSettings.ShowVisualizer) or nameof(AppSettings.AccentFromArtwork)
                  or nameof(AppSettings.ShowShuffleButton) or nameof(AppSettings.ShowRepeatButton) or nameof(AppSettings.LyricsEnabled)
-                 or nameof(AppSettings.ShowSource) or nameof(AppSettings.WavyProgress))
+                 or nameof(AppSettings.ShowSource) or nameof(AppSettings.WavyProgress) or nameof(AppSettings.FullscreenStyle))
         {
             CompactBars.Visibility = _settings.ShowVisualizer ? Visibility.Visible : Visibility.Collapsed;
             ApplyCompactAccent();

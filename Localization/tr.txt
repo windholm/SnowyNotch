@@ -338,3 +338,10 @@
 339|Tam ekran
 340|Çıkış (Esc)
 341|Oynatıcıyı şarkı sözleriyle tam ekranda açmak için kapağı fareyle adanın dışına sürükleyin. Çıkmak için Esc
+342|Tam ekran oynatıcı stili
+343|Klasik
+344|Sinema
+345|Ortada
+346|Plak
+347|Stili doğrudan oynatıcıda değiştirin: sağ üstteki düğme veya S tuşu
+348|Stili değiştir (S)

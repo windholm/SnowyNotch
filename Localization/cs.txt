@@ -338,3 +338,10 @@
 339|Celá obrazovka
 340|Ukončit (Esc)
 341|Vytáhněte obal myší z ostrova a přehrávač se otevře na celou obrazovku s textem písně. Esc — ukončit
+342|Styl přehrávače na celou obrazovku
+343|Klasický
+344|Kino
+345|Uprostřed
+346|Vinyl
+347|Styl přepínejte přímo v přehrávači: tlačítko vpravo nahoře nebo klávesa S
+348|Změnit styl (S)

@@ -338,3 +338,10 @@
 339|Helskärm
 340|Avsluta (Esc)
 341|Dra omslaget ut ur ön med musen för att öppna spelaren i helskärm med låttext. Esc för att avsluta
+342|Stil för helskärmsspelaren
+343|Klassisk
+344|Bio
+345|Centrerad
+346|Vinyl
+347|Byt stil direkt i spelaren: knappen uppe till höger eller tangenten S
+348|Byt stil (S)

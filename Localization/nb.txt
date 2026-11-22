@@ -338,3 +338,10 @@
 339|Fullskjerm
 340|Avslutt (Esc)
 341|Dra omslaget ut av øya med musen for å åpne spilleren i fullskjerm med sangtekst. Esc for å avslutte
+342|Stil for fullskjermspilleren
+343|Klassisk
+344|Kino
+345|Midtstilt
+346|Vinyl
+347|Bytt stil rett i spilleren: knappen øverst til høyre eller tasten S
+348|Bytt stil (S)

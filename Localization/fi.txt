@@ -338,3 +338,10 @@
 339|Koko näyttö
 340|Poistu (Esc)
 341|Vedä kansikuva hiirellä ulos saaresta, niin soitin avautuu koko näytölle sanoituksineen. Poistu Esc-näppäimellä
+342|Koko näytön soittimen tyyli
+343|Klassinen
+344|Elokuva
+345|Keskellä
+346|Vinyyli
+347|Vaihda tyyliä suoraan soittimessa: oikean yläkulman painike tai S-näppäin
+348|Vaihda tyyliä (S)

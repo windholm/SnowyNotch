@@ -338,3 +338,10 @@
 339|Pantalla completa
 340|Salir (Esc)
 341|Arrastra la portada fuera de la isla con el ratón para abrir el reproductor a pantalla completa con la letra. Esc para salir
+342|Estilo del reproductor a pantalla completa
+343|Clásico
+344|Cine
+345|Centrado
+346|Vinilo
+347|Cambia de estilo en el propio reproductor: botón arriba a la derecha o tecla S
+348|Cambiar estilo (S)

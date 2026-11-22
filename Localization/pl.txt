@@ -338,3 +338,10 @@
 339|Pełny ekran
 340|Wyjdź (Esc)
 341|Przeciągnij okładkę myszą poza wyspę, aby otworzyć odtwarzacz na pełnym ekranie z tekstem. Esc — wyjście
+342|Styl odtwarzacza pełnoekranowego
+343|Klasyczny
+344|Kino
+345|Na środku
+346|Winyl
+347|Zmieniaj styl w samym odtwarzaczu: przycisk w prawym górnym rogu lub klawisz S
+348|Zmień styl (S)

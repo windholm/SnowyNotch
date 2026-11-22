@@ -50,6 +50,15 @@ public partial class MainWindow
 
         _wheelUnlock.Tick += (_, _) => { _wheelUnlock.Stop(); _wheelLocked = false; _wheelAccum = 0; };
 
+        // Над сервисами колесо листает только сервисы. Страницы острова — колесом над панелью кнопок под ним,
+        // самими кнопками или стрелками. Хвост того же жеста, что привёл на эту страницу, список не крутит.
+        WidgetsView.PreviewMouseWheel += (_, e) =>
+        {
+            e.Handled = true;
+            if (_wheelLocked) { _wheelUnlock.Stop(); _wheelUnlock.Start(); return; }
+            Dock.Wheel(e.Delta);
+        };
+
         BuildHomeRow();
         _activeEl = HomeView;
         SyncNav();
@@ -468,7 +477,8 @@ public partial class MainWindow
     private void ActivateWidgets()
     {
         bool expanded = _state == IslandState.Expanded;
-        _media.PositionPolling = expanded; // позицию трека показывает только раскрытый остров
+        // Позицию трека показывают раскрытый остров и полноэкранный плеер.
+        _media.PositionPolling = expanded || _fullscreenPlayer != null;
         foreach (var w in _homeWidgets.OfType<IIslandWidget>()) w.SetActive(expanded && _view == View.Home);
         if (_focusWidget is IIslandWidget f) f.SetActive(expanded && _view == View.Focus);
         _lyricsView?.SetActive(expanded && _view == View.Lyrics);

@@ -338,3 +338,10 @@
 339|Plein écran
 340|Quitter (Échap)
 341|Faites glisser la pochette hors de l'île avec la souris pour ouvrir le lecteur en plein écran avec les paroles. Échap pour quitter
+342|Style du lecteur plein écran
+343|Classique
+344|Cinéma
+345|Centré
+346|Vinyle
+347|Changez de style directement dans le lecteur : bouton en haut à droite ou touche S
+348|Changer de style (S)

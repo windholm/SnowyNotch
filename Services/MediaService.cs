@@ -71,6 +71,7 @@ public sealed class MediaService : IDisposable
     private readonly DispatcherTimer _sync = new() { Interval = TimeSpan.FromMilliseconds(400) };
     private (TimeSpan Pos, DateTimeOffset At, TimeSpan End) _lastTimeline;
     private DateTimeOffset _playSince = DateTimeOffset.UnixEpoch;
+    private bool _noTimeline;
     // Только музыка: решения «музыка или нет» по каждому треку и периодическая перепроверка
     // (в браузере SoundCloud может смениться YouTube в той же медиасессии).
     private readonly Dictionary<string, bool> _verdicts = new();
@@ -136,7 +137,40 @@ public sealed class MediaService : IDisposable
         SelectSession();
     }
 
-    public Task TogglePlayPauseAsync() => Try(s => s.TryTogglePlayPauseAsync().AsTask());
+    /// <summary>
+    /// Пауза / воспроизведение. Браузеры (SoundCloud, YouTube Music…) часто не поддерживают «переключить»
+    /// или молча его игнорируют — тогда шлём явные «пауза» или «играть» по настоящему состоянию сессии.
+    /// Интерфейс переключается сразу, не дожидаясь ответа плеера; настоящее состояние придёт событием.
+    /// </summary>
+    public async Task TogglePlayPauseAsync()
+    {
+        var s = _session;
+        if (s == null) return;
+        bool ok = false;
+        bool playing = _playing;
+        try
+        {
+            var info = s.GetPlaybackInfo();
+            if (info != null) playing = info.PlaybackStatus == PlaybackStatus.Playing;
+            var c = info?.Controls;
+            if (playing && c?.IsPauseEnabled == true) ok = await s.TryPauseAsync();
+            else if (!playing && c?.IsPlayEnabled == true) ok = await s.TryPlayAsync();
+            if (!ok) ok = await s.TryTogglePlayPauseAsync();
+            if (!ok) ok = playing ? await s.TryPauseAsync() : await s.TryPlayAsync();
+        }
+        catch (Exception ex) { Debug.WriteLine($"[media] play/pause failed: {ex.Message}"); }
+
+        if (ok && s == _session && _playing == playing)
+        {
+            var now = DateTimeOffset.Now;
+            if (_playing) _pos = Extrapolate(now);
+            _posAt = now;
+            _playing = !playing;
+            if (_playing) _playSince = now;
+            Publish();
+        }
+    }
+
     public Task NextAsync() => Try(s => s.TrySkipNextAsync().AsTask());
     public Task PreviousAsync() => Try(s => s.TrySkipPreviousAsync().AsTask());
 
@@ -280,6 +314,7 @@ public sealed class MediaService : IDisposable
         _pos = _dur = TimeSpan.Zero;
         _posAt = DateTimeOffset.Now;
         _lastTimeline = default;
+        _noTimeline = false;
         _playSince = DateTimeOffset.UnixEpoch;
 
         if (session == null)
@@ -317,6 +352,12 @@ public sealed class MediaService : IDisposable
         _artist = artist;
         if (trackChanged)
         {
+            // Без таймлайна новый трек начинается с нуля по своим часам.
+            if (_noTimeline)
+            {
+                _pos = TimeSpan.Zero;
+                _posAt = DateTimeOffset.Now;
+            }
             _art = null;
             _accent = ColorExtractor.Fallback;
             Publish();
@@ -376,10 +417,17 @@ public sealed class MediaService : IDisposable
             var tl = _session.GetTimelineProperties();
             if (tl == null) return false;
             var sample = (Pos: tl.Position - tl.StartTime, At: tl.LastUpdatedTime, End: tl.EndTime - tl.StartTime);
-            if (!force && sample == _lastTimeline) return false;
+            // Тот же замер, что уже применён, — ничего нового. Даже при force: иначе после паузы или по событию
+            // от плеера старая позиция получала текущее время, и трек «откатывался» назад (текст песни
+            // перескакивал на прошлые строки или весь становился серым).
+            if (sample == _lastTimeline && _lastTimeline != default) return false;
             _lastTimeline = sample;
 
             var now = DateTimeOffset.Now;
+            // Плеер без таймлайна (часть сайтов в браузере): позиции нет совсем. Тогда идут свои часы трека —
+            // от его начала (см. ReadPropertiesAsync), а нулевой замер их не сбрасывает.
+            _noTimeline = sample.End <= TimeSpan.Zero && sample.Pos <= TimeSpan.Zero;
+            if (_noTimeline) return false;
             _dur = sample.End;
             _pos = sample.Pos;
             var at = sample.At;

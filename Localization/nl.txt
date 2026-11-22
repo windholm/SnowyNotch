@@ -338,3 +338,10 @@
 339|Volledig scherm
 340|Sluiten (Esc)
 341|Sleep de albumhoes met de muis uit het eiland om de speler schermvullend te openen met songtekst. Esc om te sluiten
+342|Stijl van de schermvullende speler
+343|Klassiek
+344|Bioscoop
+345|Gecentreerd
+346|Vinyl
+347|Wissel van stijl in de speler zelf: de knop rechtsboven of de S-toets
+348|Stijl wijzigen (S)

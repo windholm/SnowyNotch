@@ -11,6 +11,16 @@ using Microsoft.Win32;
 
 namespace SnowyNotch.Services;
 
+/// <summary>Вид полноэкранного плеера.</summary>
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum FullscreenStyle
+{
+    Classic,
+    Cinematic,
+    Spotlight,
+    Vinyl,
+}
+
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum IslandPreset
 {
@@ -81,6 +91,7 @@ public sealed class AppSettings : INotifyPropertyChanged
     private bool _showRepeatButton;
     private bool _showSource = true;
     private bool _wavyProgress;
+    private FullscreenStyle _fullscreenStyle = FullscreenStyle.Classic;
 
     private bool _middleClickGhost = true;
     private bool _showHud = true;
@@ -137,6 +148,9 @@ public sealed class AppSettings : INotifyPropertyChanged
 
     /// <summary>Волнистая полоса прогресса (как в Android / Material You) вместо прямой.</summary>
     public bool WavyProgress { get => _wavyProgress; set => Set(ref _wavyProgress, value); }
+
+    /// <summary>Стиль полноэкранного плеера; меняется и прямо в плеере (кнопка вверху справа, клавиша S).</summary>
+    public FullscreenStyle FullscreenStyle { get => _fullscreenStyle; set => Set(ref _fullscreenStyle, value); }
 
     public bool MiddleClickGhost { get => _middleClickGhost; set => Set(ref _middleClickGhost, value); }
 

@@ -90,18 +90,29 @@ public partial class MainWindow
             await Take("settings-general", () => { EnsureSettingsView().ShowSection("general"); DebugPreview("settings"); });
             await Take("settings-media", () => { EnsureSettingsView().ShowSection("media"); DebugPreview("settings"); });
 
-            if (Wanted("fullscreen"))
+            // Плеер во весь экран: каждый стиль, плюс классический на паузе (видно кнопку «play»).
+            foreach (var (name, style, paused) in new[]
             {
+                ("fullscreen", FullscreenStyle.Classic, false),
+                ("fullscreen-cinema", FullscreenStyle.Cinematic, false),
+                ("fullscreen-spotlight", FullscreenStyle.Spotlight, false),
+                ("fullscreen-vinyl", FullscreenStyle.Vinyl, false),
+                ("fullscreen-paused", FullscreenStyle.Classic, true),
+            })
+            {
+                if (!Wanted(name)) continue;
+                _settings.FullscreenStyle = style;
                 var player = DebugOpenFullscreen(DemoLyrics, 2);
-                await Task.Delay(3200);
-                if (player != null)
-                {
-                    var root = (FrameworkElement)player.Content;
-                    var rtb = new RenderTargetBitmap((int)root.ActualWidth, (int)root.ActualHeight, 96, 96, PixelFormats.Pbgra32);
-                    rtb.Render(root);
-                    Save(rtb, Path.Combine(dir, "fullscreen.png"));
-                    player.Close();
-                }
+                if (player == null) continue;
+                player.DebugSetStyle(style);
+                if (paused && _snap != null) player.Update(_snap with { IsPlaying = false });
+                await Task.Delay(3400);
+                var root = (FrameworkElement)player.Content;
+                var rtb = new RenderTargetBitmap((int)root.ActualWidth, (int)root.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+                rtb.Render(root);
+                Save(rtb, Path.Combine(dir, name + ".png"));
+                player.Close();
+                await Task.Delay(500);
             }
 
             foreach (var (name, img) in shots) Save(Compose(img), Path.Combine(dir, name + ".png"));

@@ -432,6 +432,23 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <StackPanel Margin="12,8,10,10">
+                                    <TextBlock Text="{l:T 'Стиль полноэкранного плеера'}" Style="{StaticResource Label}"/>
+                                    <TextBlock Text="{l:T 'Переключайте стиль прямо в плеере: кнопка вверху справа или клавиша S'}" Style="{StaticResource Hint}"/>
+                                    <Border Style="{StaticResource SegmentHost}" HorizontalAlignment="Left" Margin="0,10,0,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <RadioButton Style="{StaticResource Segment}" GroupName="FsStyle" Content="{l:T 'Классический'}"
+                                                         IsChecked="{Binding FullscreenStyle, Converter={StaticResource EnumEq}, ConverterParameter=Classic}"/>
+                                            <RadioButton Style="{StaticResource Segment}" GroupName="FsStyle" Content="{l:T 'Кино'}"
+                                                         IsChecked="{Binding FullscreenStyle, Converter={StaticResource EnumEq}, ConverterParameter=Cinematic}"/>
+                                            <RadioButton Style="{StaticResource Segment}" GroupName="FsStyle" Content="{l:T 'В центре'}"
+                                                         IsChecked="{Binding FullscreenStyle, Converter={StaticResource EnumEq}, ConverterParameter=Spotlight}"/>
+                                            <RadioButton Style="{StaticResource Segment}" GroupName="FsStyle" Content="{l:T 'Винил'}"
+                                                         IsChecked="{Binding FullscreenStyle, Converter={StaticResource EnumEq}, ConverterParameter=Vinyl}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
                             </StackPanel>
                         </Border>
                         <TextBlock Text="{l:T 'КНОПКИ ПЛЕЕРА'}" Style="{StaticResource GroupLabel}"/>

@@ -338,3 +338,10 @@
 339|Full screen
 340|Exit (Esc)
 341|Drag the artwork out of the island with the mouse to open the player in full screen with lyrics. Press Esc to exit
+342|Full-screen player style
+343|Classic
+344|Cinema
+345|Spotlight
+346|Vinyl
+347|Switch styles right in the player: the button at the top right or the S key
+348|Change style (S)

@@ -39,6 +39,7 @@ public partial class LyricsView : UserControl, IMediaView, IIslandWidget
         public required ScaleTransform Scale;
         public required BlurEffect Blur;
         public double BaseY;
+        public double TargetOpacity = 0.2, TargetBlur = 3;
     }
 
     public LyricsView(LyricsService service, AppSettings settings)
@@ -47,16 +48,23 @@ public partial class LyricsView : UserControl, IMediaView, IIslandWidget
         _service = service;
         _settings = settings;
         _notFound.Tick += (_, _) => { _notFound.Stop(); NotFound?.Invoke(); };
-        // Перекладываем строки только при смене ширины (меняются переносы).
+        // Ширина меняет переносы — перекладываем строки. Высота меняет точку, где стоит текущая строка:
+        // раньше её не пересчитывали, и строка, подсвеченная до раскладки окна (высота 0), оставалась
+        // у самого верха под затуханием — весь текст выглядел серым.
         Viewport.SizeChanged += (_, e) =>
         {
-            if (!e.WidthChanged || Math.Abs(e.NewSize.Width - e.PreviousSize.Width) < 0.5) return;
-            Relayout();
+            bool width = e.WidthChanged && Math.Abs(e.NewSize.Width - e.PreviousSize.Width) >= 0.5;
+            bool height = e.HeightChanged && Math.Abs(e.NewSize.Height - e.PreviousSize.Height) >= 0.5;
+            if (!width && !height) return;
+            if (width) Relayout();
             if (_current >= -1) Highlight(_current, animate: false);
         };
     }
 
     public event Action? BackRequested;
+
+    /// <summary>Нажали на строку — перемотать трек к ней.</summary>
+    public event Action<TimeSpan>? SeekRequested;
 
     public event Action? NotFound;
 
@@ -203,10 +211,36 @@ public partial class LyricsView : UserControl, IMediaView, IIslandWidget
                 RenderTransform = group,
                 Effect = blur,
             };
+            var visual = new LineVisual { Text = tb, Shift = shift, Scale = scale, Blur = blur };
+            MakeSeekable(visual, line.Time);
             LinesCanvas.Children.Add(tb);
-            _visuals.Add(new LineVisual { Text = tb, Shift = shift, Scale = scale, Blur = blur });
+            _visuals.Add(visual);
         }
         Relayout();
+    }
+
+    /// <summary>Строку можно нажать — трек перемотается к ней; при наведении она проясняется.</summary>
+    private void MakeSeekable(LineVisual v, TimeSpan time)
+    {
+        var tb = v.Text;
+        tb.Cursor = System.Windows.Input.Cursors.Hand;
+        tb.Background = Brushes.Transparent; // кликабельны и промежутки между словами
+        tb.MouseEnter += (_, _) =>
+        {
+            tb.BeginAnimation(OpacityProperty, new DoubleAnimation(Math.Max(v.TargetOpacity, 0.75), TimeSpan.FromMilliseconds(140)));
+            v.Blur.BeginAnimation(BlurEffect.RadiusProperty, new DoubleAnimation(0, TimeSpan.FromMilliseconds(140)));
+        };
+        tb.MouseLeave += (_, _) =>
+        {
+            tb.BeginAnimation(OpacityProperty, new DoubleAnimation(v.TargetOpacity, TimeSpan.FromMilliseconds(260)));
+            v.Blur.BeginAnimation(BlurEffect.RadiusProperty, new DoubleAnimation(v.TargetBlur, TimeSpan.FromMilliseconds(260)));
+        };
+        tb.MouseLeftButtonDown += (_, e) => e.Handled = true;
+        tb.MouseLeftButtonUp += (_, e) =>
+        {
+            e.Handled = true;
+            if (!_demo) SeekRequested?.Invoke(time);
+        };
     }
 
     private void Relayout()
@@ -257,6 +291,8 @@ public partial class LyricsView : UserControl, IMediaView, IIslandWidget
             double blur = d == 0 ? 0 : Math.Min(5, 1.1 + (dist - 1) * 1.4);
             double scale = d == 0 ? 1 : 0.96;
             double targetY = v.BaseY - focusY + anchorY;
+            v.TargetOpacity = opacity;
+            v.TargetBlur = blur;
 
             var begin = TimeSpan.FromMilliseconds(animate && d > 0 ? Math.Min(6, d) * 30 : 0);
             var dur = TimeSpan.FromMilliseconds(animate ? 480 : 0);

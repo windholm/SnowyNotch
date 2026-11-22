@@ -127,14 +127,13 @@ public sealed class ServiceDock : Canvas
         Wake();
     }
 
-    /// <summary>Горизонтальная прокрутка (жест тачпада). Возвращает false, если дальше крутить некуда.</summary>
-    public bool ScrollBy(double pixels)
+    /// <summary>Горизонтальная прокрутка (жест тачпада). У края — упругий отскок.</summary>
+    public void ScrollBy(double pixels)
     {
         double next = Math.Clamp(_scrollTarget + pixels, 0, MaxScroll);
-        if (Math.Abs(next - _scrollTarget) < 0.5) return false;
-        _scrollTarget = next;
+        if (Math.Abs(next - _scrollTarget) < 0.5) Bounce(Math.Sign(pixels));
+        else _scrollTarget = next;
         Wake();
-        return true;
     }
 
     private double MaxScroll => Math.Max(0, 2 * PadX + _items.Count * Pitch - ActualWidth);
@@ -265,13 +264,23 @@ public sealed class ServiceDock : Canvas
         if (release && IsMouseCaptured) ReleaseMouseCapture();
     }
 
-    protected override void OnMouseWheel(MouseWheelEventArgs e)
+    /// <summary>
+    /// Колесо над сервисами листает только сервисы — по две иконки за щелчок. У края список упруго
+    /// отскакивает, а не передаёт прокрутку острову (раньше это переключало страницу — ложные срабатывания).
+    /// </summary>
+    public void Wheel(int delta)
     {
-        // Колесо листает док; у края событие уходит выше — там оно переключает страницы острова.
-        double next = Snap(_scrollTarget - e.Delta / 120.0 * Pitch * 2);
-        if (Math.Abs(next - _scrollTarget) < 0.5) return;
-        _scrollTarget = next;
-        e.Handled = true;
+        double next = Snap(_scrollTarget - delta / 120.0 * Pitch * 2);
+        if (Math.Abs(next - _scrollTarget) < 0.5) Bounce(-Math.Sign(delta));
+        else _scrollTarget = next;
+        Wake();
+    }
+
+    /// <summary>Толчок за край: список чуть уезжает и пружиной возвращается — «дальше некуда».</summary>
+    private void Bounce(int dir)
+    {
+        if (dir == 0 || Math.Abs(_scrollVel) > 400) return;
+        _scrollVel += dir * 900;
         Wake();
     }
 

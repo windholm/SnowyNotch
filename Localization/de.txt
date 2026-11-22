@@ -338,3 +338,10 @@
 339|Vollbild
 340|Beenden (Esc)
 341|Ziehe das Cover mit der Maus aus der Insel, um den Player im Vollbild mit Songtext zu öffnen. Mit Esc beenden
+342|Stil des Vollbild-Players
+343|Klassisch
+344|Kino
+345|Zentriert
+346|Vinyl
+347|Wechsle den Stil direkt im Player: Taste oben rechts oder S
+348|Stil wechseln (S)

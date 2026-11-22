@@ -28,10 +28,12 @@ public partial class MainWindow
         player.Closed += (_, _) =>
         {
             if (_fullscreenPlayer == player) _fullscreenPlayer = null;
+            ActivateWidgets();
         };
         _fullscreenPlayer = player;
         player.Update(_snap);
         player.Show();
+        ActivateWidgets();
 
         // Остров уступает сцену: сворачивается в пилюлю.
         if (_view == View.Artwork) CloseArtwork();

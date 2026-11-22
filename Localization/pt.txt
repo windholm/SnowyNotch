@@ -338,3 +338,10 @@
 339|Ecrã inteiro
 340|Sair (Esc)
 341|Arraste a capa para fora da ilha com o rato para abrir o leitor em ecrã inteiro com a letra. Esc para sair
+342|Estilo do leitor em ecrã inteiro
+343|Clássico
+344|Cinema
+345|Ao centro
+346|Vinil
+347|Mude de estilo no próprio leitor: botão no canto superior direito ou tecla S
+348|Mudar estilo (S)
