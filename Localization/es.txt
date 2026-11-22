@@ -345,3 +345,8 @@
 346|Vinilo
 347|Cambia de estilo en el propio reproductor: botón arriba a la derecha o tecla S
 348|Cambiar estilo (S)
+349|Profundidad
+350|Cinético
+351|Flotante
+352|Letra sobre la pantalla
+353|Las líneas de la canción flotan por la pantalla mientras trabajas y los clics las atraviesan. Activar o desactivar: botón en la letra, menú de la bandeja o Win + Alt + T

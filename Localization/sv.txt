@@ -345,3 +345,8 @@
 346|Vinyl
 347|Byt stil direkt i spelaren: knappen uppe till höger eller tangenten S
 348|Byt stil (S)
+349|Djup
+350|Kinetisk
+351|Svävande
+352|Låttext över skärmen
+353|Låtraderna svävar över skärmen medan du arbetar, och klick går rakt igenom. Slå på eller av: knappen i låttexten, menyn i aktivitetsfältet eller Win + Alt + T

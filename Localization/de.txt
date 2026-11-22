@@ -345,3 +345,8 @@
 346|Vinyl
 347|Wechsle den Stil direkt im Player: Taste oben rechts oder S
 348|Stil wechseln (S)
+349|Tiefe
+350|Kinetisch
+351|Schwebend
+352|Songtext über dem Bildschirm
+353|Liedzeilen schweben über den Bildschirm, während du arbeitest, und Klicks gehen hindurch. Ein- und ausschalten: Taste im Songtext, Tray-Menü oder Win + Alt + T

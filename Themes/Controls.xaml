@@ -745,6 +745,8 @@
     <Geometry x:Key="IconList">M4.5 7 A1.2 1.2 0 1 0 6.9 7 A1.2 1.2 0 1 0 4.5 7 M4.5 12 A1.2 1.2 0 1 0 6.9 12 A1.2 1.2 0 1 0 4.5 12 M4.5 17 A1.2 1.2 0 1 0 6.9 17 A1.2 1.2 0 1 0 4.5 17 M10 7 H19.5 M10 12 H19.5 M10 17 H19.5</Geometry>
     <Geometry x:Key="IconRefresh">M19 12 A7 7 0 1 1 16.9 7 M17.2 3.8 V7.4 H13.6</Geometry>
     <Geometry x:Key="IconExpand">M4.5 9.5 V5.5 A1 1 0 0 1 5.5 4.5 H9.5 M14.5 4.5 H18.5 A1 1 0 0 1 19.5 5.5 V9.5 M19.5 14.5 V18.5 A1 1 0 0 1 18.5 19.5 H14.5 M9.5 19.5 H5.5 A1 1 0 0 1 4.5 18.5 V14.5</Geometry>
+    <Geometry x:Key="IconLayers">M12 3.8 L20.3 8.4 L12 13 L3.7 8.4 Z M3.7 12.4 L12 17 L20.3 12.4 M3.7 16.2 L12 20.8 L20.3 16.2</Geometry>
+    <Geometry x:Key="IconFloatText">M4 6.5 H12.5 M4 10 H9.5 M11.5 14.5 H20 M14.5 18 H20 M16.5 5 L18 3.5 L19.5 5 M18 3.5 V9</Geometry>
     <!-- Залитые глифы для иконок сервисов (AppIcon), сетка 24×24. Свои, в духе SF Symbols. -->
     <GeometryGroup x:Key="AppGlyphMusic" FillRule="Nonzero">
         <PathGeometry Figures="M9 6.2 L19.2 3.4 V6.6 L9 9.4 Z M9 6.4 H10.7 V17.3 H9 Z M17.5 3.9 H19.2 V15.2 H17.5 Z"/>

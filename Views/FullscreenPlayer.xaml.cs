@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -102,12 +103,15 @@ public partial class FullscreenPlayer : Window, IMediaView
 
         SourceInitialized += (_, _) => CoverMonitor();
         SizeChanged += (_, _) => Relayout();
+        LyricsPane.MouseWheel += LyricsPane_MouseWheel;
+        LyricsPane.SizeChanged += (_, e) => LyricsMask.EndPoint = new Point(0, e.NewSize.Height); // маска — по видимой высоте
+        _browseEnd.Tick += (_, _) => EndBrowse();
         ContentRendered += (_, _) => PlayEnter();
         PreviewKeyDown += OnKey;
         MouseMove += OnMouseMove;
         _idle.Tick += (_, _) => { _idle.Stop(); HideChrome(); };
         _toastHide.Tick += (_, _) => { _toastHide.Stop(); StyleToast.BeginAnimation(OpacityProperty, new DoubleAnimation(0, TimeSpan.FromMilliseconds(400))); };
-        Closed += (_, _) => { CompositionTarget.Rendering -= OnFrame; _idle.Stop(); _meter.Dispose(); };
+        Closed += (_, _) => { CompositionTarget.Rendering -= OnFrame; _idle.Stop(); _browseEnd.Stop(); _meter.Dispose(); };
         ApplyStyleVisuals(animate: false);
         ApplySettings();
     }
@@ -137,23 +141,11 @@ public partial class FullscreenPlayer : Window, IMediaView
         double bars = _style == FullscreenStyle.Cinematic ? Math.Round(h * 0.085) : 0;
 
         double s;
-        bool corner = false; // обложка в левом нижнем углу (кино с текстом)
-        switch (_style)
-        {
-            case FullscreenStyle.Cinematic when lyrics:
-                s = Math.Round(h * 0.16);
-                corner = true;
-                break;
-            case FullscreenStyle.Cinematic:
-                s = Math.Round(Math.Min(h * 0.46, w * 0.32));
-                break;
-            case FullscreenStyle.Spotlight:
-                s = Math.Round(Math.Min(h * 0.46, w * 0.34));
-                break;
-            default:
-                s = Math.Round(lyrics ? Math.Min(h * 0.44, w * 0.27) : Math.Min(h * 0.52, w * 0.36));
-                break;
-        }
+        // Иммерсивные стили с текстом: обложка уходит в левый нижний угол, экран — тексту.
+        bool corner = lyrics && Immersive;
+        if (corner) s = Math.Round(h * 0.16);
+        else if (Immersive || _style == FullscreenStyle.Spotlight) s = Math.Round(Math.Min(h * 0.46, w * 0.33));
+        else s = Math.Round(lyrics ? Math.Min(h * 0.44, w * 0.27) : Math.Min(h * 0.52, w * 0.36));
 
         CoverHost.Width = CoverHost.Height = s;
         CoverHost.HorizontalAlignment = corner ? HorizontalAlignment.Left : HorizontalAlignment.Center;
@@ -168,8 +160,9 @@ public partial class FullscreenPlayer : Window, IMediaView
         ArtistText.FontSize = Math.Clamp(TitleText.FontSize * 0.62, 15, 24);
 
         // Колонки и место текста.
-        bool centeredText = _style == FullscreenStyle.Cinematic;
-        if (!lyrics || _style == FullscreenStyle.Spotlight)
+        bool centeredText = CenteredLines;
+        bool ownHost = _style is FullscreenStyle.Spotlight or FullscreenStyle.Kinetic or FullscreenStyle.Float;
+        if (!lyrics || ownHost)
         {
             RightColDef.Width = new GridLength(0);
             LyricsPane.Visibility = Visibility.Collapsed;
@@ -182,7 +175,9 @@ public partial class FullscreenPlayer : Window, IMediaView
                 RightColDef.Width = new GridLength(0);
                 Grid.SetColumn(LyricsPane, 0);
                 Grid.SetColumnSpan(LyricsPane, 2);
-                LyricsPane.Margin = new Thickness(w * 0.14, bars + h * 0.04, w * 0.14, bars + h * 0.24);
+                LyricsPane.Margin = _style == FullscreenStyle.Depth
+                    ? new Thickness(w * 0.1, h * 0.02, w * 0.1, h * 0.2)
+                    : new Thickness(w * 0.14, bars + h * 0.04, w * 0.14, bars + h * 0.24);
             }
             else
             {
@@ -193,7 +188,8 @@ public partial class FullscreenPlayer : Window, IMediaView
             }
         }
 
-        _lyricFont = Math.Clamp(h * (centeredText ? 0.058 : 0.04), 24, 66);
+        _lyricFont = Math.Clamp(h * (_style == FullscreenStyle.Depth ? 0.064 : centeredText ? 0.058 : 0.04), 24, 72);
+        KineticHost.Margin = new Thickness(w * 0.1, h * 0.06, w * 0.1, h * 0.26);
         PlainText.FontSize = _lyricFont * 0.66;
         PlainText.LineHeight = _lyricFont;
         PlainText.TextAlignment = centeredText ? TextAlignment.Center : TextAlignment.Left;
@@ -252,8 +248,17 @@ public partial class FullscreenPlayer : Window, IMediaView
         FullscreenStyle.Cinematic => L.T("Кино"),
         FullscreenStyle.Spotlight => L.T("В центре"),
         FullscreenStyle.Vinyl => L.T("Винил"),
+        FullscreenStyle.Depth => L.T("Глубина"),
+        FullscreenStyle.Kinetic => L.T("Кинетика"),
+        FullscreenStyle.Float => L.T("Парящий"),
         _ => L.T("Классический"),
     };
+
+    /// <summary>Погружение: обложка с управлением уходят в угол, управление прячется вместе с курсором.</summary>
+    private bool Immersive => _style is FullscreenStyle.Cinematic or FullscreenStyle.Depth or FullscreenStyle.Kinetic or FullscreenStyle.Float;
+
+    /// <summary>Строки текста по центру экрана (а не колонкой справа).</summary>
+    private bool CenteredLines => _style is FullscreenStyle.Cinematic or FullscreenStyle.Depth;
 
     /// <summary>Параметры фона и декора стиля. Пятна, луч и частицы подтягиваются к ним плавно (покадрово).</summary>
     private void ApplyStyleVisuals(bool animate)
@@ -261,38 +266,91 @@ public partial class FullscreenPlayer : Window, IMediaView
         var dur = TimeSpan.FromMilliseconds(animate ? 700 : 0);
         bool cinema = _style == FullscreenStyle.Cinematic, vinyl = _style == FullscreenStyle.Vinyl, spot = _style == FullscreenStyle.Spotlight;
 
-        double blur = cinema ? 64 : spot ? 120 : 160;
+        double blur = _style switch
+        {
+            FullscreenStyle.Cinematic => 64, FullscreenStyle.Spotlight => 120, FullscreenStyle.Kinetic => 100,
+            FullscreenStyle.Float => 120, FullscreenStyle.Depth => 140, _ => 160,
+        };
         BlurA.Radius = BlurB.Radius = blur;
-        Scrim.BeginAnimation(OpacityProperty, new DoubleAnimation(cinema ? 0.75 : 1, dur));
-        Vignette.BeginAnimation(OpacityProperty, new DoubleAnimation(cinema ? 1 : spot ? 0.85 : 0.7, dur));
+        Scrim.BeginAnimation(OpacityProperty, new DoubleAnimation(cinema ? 0.75 : _style == FullscreenStyle.Kinetic ? 1.15 : 1, dur));
+        Vignette.BeginAnimation(OpacityProperty, new DoubleAnimation(cinema || _style == FullscreenStyle.Depth ? 1 : spot ? 0.85 : 0.7, dur));
         Grain.BeginAnimation(OpacityProperty, new DoubleAnimation(cinema ? 0.085 : 0, dur));
 
         SquareArt.Visibility = vinyl ? Visibility.Collapsed : Visibility.Visible;
         VinylArt.Visibility = vinyl ? Visibility.Visible : Visibility.Collapsed;
         Caption.Visibility = spot ? Visibility.Visible : Visibility.Collapsed;
-        Bars.Visibility = _settings.ShowVisualizer && !spot && !cinema ? Visibility.Visible : Visibility.Collapsed;
+        KineticHost.Visibility = _style == FullscreenStyle.Kinetic ? Visibility.Visible : Visibility.Collapsed;
+        FloatHost.Visibility = _style == FullscreenStyle.Float ? Visibility.Visible : Visibility.Collapsed;
+        if (_style != FullscreenStyle.Float) FloatHost.Clear();
+        if (_style != FullscreenStyle.Kinetic) KineticHost.Children.Clear();
+        _kineticIdx = _floatIdx = -2;
+        Bars.Visibility = _settings.ShowVisualizer && _style is FullscreenStyle.Classic or FullscreenStyle.Vinyl ? Visibility.Visible : Visibility.Collapsed;
         TitleStack.Margin = new Thickness(0, 0, spot ? 0 : 44, 0);
         TitleText.TextAlignment = ArtistText.TextAlignment = spot ? TextAlignment.Center : TextAlignment.Left;
+        StyleLabel.Text = StyleName(_style);
 
-        // Вне «Кино» управление всегда видно.
-        if (!cinema && _entered)
+        // Вне иммерсивных стилей управление всегда видно.
+        if (!Immersive && _entered)
         {
             ProgressRow.BeginAnimation(OpacityProperty, new DoubleAnimation(1, dur));
             ControlsRow.BeginAnimation(OpacityProperty, new DoubleAnimation(1, dur));
         }
     }
 
-    private double AuroraTarget => _style switch { FullscreenStyle.Cinematic => 0.3, FullscreenStyle.Spotlight => 0.7, FullscreenStyle.Vinyl => 0.45, _ => 0.55 };
-    private double BeamTarget => _style == FullscreenStyle.Cinematic ? 0.55 : 0;
-    private double ParticlesTarget => _style switch { FullscreenStyle.Cinematic => 0.9, FullscreenStyle.Spotlight => 0.6, _ => 0.4 };
-
-    private void CycleStyle()
+    private double AuroraTarget => _style switch
     {
-        var next = (FullscreenStyle)(((int)_style + 1) % 4);
-        _settings.FullscreenStyle = next; // ApplySettings придёт следом и переключит
-        if (_style != next) TransitionTo(next);
+        FullscreenStyle.Cinematic => 0.3, FullscreenStyle.Spotlight => 0.7, FullscreenStyle.Vinyl => 0.45,
+        FullscreenStyle.Kinetic => 0.65, FullscreenStyle.Float => 0.6, FullscreenStyle.Depth => 0.5, _ => 0.55,
+    };
+    private double BeamTarget => _style == FullscreenStyle.Cinematic ? 0.55 : _style == FullscreenStyle.Depth ? 0.25 : 0;
+    private double ParticlesTarget => _style switch
+    {
+        FullscreenStyle.Cinematic => 0.9, FullscreenStyle.Depth => 0.85, FullscreenStyle.Spotlight => 0.6,
+        FullscreenStyle.Float => 0.5, FullscreenStyle.Kinetic => 0.3, _ => 0.4,
+    };
+
+    private const int StyleCount = 7;
+
+    private void CycleStyle() => ChooseStyle((FullscreenStyle)(((int)_style + 1) % StyleCount));
+
+    private void ChooseStyle(FullscreenStyle style)
+    {
+        _settings.FullscreenStyle = style; // ApplySettings придёт следом и переключит
+        if (_style != style) TransitionTo(style);
     }
 
+    /// <summary>Меню стилей под кнопкой: все стили списком, текущий отмечен.</summary>
+    private void OpenStyleMenu()
+    {
+        StyleList.Children.Clear();
+        for (int i = 0; i < StyleCount; i++)
+        {
+            var style = (FullscreenStyle)i;
+            bool current = style == _style;
+            var row = new Button
+            {
+                Style = (Style)FindResource("PillButton"), Background = current ? new SolidColorBrush(Color.FromArgb(0x33, 0xFF, 0xFF, 0xFF)) : Brushes.Transparent,
+                HorizontalContentAlignment = HorizontalAlignment.Stretch, Padding = new Thickness(14, 10, 14, 10), Margin = new Thickness(0, 1, 0, 1),
+                Content = new Grid
+                {
+                    Children =
+                    {
+                        new TextBlock { Text = StyleName(style), FontSize = 15, FontWeight = current ? FontWeights.SemiBold : FontWeights.Normal, Foreground = Brushes.White },
+                        new TextBlock { Text = current ? "✓" : "", FontSize = 15, Foreground = Brushes.White, HorizontalAlignment = HorizontalAlignment.Right },
+                    },
+                },
+            };
+            row.Click += (_, _) => { StyleMenu.IsOpen = false; ChooseStyle(style); };
+            StyleList.Children.Add(row);
+        }
+        StyleMenu.IsOpen = true;
+        _idle.Stop();
+    }
+
+    /// <summary>Перейти в «Текст поверх экрана» (плеер закроется).</summary>
+    public event Action? OverlayRequested;
+
+    private void Overlay_Click(object sender, RoutedEventArgs e) => OverlayRequested?.Invoke();
     /// <summary>Смена стиля: сцена гаснет, перестраивается и проявляется с пружинкой; вверху — название стиля.</summary>
     private void TransitionTo(FullscreenStyle style)
     {
@@ -588,7 +646,7 @@ public partial class FullscreenPlayer : Window, IMediaView
         var show = new DoubleAnimation(1, TimeSpan.FromMilliseconds(220));
         TopBar.BeginAnimation(OpacityProperty, show);
         TopRight.BeginAnimation(OpacityProperty, show);
-        if (_style == FullscreenStyle.Cinematic && _entered)
+        if (Immersive && _entered)
         {
             ProgressRow.BeginAnimation(OpacityProperty, show);
             ControlsRow.BeginAnimation(OpacityProperty, show);
@@ -604,7 +662,7 @@ public partial class FullscreenPlayer : Window, IMediaView
         var hide = new DoubleAnimation(0, TimeSpan.FromMilliseconds(700));
         TopBar.BeginAnimation(OpacityProperty, hide);
         TopRight.BeginAnimation(OpacityProperty, hide);
-        if (_style == FullscreenStyle.Cinematic)
+        if (Immersive)
         {
             ProgressRow.BeginAnimation(OpacityProperty, hide);
             ControlsRow.BeginAnimation(OpacityProperty, hide);
@@ -612,7 +670,7 @@ public partial class FullscreenPlayer : Window, IMediaView
     }
 
     private void Close_Click(object sender, RoutedEventArgs e) => CloseAnimated();
-    private void Style_Click(object sender, RoutedEventArgs e) => CycleStyle();
+    private void Style_Click(object sender, RoutedEventArgs e) => OpenStyleMenu();
     private async void PlayPause_Click(object sender, RoutedEventArgs e) => await TogglePlay();
     private async void Next_Click(object sender, RoutedEventArgs e) => await _media.NextAsync();
     private async void Prev_Click(object sender, RoutedEventArgs e) => await _media.PreviousAsync();
@@ -799,7 +857,7 @@ public partial class FullscreenPlayer : Window, IMediaView
         {
             var lines = new List<LyricLine>(result.Lines);
             // Длинное вступление: до первой строки горит «♪», а не весь текст тусклый.
-            if (lines[0].Time > TimeSpan.FromSeconds(1.5) && !string.IsNullOrWhiteSpace(lines[0].Text))
+            if (lines[0].Time > TimeSpan.FromSeconds(1.5))
                 lines.Insert(0, new LyricLine(TimeSpan.Zero, ""));
             _lyricLines = lines;
             BuildLines();
@@ -833,6 +891,11 @@ public partial class FullscreenPlayer : Window, IMediaView
     {
         _lyricLines = Array.Empty<LyricLine>();
         _lines.Clear();
+        _browsing = false;
+        _browse = 0;
+        FloatHost.Clear();
+        KineticHost.Children.Clear();
+        _kineticIdx = _floatIdx = -2;
         LinesCanvas.Children.Clear();
         PlainScroll.Visibility = Visibility.Collapsed;
         _current = -2;
@@ -882,7 +945,7 @@ public partial class FullscreenPlayer : Window, IMediaView
     private void RelayoutLines()
     {
         double width = Math.Max(200, LyricsPane.ActualWidth - 10);
-        bool center = _style == FullscreenStyle.Cinematic;
+        bool center = CenteredLines;
         double y = 0, gap = _lyricFont * 0.55;
         foreach (var v in _lines)
         {
@@ -897,17 +960,54 @@ public partial class FullscreenPlayer : Window, IMediaView
         }
     }
 
-    /// <summary>Текущая строка — яркая, крупная, со свечением; соседние — тусклее и размыты тем сильнее, чем дальше.</summary>
+    private int _kineticIdx = -2, _floatIdx = -2;
+
+    /// <summary>
+    /// Текущая строка — яркая, крупная, со свечением; соседние — тусклее и размыты тем сильнее, чем дальше.
+    /// «Глубина»: прошлые строки уменьшаются и улетают вдаль, будущие — крупные, ближе к зрителю, не в фокусе.
+    /// Ручная прокрутка: все строки читаемые, сдвинуты на прокрученное расстояние.
+    /// </summary>
     private void Highlight(int idx, bool animate)
     {
         _current = idx;
-        SetCaption(idx >= 0 && idx < _lines.Count ? _lines[idx].Text.Text : "");
+        string text = idx >= 0 && idx < _lines.Count ? _lines[idx].Text.Text : "";
+        SetCaption(text);
+        if (_style == FullscreenStyle.Kinetic && idx != _kineticIdx) { _kineticIdx = idx; ShowKinetic(idx); }
+        if (_style == FullscreenStyle.Float && idx != _floatIdx) { _floatIdx = idx; FloatHost.ShowLine(text); }
         if (_lines.Count == 0) return;
         double paneH = LyricsPane.ActualHeight;
         if (paneH <= 0) return; // ещё не разложено — подсветка придёт из Relayout
-        double anchorY = paneH * (_style == FullscreenStyle.Cinematic ? 0.42 : 0.38);
+        bool depth = _style == FullscreenStyle.Depth && !_browsing;
+        double anchorY = paneH * (_style == FullscreenStyle.Depth ? 0.5 : _style == FullscreenStyle.Cinematic ? 0.42 : 0.38);
         double focusY = idx >= 0 && idx < _lines.Count ? _lines[idx].BaseY : _lines[0].BaseY - _lyricFont;
         var ease = new QuinticEase { EasingMode = EasingMode.EaseOut };
+
+        // «Глубина»: где стоит строка — накопленные высоты уменьшенных (прошлых) и увеличенных (будущих) строк.
+        var depthY = new double[_lines.Count];
+        var depthS = new double[_lines.Count];
+        if (depth)
+        {
+            int c = Math.Clamp(idx, -1, _lines.Count - 1);
+            double hc = c >= 0 ? _lines[c].Text.DesiredSize.Height : _lyricFont;
+            double upY = anchorY - hc / 2, downY = anchorY + hc / 2;
+            for (int i = c - 1; i >= 0; i--)
+            {
+                double sc = Math.Max(0.32, 1 - 0.17 * (c - i));
+                double hh = _lines[i].Text.DesiredSize.Height * sc;
+                upY -= hh * 0.92;
+                depthY[i] = upY + hh / 2;
+                depthS[i] = sc;
+            }
+            for (int i = Math.Max(0, c + 1); i < _lines.Count; i++)
+            {
+                double sc = 1 + 0.09 * Math.Min(4, i - c);
+                double hh = _lines[i].Text.DesiredSize.Height * sc;
+                depthY[i] = downY + hh / 2 + _lyricFont * 0.25;
+                downY += hh + _lyricFont * 0.25;
+                depthS[i] = sc;
+            }
+            if (c >= 0) { depthY[c] = anchorY; depthS[c] = 1; }
+        }
 
         for (int i = 0; i < _lines.Count; i++)
         {
@@ -919,25 +1019,153 @@ public partial class FullscreenPlayer : Window, IMediaView
             double blur = d == 0 ? 0 : Math.Min(7, 1.4 + (dist - 1) * 1.8);
             double scale = d == 0 ? 1 : 0.94;
             double targetY = v.BaseY - focusY + anchorY;
+
+            if (depth)
+            {
+                targetY = depthY[i] - v.Text.DesiredSize.Height / 2;
+                scale = depthS[i];
+                opacity = d == 0 ? 1 : d < 0 ? Math.Max(0, 0.55 - 0.12 * dist) : Math.Max(0, 0.38 - 0.12 * dist);
+                blur = d == 0 ? 0 : d < 0 ? Math.Min(6, 0.8 * dist) : Math.Min(10, 3 * dist);
+            }
+            if (_browsing)
+            {
+                targetY += _browse;
+                opacity = d == 0 ? 1 : 0.6;
+                blur = 0;
+            }
             v.TargetOpacity = opacity;
             v.TargetBlur = blur;
 
-            var begin = TimeSpan.FromMilliseconds(animate && d > 0 ? Math.Min(6, d) * 35 : 0);
-            var dur = TimeSpan.FromMilliseconds(animate ? 700 : 0);
-            v.Shift.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(targetY, dur) { BeginTime = begin, EasingFunction = animate ? SpringEase.Soft : ease });
+            var begin = TimeSpan.FromMilliseconds(animate && d > 0 && !_browsing ? Math.Min(6, d) * 35 : 0);
+            var dur = TimeSpan.FromMilliseconds(!animate ? 0 : _browsing ? 260 : 700);
+            IEasingFunction moveEase = !animate || _browsing ? ease : SpringEase.Soft;
+            v.Shift.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(targetY, dur) { BeginTime = begin, EasingFunction = moveEase });
             v.Text.BeginAnimation(OpacityProperty, new DoubleAnimation(opacity, dur) { BeginTime = begin, EasingFunction = ease });
-            var s = new DoubleAnimation(scale, dur) { BeginTime = begin, EasingFunction = animate ? SpringEase.Lively : ease };
+            var s = new DoubleAnimation(scale, dur) { BeginTime = begin, EasingFunction = animate && !_browsing ? SpringEase.Lively : ease };
             v.Scale.BeginAnimation(ScaleTransform.ScaleXProperty, s);
             v.Scale.BeginAnimation(ScaleTransform.ScaleYProperty, s);
 
-            if (d == 0) v.Text.Effect = v.Glow;
-            else if (dist <= EffectRange)
+            if (d == 0 && !_browsing) v.Text.Effect = v.Glow;
+            else if (dist <= EffectRange + (depth ? 2 : 0))
             {
                 v.Text.Effect = v.Blur;
                 v.Blur.BeginAnimation(BlurEffect.RadiusProperty, new DoubleAnimation(blur, dur) { BeginTime = begin, EasingFunction = ease });
             }
             else v.Text.Effect = null;
         }
+    }
+
+    // ======================= ручная прокрутка =======================
+
+    private bool _browsing;
+    private double _browse;
+    private readonly DispatcherTimer _browseEnd = new() { Interval = TimeSpan.FromSeconds(3) };
+
+    /// <summary>Колесо листает текст: строки проясняются, любую можно нажать. Через 3 с текст сам вернётся к звучащей строке.</summary>
+    private void LyricsPane_MouseWheel(object sender, MouseWheelEventArgs e)
+    {
+        e.Handled = true;
+        if (_lines.Count == 0) return;
+        double focusY = _current >= 0 && _current < _lines.Count ? _lines[_current].BaseY : _lines[0].BaseY;
+        double max = focusY - _lines[0].BaseY, min = -(_lines[^1].BaseY - focusY);
+        _browse = Math.Clamp(_browse + e.Delta * 0.7, min, max);
+        _browsing = true;
+        _browseEnd.Stop();
+        _browseEnd.Start();
+        ShowChrome();
+        Highlight(_current, animate: true);
+    }
+
+    private void EndBrowse()
+    {
+        _browseEnd.Stop();
+        if (!_browsing) return;
+        _browsing = false;
+        _browse = 0;
+        Highlight(_current, animate: true);
+    }
+
+    // ======================= «Кинетика» =======================
+
+    /// <summary>Слова строки: по пробелам, а для языков без пробелов (японский, китайский) — по знакам.</summary>
+    private static List<string> Words(string text)
+    {
+        var parts = new List<string>();
+        if (text.Contains(' '))
+        {
+            parts.AddRange(text.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+            return parts;
+        }
+        var en = System.Globalization.StringInfo.GetTextElementEnumerator(text);
+        while (en.MoveNext()) parts.Add(en.GetTextElement());
+        return parts;
+    }
+
+    /// <summary>
+    /// Строка собирается по словам: каждое всплывает снизу из размытия, в темпе строки (за ~60 % её длительности).
+    /// Прошлая строка улетает вверх и тает; под текущей — следующая, тускло.
+    /// </summary>
+    private void ShowKinetic(int idx)
+    {
+        foreach (var old in KineticHost.Children.OfType<FrameworkElement>().ToList())
+        {
+            var t = old.RenderTransform as TranslateTransform ?? new TranslateTransform();
+            old.RenderTransform = t;
+            var gone = new DoubleAnimation(0, TimeSpan.FromMilliseconds(380));
+            gone.Completed += (_, _) => KineticHost.Children.Remove(old);
+            old.BeginAnimation(OpacityProperty, gone);
+            t.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(t.Y - 70, TimeSpan.FromMilliseconds(420)) { EasingFunction = new CubicEase { EasingMode = EasingMode.EaseIn } });
+        }
+        if (idx < 0 || idx >= _lyricLines.Count) return;
+        string text = _lyricLines[idx].Text.Trim();
+        if (text.Length == 0) text = "♪";
+
+        double size = Math.Clamp(ActualHeight * 0.078, 30, 96);
+        var words = Words(text);
+        if (words.Count > 9) size *= 0.82;
+        var wrap = new WrapPanel { HorizontalAlignment = HorizontalAlignment.Center };
+        double lineSec = idx + 1 < _lyricLines.Count ? (_lyricLines[idx + 1].Time - _lyricLines[idx].Time).TotalSeconds : 3;
+        double stepMs = Math.Clamp(lineSec * 600 / Math.Max(1, words.Count), 35, 260);
+        bool spaced = text.Contains(' ');
+        for (int i = 0; i < words.Count; i++)
+        {
+            var tb = new TextBlock
+            {
+                Text = words[i], FontSize = size, FontWeight = FontWeights.Black, Foreground = Brushes.White,
+                Margin = new Thickness(0, 0, spaced ? size * 0.28 : 0, 0), Opacity = 0,
+                RenderTransformOrigin = new Point(0.5, 1),
+            };
+            var tt = new TranslateTransform(0, size * 0.55);
+            var sc = new ScaleTransform(0.8, 0.8);
+            tb.RenderTransform = new TransformGroup { Children = { sc, tt } };
+            var blur = new BlurEffect { Radius = 14, RenderingBias = RenderingBias.Performance };
+            tb.Effect = blur;
+            var begin = TimeSpan.FromMilliseconds(i * stepMs);
+            tb.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(260)) { BeginTime = begin });
+            tt.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(size * 0.55, 0, TimeSpan.FromMilliseconds(620)) { BeginTime = begin, EasingFunction = SpringEase.Lively });
+            var grow = new DoubleAnimation(0.8, 1, TimeSpan.FromMilliseconds(620)) { BeginTime = begin, EasingFunction = SpringEase.Bouncy };
+            sc.BeginAnimation(ScaleTransform.ScaleXProperty, grow);
+            sc.BeginAnimation(ScaleTransform.ScaleYProperty, grow);
+            var unblur = new DoubleAnimation(14, 0, TimeSpan.FromMilliseconds(420)) { BeginTime = begin };
+            unblur.Completed += (_, _) => tb.Effect = new DropShadowEffect { Color = Colors.White, BlurRadius = 34, ShadowDepth = 0, Opacity = 0.3, RenderingBias = RenderingBias.Performance };
+            blur.BeginAnimation(BlurEffect.RadiusProperty, unblur);
+            wrap.Children.Add(tb);
+        }
+
+        var stack = new StackPanel { VerticalAlignment = VerticalAlignment.Center, RenderTransform = new TranslateTransform() };
+        stack.Children.Add(wrap);
+        string next = idx + 1 < _lyricLines.Count ? _lyricLines[idx + 1].Text.Trim() : "";
+        if (next.Length > 0)
+        {
+            var nextTb = new TextBlock
+            {
+                Text = next, FontSize = size * 0.42, FontWeight = FontWeights.SemiBold, Foreground = Brushes.White, Opacity = 0,
+                TextAlignment = TextAlignment.Center, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, size * 0.5, 0, 0),
+            };
+            nextTb.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 0.32, TimeSpan.FromMilliseconds(600)) { BeginTime = TimeSpan.FromMilliseconds(300) });
+            stack.Children.Add(nextTb);
+        }
+        KineticHost.Children.Add(stack);
     }
 
     private string _caption = "";
@@ -994,6 +1222,17 @@ public partial class FullscreenPlayer : Window, IMediaView
     }
 
 #if DEBUG
+    /// <summary>Для скриншотов: подсветить строку (как будто песня дошла до неё).</summary>
+    public void DebugHighlight(int idx) => Highlight(idx, animate: true);
+
+    /// <summary>Для скриншотов: прокрутить текст колесом.</summary>
+    public void DebugBrowse(double delta)
+    {
+        _browsing = true;
+        _browse = delta;
+        Highlight(_current, animate: false);
+    }
+
     /// <summary>Для скриншотов: сразу включить стиль без анимации перехода.</summary>
     public void DebugSetStyle(FullscreenStyle style)
     {

@@ -444,6 +444,7 @@ public partial class MainWindow
         if (_hero != null) yield return _hero;
         if (_lyricsView != null) yield return _lyricsView;
         if (_fullscreenPlayer != null) yield return _fullscreenPlayer;
+        if (_lyricsOverlay != null) yield return _lyricsOverlay;
     }
 
     private MediaHero? _hero;
@@ -478,7 +479,7 @@ public partial class MainWindow
     {
         bool expanded = _state == IslandState.Expanded;
         // Позицию трека показывают раскрытый остров и полноэкранный плеер.
-        _media.PositionPolling = expanded || _fullscreenPlayer != null;
+        _media.PositionPolling = expanded || _fullscreenPlayer != null || _lyricsOverlay != null;
         foreach (var w in _homeWidgets.OfType<IIslandWidget>()) w.SetActive(expanded && _view == View.Home);
         if (_focusWidget is IIslandWidget f) f.SetActive(expanded && _view == View.Focus);
         _lyricsView?.SetActive(expanded && _view == View.Lyrics);

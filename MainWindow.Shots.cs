@@ -98,6 +98,10 @@ public partial class MainWindow
                 ("fullscreen-spotlight", FullscreenStyle.Spotlight, false),
                 ("fullscreen-vinyl", FullscreenStyle.Vinyl, false),
                 ("fullscreen-paused", FullscreenStyle.Classic, true),
+                ("fullscreen-depth", FullscreenStyle.Depth, false),
+                ("fullscreen-kinetic", FullscreenStyle.Kinetic, false),
+                ("fullscreen-float", FullscreenStyle.Float, false),
+                ("fullscreen-browse", FullscreenStyle.Classic, false),
             })
             {
                 if (!Wanted(name)) continue;
@@ -106,6 +110,12 @@ public partial class MainWindow
                 if (player == null) continue;
                 player.DebugSetStyle(style);
                 if (paused && _snap != null) player.Update(_snap with { IsPlaying = false });
+                if (style == FullscreenStyle.Float)
+                {
+                    // Несколько строк подряд — чтобы было видно, как они расходятся по экрану.
+                    for (int i = 0; i < 3; i++) { await Task.Delay(1300); player.DebugHighlight(i); }
+                }
+                if (name == "fullscreen-browse") { await Task.Delay(1500); player.DebugBrowse(-220); }
                 await Task.Delay(3400);
                 var root = (FrameworkElement)player.Content;
                 var rtb = new RenderTargetBitmap((int)root.ActualWidth, (int)root.ActualHeight, 96, 96, PixelFormats.Pbgra32);
@@ -113,6 +123,30 @@ public partial class MainWindow
                 Save(rtb, Path.Combine(dir, name + ".png"));
                 player.Close();
                 await Task.Delay(500);
+            }
+
+            // «Текст поверх экрана» — поверх «обоев», как над рабочим столом.
+            if (Wanted("overlay"))
+            {
+                var ov = new Views.LyricsOverlay(_lyricsService, _settings);
+                ov.Show();
+                await Task.Delay(600);
+                for (int i = 0; i < 3; i++) { ov.DebugShowLine(DemoLyrics[i]); await Task.Delay(1500); }
+                await Task.Delay(1200);
+                var fl = (FrameworkElement)ov.Content;
+                int ow = (int)fl.ActualWidth, oh = (int)fl.ActualHeight;
+                var layer = new RenderTargetBitmap(ow, oh, 96, 96, PixelFormats.Pbgra32);
+                layer.Render(fl);
+                var dv = new DrawingVisual();
+                using (var dc = dv.RenderOpen())
+                {
+                    Wallpaper(dc, ow, oh, 5, _ => false);
+                    dc.DrawImage(layer, new Rect(0, 0, ow, oh));
+                }
+                var outImg = new RenderTargetBitmap(ow, oh, 96, 96, PixelFormats.Pbgra32);
+                outImg.Render(dv);
+                Save(outImg, Path.Combine(dir, "overlay.png"));
+                ov.Close();
             }
 
             foreach (var (name, img) in shots) Save(Compose(img), Path.Combine(dir, name + ".png"));

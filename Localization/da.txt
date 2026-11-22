@@ -345,3 +345,8 @@
 346|Vinyl
 347|Skift stil direkte i afspilleren: knappen øverst til højre eller tasten S
 348|Skift stil (S)
+349|Dybde
+350|Kinetisk
+351|Svævende
+352|Sangtekst over skærmen
+353|Sangens linjer svæver over skærmen, mens du arbejder, og klik går lige igennem dem. Slå til eller fra: knappen i sangteksten, menuen i proceslinjen eller Win + Alt + T

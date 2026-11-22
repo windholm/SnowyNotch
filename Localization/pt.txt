@@ -345,3 +345,8 @@
 346|Vinil
 347|Mude de estilo no próprio leitor: botão no canto superior direito ou tecla S
 348|Mudar estilo (S)
+349|Profundidade
+350|Cinético
+351|Flutuante
+352|Letra sobre o ecrã
+353|As linhas da música flutuam pelo ecrã enquanto trabalha e os cliques passam através delas. Ligar ou desligar: botão na letra, menu da área de notificação ou Win + Alt + T

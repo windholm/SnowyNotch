@@ -11,6 +11,10 @@
         </Grid.RowDefinitions>
 
         <Grid Margin="0,0,0,4">
+            <Button x:Name="OverlayButton" Style="{StaticResource IconButton}" Width="30" Height="30" HorizontalAlignment="Right"
+                    Foreground="#B3FFFFFF" Click="Overlay_Click" ToolTip="{l:T 'Текст поверх экрана'}">
+                <c:IconGlyph Data="{StaticResource IconFloatText}" Width="18" Height="18" StrokeWidth="1.8"/>
+            </Button>
             <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource IconButton}" Width="30" Height="30" Foreground="#B3FFFFFF"
                         Click="Back_Click" ToolTip="{l:T 'Назад'}">
@@ -24,7 +28,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1" ClipToBounds="True" x:Name="Viewport" Margin="16,0,0,0">
+        <Grid Grid.Row="1" ClipToBounds="True" x:Name="Viewport" Margin="16,0,0,0" Background="Transparent">
             <!-- Absolute и высота области (220): относительная маска растягивалась на ВСЕ строки песни,
                  и в начале трека весь видимый текст попадал в зону затухания — строки были серыми. -->
             <Grid.OpacityMask>

@@ -345,3 +345,8 @@
 346|Winyl
 347|Zmieniaj styl w samym odtwarzaczu: przycisk w prawym górnym rogu lub klawisz S
 348|Zmień styl (S)
+349|Głębia
+350|Kinetyczny
+351|Unoszący się
+352|Tekst nad ekranem
+353|Wersy piosenki unoszą się po ekranie, gdy pracujesz, a kliknięcia przez nie przechodzą. Włącz lub wyłącz: przycisk w tekście, menu w zasobniku lub Win + Alt + T

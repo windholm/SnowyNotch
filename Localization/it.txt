@@ -345,3 +345,8 @@
 346|Vinile
 347|Cambia stile direttamente nel player: pulsante in alto a destra o tasto S
 348|Cambia stile (S)
+349|Profondità
+350|Cinetico
+351|Fluttuante
+352|Testo sopra lo schermo
+353|Le righe della canzone fluttuano sullo schermo mentre lavori e i clic le attraversano. Attiva o disattiva: pulsante nel testo, menu dell'area di notifica o Win + Alt + T

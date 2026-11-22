@@ -345,3 +345,8 @@
 346|Plak
 347|Stili doğrudan oynatıcıda değiştirin: sağ üstteki düğme veya S tuşu
 348|Stili değiştir (S)
+349|Derinlik
+350|Kinetik
+351|Süzülen
+352|Ekran üstü şarkı sözü
+353|Siz çalışırken şarkı satırları ekranda süzülür ve tıklamalar içlerinden geçer. Açmak ve kapatmak için: sözlerdeki düğme, tepsi menüsü veya Win + Alt + T

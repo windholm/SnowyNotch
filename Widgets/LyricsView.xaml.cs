@@ -51,6 +51,8 @@ public partial class LyricsView : UserControl, IMediaView, IIslandWidget
         // Ширина меняет переносы — перекладываем строки. Высота меняет точку, где стоит текущая строка:
         // раньше её не пересчитывали, и строка, подсвеченная до раскладки окна (высота 0), оставалась
         // у самого верха под затуханием — весь текст выглядел серым.
+        Viewport.MouseWheel += Viewport_MouseWheel;
+        _browseEnd.Tick += (_, _) => EndBrowse();
         Viewport.SizeChanged += (_, e) =>
         {
             bool width = e.WidthChanged && Math.Abs(e.NewSize.Width - e.PreviousSize.Width) >= 0.5;
@@ -143,7 +145,7 @@ public partial class LyricsView : UserControl, IMediaView, IIslandWidget
         {
             var lines = new List<LyricLine>(result.Lines);
             // Длинное вступление: до первой строки горит «♪», а не весь текст тусклый, будто всё сломалось.
-            if (lines[0].Time > TimeSpan.FromSeconds(2.5) && !string.IsNullOrWhiteSpace(lines[0].Text))
+            if (lines[0].Time > TimeSpan.FromSeconds(1.5))
                 lines.Insert(0, new LyricLine(TimeSpan.Zero, ""));
             _lines = lines;
             BuildLines();
@@ -181,6 +183,8 @@ public partial class LyricsView : UserControl, IMediaView, IIslandWidget
     {
         _lines = Array.Empty<LyricLine>();
         _visuals.Clear();
+        _browsing = false;
+        _browse = 0;
         LinesCanvas.Children.Clear();
         PlainScroll.Visibility = Visibility.Collapsed;
         _current = -2;
@@ -291,11 +295,18 @@ public partial class LyricsView : UserControl, IMediaView, IIslandWidget
             double blur = d == 0 ? 0 : Math.Min(5, 1.1 + (dist - 1) * 1.4);
             double scale = d == 0 ? 1 : 0.96;
             double targetY = v.BaseY - focusY + anchorY;
+            // Ручная прокрутка: весь текст читаемый, без размытия; звучащая строка — по-прежнему ярче.
+            if (_browsing)
+            {
+                targetY += _browse;
+                opacity = d == 0 ? 1 : 0.62;
+                blur = 0;
+            }
             v.TargetOpacity = opacity;
             v.TargetBlur = blur;
 
-            var begin = TimeSpan.FromMilliseconds(animate && d > 0 ? Math.Min(6, d) * 30 : 0);
-            var dur = TimeSpan.FromMilliseconds(animate ? 480 : 0);
+            var begin = TimeSpan.FromMilliseconds(animate && d > 0 && !_browsing ? Math.Min(6, d) * 30 : 0);
+            var dur = TimeSpan.FromMilliseconds(!animate ? 0 : _browsing ? 260 : 480);
 
             v.Shift.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(targetY, dur) { BeginTime = begin, EasingFunction = ease });
             v.Text.BeginAnimation(OpacityProperty, new DoubleAnimation(opacity, dur) { BeginTime = begin, EasingFunction = ease });
@@ -316,4 +327,47 @@ public partial class LyricsView : UserControl, IMediaView, IIslandWidget
     }
 
     private void Back_Click(object sender, RoutedEventArgs e) => BackRequested?.Invoke();
+
+    // ======================= «поверх экрана» =======================
+
+    /// <summary>Кнопка «Текст поверх экрана» в шапке.</summary>
+    public event Action? OverlayToggleRequested;
+
+    private void Overlay_Click(object sender, RoutedEventArgs e) => OverlayToggleRequested?.Invoke();
+
+    /// <summary>Подсветить кнопку, когда режим включён.</summary>
+    public void SetOverlayActive(bool active) =>
+        OverlayButton.Foreground = active ? (Brush)FindResource("AccentBrush") : new SolidColorBrush(Color.FromArgb(0xB3, 0xFF, 0xFF, 0xFF));
+
+    // ======================= ручная прокрутка =======================
+
+    private bool _browsing;
+    private double _browse;
+    private readonly DispatcherTimer _browseEnd = new() { Interval = TimeSpan.FromSeconds(3) };
+
+    /// <summary>
+    /// Колесо листает текст вручную (как в Apple Music): строки проясняются, любую можно нажать и перемотать к ней.
+    /// Через 3 секунды без прокрутки текст сам возвращается к звучащей строке.
+    /// </summary>
+    private void Viewport_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+    {
+        e.Handled = true;
+        if (_visuals.Count == 0) return;
+        double focusY = _current >= 0 && _current < _visuals.Count ? _visuals[_current].BaseY : _visuals[0].BaseY;
+        double max = focusY - _visuals[0].BaseY, min = -(_visuals[^1].BaseY - focusY);
+        _browse = Math.Clamp(_browse + e.Delta * 0.55, min, max);
+        _browsing = true;
+        _browseEnd.Stop();
+        _browseEnd.Start();
+        Highlight(_current, animate: true);
+    }
+
+    private void EndBrowse()
+    {
+        _browseEnd.Stop();
+        if (!_browsing) return;
+        _browsing = false;
+        _browse = 0;
+        Highlight(_current, animate: true);
+    }
 }

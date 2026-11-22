@@ -345,3 +345,8 @@
 346|Vinyl
 347|Styl přepínejte přímo v přehrávači: tlačítko vpravo nahoře nebo klávesa S
 348|Změnit styl (S)
+349|Hloubka
+350|Kinetický
+351|Plovoucí
+352|Text přes obrazovku
+353|Řádky písně plují po obrazovce, zatímco pracujete, a kliknutí jimi procházejí. Zapnout a vypnout: tlačítko v textu písně, nabídka v oznamovací oblasti nebo Win + Alt + T

@@ -17,6 +17,7 @@ public partial class App : System.Windows.Application
     private MainWindow? _island;
     private WinSlashHotkey? _hotkey;
     private GlobalHotkey? _audioHotkey;
+    private GlobalHotkey? _lyricsHotkey;
 
     /// <summary>Сочетание, которое реально открывает «Звук» (для настроек).</summary>
     public static string? AudioHotkeyLabel { get; private set; }
@@ -121,6 +122,13 @@ public partial class App : System.Windows.Application
         _audioHotkey.Pressed += () => _island?.ToggleAudio();
         AudioHotkeyLabel = _audioHotkey.Label;
 
+        // «Текст поверх экрана»: Win+Alt+T (T — text; с L нельзя — Win+L блокирует компьютер); если занято — запасное.
+        const uint Tk = 0x54;
+        _lyricsHotkey = new GlobalHotkey(
+            (GlobalHotkey.Win | GlobalHotkey.Alt, Tk, "Win + Alt + T"),
+            (GlobalHotkey.Ctrl | GlobalHotkey.Alt | GlobalHotkey.Shift, Tk, "Ctrl + Alt + Shift + T"));
+        _lyricsHotkey.Pressed += () => _island?.ToggleLyricsOverlay();
+
         CreateTrayIcon();
 
         // После перезапуска из настроек (смена языка) — вернуть пользователя туда же.
@@ -137,6 +145,7 @@ public partial class App : System.Windows.Application
         if (_saveDebounce.IsEnabled) _settings.Save();
         _hotkey?.Dispose();
         _audioHotkey?.Dispose();
+        _lyricsHotkey?.Dispose();
         if (_tray != null)
         {
             _tray.Visible = false;
@@ -209,6 +218,7 @@ public partial class App : System.Windows.Application
         var menu = new Forms.ContextMenuStrip();
         menu.Items.Add(L.T("Настройки        Win + /"), null, (_, _) => OpenSettings());
         menu.Items.Add(L.T("Показать остров"), null, (_, _) => _island?.ShowIsland());
+        menu.Items.Add(L.T("Текст поверх экрана") + "   " + (_lyricsHotkey?.Label ?? ""), null, (_, _) => _island?.ToggleLyricsOverlay());
         menu.Items.Add(new Forms.ToolStripSeparator());
         menu.Items.Add(L.T("Выход"), null, (_, _) => Shutdown());
 

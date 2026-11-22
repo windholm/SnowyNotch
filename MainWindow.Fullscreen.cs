@@ -30,6 +30,11 @@ public partial class MainWindow
             if (_fullscreenPlayer == player) _fullscreenPlayer = null;
             ActivateWidgets();
         };
+        player.OverlayRequested += () =>
+        {
+            player.CloseAnimated();
+            if (_lyricsOverlay == null) ToggleLyricsOverlay();
+        };
         _fullscreenPlayer = player;
         player.Update(_snap);
         player.Show();
@@ -41,6 +46,36 @@ public partial class MainWindow
         _hoverActive = _peeking = _sticky = false;
         UpdateState();
         return true;
+    }
+
+    private LyricsOverlay? _lyricsOverlay;
+
+    /// <summary>Включён ли «Текст поверх экрана».</summary>
+    public bool LyricsOverlayActive => _lyricsOverlay != null;
+
+    /// <summary>«Текст поверх экрана»: строки песни плавают по рабочему столу, клики проходят сквозь них.</summary>
+    public void ToggleLyricsOverlay()
+    {
+        if (_lyricsOverlay != null)
+        {
+            _lyricsOverlay.CloseAnimated();
+            _lyricsOverlay = null;
+        }
+        else
+        {
+            var overlay = new LyricsOverlay(_lyricsService, _settings);
+            overlay.Closed += (_, _) =>
+            {
+                if (_lyricsOverlay == overlay) _lyricsOverlay = null;
+                ActivateWidgets();
+                _lyricsView?.SetOverlayActive(false);
+            };
+            _lyricsOverlay = overlay;
+            overlay.Update(_snap);
+            overlay.Show();
+        }
+        _lyricsView?.SetOverlayActive(_lyricsOverlay != null);
+        ActivateWidgets();
     }
 
 #if DEBUG

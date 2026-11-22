@@ -345,3 +345,8 @@
 346|Vinyle
 347|Changez de style directement dans le lecteur : bouton en haut à droite ou touche S
 348|Changer de style (S)
+349|Profondeur
+350|Cinétique
+351|Flottant
+352|Paroles par-dessus l'écran
+353|Les lignes de la chanson flottent sur l'écran pendant que vous travaillez, et les clics passent à travers. Activer ou désactiver : bouton dans les paroles, menu de la barre d'état ou Win + Alt + T

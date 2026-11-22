@@ -72,6 +72,8 @@ public sealed class MediaService : IDisposable
     private (TimeSpan Pos, DateTimeOffset At, TimeSpan End) _lastTimeline;
     private DateTimeOffset _playSince = DateTimeOffset.UnixEpoch;
     private bool _noTimeline;
+    private DateTimeOffset _trackChangedAt, _seekAt;
+    private (TimeSpan Pos, DateTimeOffset At)? _pendingBack;
     // Только музыка: решения «музыка или нет» по каждому треку и периодическая перепроверка
     // (в браузере SoundCloud может смениться YouTube в той же медиасессии).
     private readonly Dictionary<string, bool> _verdicts = new();
@@ -86,7 +88,7 @@ public sealed class MediaService : IDisposable
         _onPlayback = (_, _) => OnUi(() => { ReadPlayback(); SelectSession(); Publish(); return Task.CompletedTask; });
         _onTimeline = (_, _) => OnUi(() => { ReadTimeline(force: true); Publish(); return Task.CompletedTask; });
         _rescan.Tick += (_, _) => { if (_musicOnly) SelectSession(); };
-        _sync.Tick += (_, _) => { if (ReadTimeline()) Publish(); };
+        _sync.Tick += (_, _) => { if (ReadTimeline() || AcceptPendingBack()) Publish(); };
     }
 
     public event Action<MediaSnapshot?>? Changed;
@@ -172,7 +174,11 @@ public sealed class MediaService : IDisposable
     }
 
     public Task NextAsync() => Try(s => s.TrySkipNextAsync().AsTask());
-    public Task PreviousAsync() => Try(s => s.TrySkipPreviousAsync().AsTask());
+    public Task PreviousAsync()
+    {
+        _seekAt = DateTimeOffset.Now; // «назад» может начать трек заново — это не сбой позиции
+        return Try(s => s.TrySkipPreviousAsync().AsTask());
+    }
 
     public Task ToggleShuffleAsync() => Try(s => s.TryChangeShuffleActiveAsync(!_shuffle).AsTask());
 
@@ -190,7 +196,8 @@ public sealed class MediaService : IDisposable
     public Task SeekAsync(TimeSpan position)
     {
         _pos = position;
-        _posAt = DateTimeOffset.Now;
+        _posAt = _seekAt = DateTimeOffset.Now;
+        _pendingBack = null;
         Publish();
         return Try(s => s.TryChangePlaybackPositionAsync(position.Ticks).AsTask());
     }
@@ -315,6 +322,8 @@ public sealed class MediaService : IDisposable
         _posAt = DateTimeOffset.Now;
         _lastTimeline = default;
         _noTimeline = false;
+        _pendingBack = null;
+        _trackChangedAt = DateTimeOffset.Now;
         _playSince = DateTimeOffset.UnixEpoch;
 
         if (session == null)
@@ -348,6 +357,7 @@ public sealed class MediaService : IDisposable
         if (string.IsNullOrWhiteSpace(artist)) artist = props?.AlbumArtist ?? "";
 
         bool trackChanged = title != _title || artist != _artist;
+        if (trackChanged) _trackChangedAt = DateTimeOffset.Now;
         _title = title;
         _artist = artist;
         if (trackChanged)
@@ -428,12 +438,28 @@ public sealed class MediaService : IDisposable
             // от его начала (см. ReadPropertiesAsync), а нулевой замер их не сбрасывает.
             _noTimeline = sample.End <= TimeSpan.Zero && sample.Pos <= TimeSpan.Zero;
             if (_noTimeline) return false;
-            _dur = sample.End;
-            _pos = sample.Pos;
             var at = sample.At;
             if (at.Year < 2000 || at > now) at = now;
             // Замер сделан ещё на паузе: с тех пор трек шёл только с момента запуска, а не с момента замера.
             if (at < _playSince - TimeSpan.FromMilliseconds(150)) at = _playSince;
+
+            // Скачок назад посреди трека. Браузеры иногда присылают «0» или устаревший замер (буферизация,
+            // обновление метаданных) — текст песни на секунду уходил в начало и серел. Настоящую перемотку назад
+            // (в самом плеере) подтверждаем: принимаем, если через 1.2 с её не опроверг новый замер.
+            var samplePos = sample.Pos + (_playing ? now - at : TimeSpan.Zero);
+            var expected = Extrapolate(now);
+            bool recentAction = now - _trackChangedAt < TimeSpan.FromSeconds(3) || now - _seekAt < TimeSpan.FromSeconds(3);
+            if (!recentAction && expected > TimeSpan.FromSeconds(3) && samplePos < expected - TimeSpan.FromSeconds(2.5))
+            {
+                _dur = sample.End;
+                // Ровно ноль посреди трека — почти всегда сбой: не ждём подтверждения, просто игнорируем.
+                _pendingBack = sample.Pos <= TimeSpan.Zero ? null : (samplePos, now);
+                return false;
+            }
+            _pendingBack = null;
+
+            _dur = sample.End;
+            _pos = sample.Pos;
             _posAt = _playing ? at : now;
             return true;
         }
@@ -442,6 +468,18 @@ public sealed class MediaService : IDisposable
             Debug.WriteLine($"[media] timeline failed: {ex.Message}");
             return false;
         }
+    }
+
+    /// <summary>Подозрительный скачок назад продержался 1.2 с без опровержения — значит, это настоящая перемотка.</summary>
+    private bool AcceptPendingBack()
+    {
+        if (_pendingBack is not { } p) return false;
+        var now = DateTimeOffset.Now;
+        if (now - p.At < TimeSpan.FromSeconds(1.2)) return false;
+        _pendingBack = null;
+        _pos = p.Pos + (_playing ? now - p.At : TimeSpan.Zero);
+        _posAt = now;
+        return true;
     }
 
     private TimeSpan Extrapolate(DateTimeOffset now) =>

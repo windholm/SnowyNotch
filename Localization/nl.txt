@@ -345,3 +345,8 @@
 346|Vinyl
 347|Wissel van stijl in de speler zelf: de knop rechtsboven of de S-toets
 348|Stijl wijzigen (S)
+349|Diepte
+350|Kinetisch
+351|Zwevend
+352|Songtekst over het scherm
+353|Regels van het nummer zweven over het scherm terwijl je werkt, en klikken gaan er dwars doorheen. Aan of uit: de knop in de songtekst, het systeemvakmenu of Win + Alt + T

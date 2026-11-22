@@ -345,3 +345,8 @@
 346|Vinyl
 347|Switch styles right in the player: the button at the top right or the S key
 348|Change style (S)
+349|Depth
+350|Kinetic
+351|Floating
+352|Lyrics over screen
+353|Song lines float around the screen while you work, and clicks pass right through them. Turn on or off: the button in the lyrics, the tray menu or Win + Alt + T

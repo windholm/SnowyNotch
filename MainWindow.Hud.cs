@@ -268,6 +268,8 @@ public partial class MainWindow
             _lyricsView = new LyricsView(_lyricsService, _settings);
             _lyricsView.BackRequested += CloseLyrics;
             _lyricsView.SeekRequested += t => _ = _media.SeekAsync(t);
+            _lyricsView.OverlayToggleRequested += ToggleLyricsOverlay;
+            _lyricsView.SetOverlayActive(_lyricsOverlay != null);
             _lyricsView.NotFound += () => { if (_view == View.Lyrics) CloseLyrics(); };
             LyricsHost.Content = _lyricsView;
         }

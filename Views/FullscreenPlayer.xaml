@@ -95,10 +95,12 @@
             </Grid.ColumnDefinitions>
 
             <!-- Текст песни: строки на холсте, затухание сверху и снизу. -->
-            <Grid x:Name="LyricsPane" Grid.Column="1" ClipToBounds="True" Opacity="0" Margin="0,0,80,0">
+            <Grid x:Name="LyricsPane" Grid.Column="1" ClipToBounds="True" Opacity="0" Margin="0,0,80,0" Background="Transparent">
                 <Grid.RenderTransform><TranslateTransform x:Name="LyricsShift"/></Grid.RenderTransform>
                 <Grid.OpacityMask>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <!-- Absolute: относительная маска растягивалась на все строки песни (они далеко за краем окна), и пока
+                         строки ехали, зона затухания гуляла — видимый текст то и дело становился серым. Высота — из кода. -->
+                    <LinearGradientBrush x:Name="LyricsMask" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,600">
                         <GradientStop Color="#00000000" Offset="0"/>
                         <GradientStop Color="#FF000000" Offset="0.16"/>
                         <GradientStop Color="#FF000000" Offset="0.82"/>
@@ -113,6 +115,11 @@
                            VerticalAlignment="Center" Visibility="Collapsed"/>
             </Grid>
 
+
+            <!-- «Кинетика»: текущая строка по словам, крупно; ниже — следующая, тускло. -->
+            <Grid x:Name="KineticHost" Grid.ColumnSpan="2" Visibility="Collapsed" IsHitTestVisible="False" ClipToBounds="False"/>
+            <!-- «Парящий»: строки возникают в разных местах экрана. -->
+            <c:FloatingLyrics x:Name="FloatHost" Grid.ColumnSpan="2" Visibility="Collapsed" SafeArea="0.06,0.12,0.06,0.3"/>
             <StackPanel x:Name="LeftCol" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel.RenderTransform><TranslateTransform/></StackPanel.RenderTransform>
 
@@ -272,10 +279,28 @@
             <Border x:Name="StyleToast" Background="#33FFFFFF" CornerRadius="16" Padding="14,7" Margin="0,0,12,0" VerticalAlignment="Center" Opacity="0">
                 <TextBlock x:Name="StyleToastText" FontSize="14" FontWeight="SemiBold"/>
             </Border>
-            <Button Style="{StaticResource IconButton}" Width="48" Height="48" Background="#2EFFFFFF" Click="Style_Click"
+            <Button Style="{StaticResource IconButton}" Width="48" Height="48" Background="#2EFFFFFF" Margin="0,0,10,0"
+                    Click="Overlay_Click" ToolTip="{l:T 'Текст поверх экрана'}">
+                <c:IconGlyph Data="{StaticResource IconFloatText}" Width="21" Height="21" StrokeWidth="1.8"/>
+            </Button>
+            <!-- Стиль: «пилюля» со слоями и названием; меню со всеми стилями. -->
+            <Button x:Name="StyleButton" Style="{StaticResource IconButton}" Height="48" Background="#2EFFFFFF" Click="Style_Click"
                     ToolTip="{l:T 'Сменить стиль (S)'}">
-                <c:IconGlyph Data="{StaticResource IconSparkle}" Width="21" Height="21" StrokeWidth="1.8"/>
+                <StackPanel Orientation="Horizontal" Margin="16,0,18,0">
+                    <c:IconGlyph Data="{StaticResource IconLayers}" Width="20" Height="20" StrokeWidth="1.8" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="StyleLabel" FontSize="14.5" FontWeight="SemiBold" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                    <c:IconGlyph Data="{StaticResource IconChevronLeft}" Width="14" Height="14" StrokeWidth="2.2" Margin="8,1,0,0"
+                                 VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
+                        <c:IconGlyph.RenderTransform><RotateTransform Angle="-90"/></c:IconGlyph.RenderTransform>
+                    </c:IconGlyph>
+                </StackPanel>
             </Button>
         </StackPanel>
+        <Popup x:Name="StyleMenu" PlacementTarget="{Binding ElementName=StyleButton}" Placement="Bottom" VerticalOffset="10"
+               AllowsTransparency="True" StaysOpen="False" PopupAnimation="Fade">
+            <Border Background="#F21C1C20" CornerRadius="18" Padding="8" BorderBrush="#26FFFFFF" BorderThickness="1" MinWidth="240">
+                <StackPanel x:Name="StyleList"/>
+            </Border>
+        </Popup>
     </Grid>
 </Window>

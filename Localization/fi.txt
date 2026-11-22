@@ -345,3 +345,8 @@
 346|Vinyyli
 347|Vaihda tyyliä suoraan soittimessa: oikean yläkulman painike tai S-näppäin
 348|Vaihda tyyliä (S)
+349|Syvyys
+350|Kineettinen
+351|Leijuva
+352|Sanat näytön päällä
+353|Kappaleen rivit leijuvat näytöllä työskennellessäsi, ja napsautukset menevät niiden läpi. Päälle ja pois: painike sanoituksissa, ilmoitusalueen valikko tai Win + Alt + T

@@ -345,3 +345,8 @@
 346|Vinyl
 347|Bytt stil rett i spilleren: knappen øverst til høyre eller tasten S
 348|Bytt stil (S)
+349|Dybde
+350|Kinetisk
+351|Svevende
+352|Sangtekst over skjermen
+353|Sanglinjene svever over skjermen mens du jobber, og klikk går rett gjennom dem. Slå på eller av: knappen i sangteksten, menyen i systemstatusfeltet eller Win + Alt + T

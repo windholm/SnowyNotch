@@ -19,6 +19,9 @@ public enum FullscreenStyle
     Cinematic,
     Spotlight,
     Vinyl,
+    Depth,
+    Kinetic,
+    Float,
 }
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
