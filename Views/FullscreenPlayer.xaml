@@ -263,20 +263,6 @@
         <Rectangle x:Name="BarTop" Fill="Black" Height="0" VerticalAlignment="Top" IsHitTestVisible="False"/>
         <Rectangle x:Name="BarBottom" Fill="Black" Height="0" VerticalAlignment="Bottom" IsHitTestVisible="False"/>
 
-        <!-- Текста нет (или он без синхронизации): эффекты стиля строятся на строках песни — честно предупреждаем. -->
-        <Border x:Name="NoLyricsNote" Background="#33FFFFFF" CornerRadius="18" Padding="16,9,18,9" Margin="0,0,0,34"
-                HorizontalAlignment="Center" VerticalAlignment="Bottom" IsHitTestVisible="False" Opacity="0" Visibility="Collapsed">
-            <StackPanel Orientation="Horizontal">
-                <Grid Width="18" Height="18" VerticalAlignment="Center">
-                    <Ellipse Stroke="#CCFFFFFF" StrokeThickness="1.6"/>
-                    <TextBlock Text="i" FontSize="12" FontWeight="Bold" Foreground="#CCFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               FontFamily="Georgia"/>
-                </Grid>
-                <TextBlock x:Name="NoLyricsText" FontSize="14" FontWeight="SemiBold" Foreground="#E6FFFFFF" Margin="10,0,0,0"
-                           VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="640"/>
-            </StackPanel>
-        </Border>
-
         <!-- ===== Верх: выход слева, стиль справа. Прячутся вместе с курсором, когда мышь не двигается. ===== -->
         <StackPanel x:Name="TopBar" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,32,0,0" Opacity="0">
             <Button Style="{StaticResource IconButton}" Width="48" Height="48" Background="#2EFFFFFF" Click="Close_Click"
@@ -285,9 +271,6 @@
                     <c:IconGlyph.RenderTransform><RotateTransform Angle="-90"/></c:IconGlyph.RenderTransform>
                 </c:IconGlyph>
             </Button>
-            <Border Background="#24FFFFFF" CornerRadius="8" Padding="9,4" Margin="14,0,0,0" VerticalAlignment="Center">
-                <TextBlock Text="Esc" FontSize="12.5" FontWeight="SemiBold" Foreground="#B3FFFFFF"/>
-            </Border>
         </StackPanel>
         <StackPanel x:Name="TopRight" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,32,36,0" Opacity="0">
             <Border x:Name="StyleToast" Background="#33FFFFFF" CornerRadius="16" Padding="14,7" Margin="0,0,12,0" VerticalAlignment="Center" Opacity="0">
@@ -298,23 +281,36 @@
                     Click="Overlay_Click" ToolTip="{l:T 'Текст поверх экрана'}">
                 <c:IconGlyph x:Name="OverlayGlyph" Data="{StaticResource IconFloatText}" Width="21" Height="21" StrokeWidth="1.8"/>
             </Button>
-            <!-- Стиль: «пилюля» со слоями и названием; меню со всеми стилями. -->
-            <Button x:Name="StyleButton" Style="{StaticResource IconButton}" Height="48" Background="#2EFFFFFF" Click="Style_Click"
+            <!-- Стиль: круглая кнопка со слоями, без подписи — названия только в раскрывающемся меню. -->
+            <Button x:Name="StyleButton" Style="{StaticResource IconButton}" Width="48" Height="48" Background="#2EFFFFFF" Click="Style_Click"
                     ToolTip="{l:T 'Сменить стиль (S)'}">
-                <StackPanel Orientation="Horizontal" Margin="16,0,18,0">
-                    <c:IconGlyph Data="{StaticResource IconLayers}" Width="20" Height="20" StrokeWidth="1.8" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="StyleLabel" FontSize="14.5" FontWeight="SemiBold" Margin="10,0,0,0" VerticalAlignment="Center"/>
-                    <c:IconGlyph Data="{StaticResource IconChevronLeft}" Width="14" Height="14" StrokeWidth="2.2" Margin="8,1,0,0"
-                                 VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Opacity="0.7">
-                        <c:IconGlyph.RenderTransform><RotateTransform Angle="-90"/></c:IconGlyph.RenderTransform>
-                    </c:IconGlyph>
-                </StackPanel>
+                <c:IconGlyph Data="{StaticResource IconLayers}" Width="21" Height="21" StrokeWidth="1.8"/>
             </Button>
         </StackPanel>
         <Popup x:Name="StyleMenu" PlacementTarget="{Binding ElementName=StyleButton}" Placement="Bottom" VerticalOffset="10"
                AllowsTransparency="True" StaysOpen="False" PopupAnimation="Fade">
             <Border Background="#F21C1C20" CornerRadius="18" Padding="8" BorderBrush="#26FFFFFF" BorderThickness="1" MinWidth="240">
-                <StackPanel x:Name="StyleList"/>
+                <StackPanel>
+                    <StackPanel x:Name="StyleList"/>
+                    <!-- Текста нет (или он без синхронизации): эффекты стилей строятся на строках песни — предупреждаем здесь,
+                         где стиль и выбирают, а не поверх всего экрана. -->
+                    <Border x:Name="NoLyricsNote" Visibility="Collapsed" Margin="0,6,0,0" Padding="14,10,14,8"
+                            BorderBrush="#1FFFFFFF" BorderThickness="0,1,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Width="16" Height="16" VerticalAlignment="Top" Margin="0,1,0,0">
+                                <Ellipse Stroke="#99FFFFFF" StrokeThickness="1.4"/>
+                                <TextBlock Text="i" FontSize="11" FontWeight="Bold" Foreground="#99FFFFFF" FontFamily="Georgia"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <TextBlock x:Name="NoLyricsText" Grid.Column="1" FontSize="13" Foreground="#A6FFFFFF" Margin="9,0,0,0"
+                                       TextWrapping="Wrap" MaxWidth="215" LineHeight="18"/>
+                        </Grid>
+                    </Border>
+                </StackPanel>
             </Border>
         </Popup>
     </Grid>

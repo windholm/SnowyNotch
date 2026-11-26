@@ -118,6 +118,16 @@ public partial class MainWindow
                 }
                 if (name == "fullscreen-browse") { await Task.Delay(1500); player.DebugBrowse(-220); }
                 if (name == "fullscreen-nolyrics") { await Task.Delay(800); player.DebugNoLyrics(); player.SetOverlayActive(true); }
+                if (name == "fullscreen-nolyrics")
+                {
+                    // Меню стилей с подсказкой «нет текста» — отдельным кадром (это всплывающее окно).
+                    var menu = player.DebugOpenStyleMenu();
+                    await Task.Delay(600);
+                    var mb = new RenderTargetBitmap((int)(menu.ActualWidth * ShotScale), (int)(menu.ActualHeight * ShotScale),
+                        96 * ShotScale, 96 * ShotScale, PixelFormats.Pbgra32);
+                    mb.Render(menu);
+                    Save(mb, Path.Combine(dir, "fullscreen-stylemenu.png"));
+                }
                 await Task.Delay(3400);
                 var root = (FrameworkElement)player.Content;
                 var rtb = new RenderTargetBitmap((int)root.ActualWidth, (int)root.ActualHeight, 96, 96, PixelFormats.Pbgra32);

@@ -287,7 +287,6 @@ public partial class FullscreenPlayer : Window, IMediaView
         Bars.Visibility = _settings.ShowVisualizer && _style is FullscreenStyle.Classic or FullscreenStyle.Vinyl ? Visibility.Visible : Visibility.Collapsed;
         TitleStack.Margin = new Thickness(0, 0, spot ? 0 : 44, 0);
         TitleText.TextAlignment = ArtistText.TextAlignment = spot ? TextAlignment.Center : TextAlignment.Left;
-        StyleLabel.Text = StyleName(_style);
 
         // Вне иммерсивных стилей управление всегда видно.
         if (!Immersive && _entered)
@@ -333,7 +332,7 @@ public partial class FullscreenPlayer : Window, IMediaView
                 HorizontalContentAlignment = HorizontalAlignment.Stretch, Padding = new Thickness(14, 10, 14, 10), Margin = new Thickness(0, 1, 0, 1),
                 Content = new Grid
                 {
-                    Children =
+                    Width = 214, Children =
                     {
                         new TextBlock { Text = StyleName(style), FontSize = 15, FontWeight = current ? FontWeights.SemiBold : FontWeights.Normal, Foreground = Brushes.White },
                         new TextBlock { Text = current ? "✓" : "", FontSize = 15, Foreground = Brushes.White, HorizontalAlignment = HorizontalAlignment.Right },
@@ -898,8 +897,8 @@ public partial class FullscreenPlayer : Window, IMediaView
     }
 
     /// <summary>
-    /// Подсказка внизу: стили (свечение строк, «Кинетика», «Парящий», субтитр…) живут на синхронизированном тексте.
-    /// Его нет — эффекты видны не полностью, и об этом лучше сказать, чем оставить человека гадать.
+    /// Подсказка в меню стилей: стили (свечение строк, «Кинетика», «Парящий», субтитр…) живут на синхронизированном
+    /// тексте. Его нет — эффекты видны не полностью, и об этом говорим там, где стиль выбирают.
     /// </summary>
     private void UpdateNoLyricsNote()
     {
@@ -911,16 +910,7 @@ public partial class FullscreenPlayer : Window, IMediaView
             _ => null,
         };
         if (text != null) NoLyricsText.Text = text;
-        bool show = text != null;
-        if (show == (NoLyricsNote.Visibility == Visibility.Visible && NoLyricsNote.Tag is true)) return;
-        NoLyricsNote.Tag = show;
-        if (show) NoLyricsNote.Visibility = Visibility.Visible;
-        var anim = new DoubleAnimation(show ? 1 : 0, TimeSpan.FromMilliseconds(show ? 500 : 250))
-        {
-            BeginTime = show ? TimeSpan.FromMilliseconds(400) : TimeSpan.Zero,
-        };
-        if (!show) anim.Completed += (_, _) => { if (NoLyricsNote.Tag is false) NoLyricsNote.Visibility = Visibility.Collapsed; };
-        NoLyricsNote.BeginAnimation(OpacityProperty, anim);
+        NoLyricsNote.Visibility = text != null ? Visibility.Visible : Visibility.Collapsed;
     }
 
     private void ClearLines()
@@ -1279,7 +1269,14 @@ public partial class FullscreenPlayer : Window, IMediaView
         if (style == FullscreenStyle.Cinematic) BarTop.BeginAnimation(HeightProperty, null);
     }
 
-    /// <summary>Для скриншотов: песня без текста (видна подсказка внизу), управление показано.</summary>
+    /// <summary>Для скриншотов: открыть меню стилей и вернуть его содержимое.</summary>
+    public FrameworkElement DebugOpenStyleMenu()
+    {
+        OpenStyleMenu();
+        return (FrameworkElement)StyleMenu.Child;
+    }
+
+    /// <summary>Для скриншотов: песня без текста (подсказка — в меню стилей), управление показано.</summary>
     public void DebugNoLyrics()
     {
         _loadVersion++;
