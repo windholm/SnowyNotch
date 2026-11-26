@@ -350,9 +350,9 @@
 351|Unoszący się
 352|Tekst nad ekranem
 353|Wersy piosenki unoszą się po ekranie, gdy pracujesz, a kliknięcia przez nie przechodzą. Włącz lub wyłącz: przycisk w tekście, menu w zasobniku lub Win + Alt + T
-353|Wyłącz tekst nad ekranem
-354|Tekst nad ekranem włączony
-355|Tekst nad ekranem wyłączony
-356|Nie znaleziono tekstu tej piosenki — efekty stylu nie są w pełni widoczne
-357|Tekst piosenek jest wyłączony w ustawieniach — efekty stylu nie są w pełni widoczne
-358|Ten tekst nie jest zsynchronizowany — efekty stylu nie są w pełni widoczne
+354|Wyłącz tekst nad ekranem
+355|Tekst nad ekranem włączony
+356|Tekst nad ekranem wyłączony
+357|Nie znaleziono tekstu tej piosenki — efekty stylu nie są w pełni widoczne
+358|Tekst piosenek jest wyłączony w ustawieniach — efekty stylu nie są w pełni widoczne
+359|Ten tekst nie jest zsynchronizowany — efekty stylu nie są w pełni widoczne

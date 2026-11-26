@@ -350,9 +350,9 @@
 351|Flutuante
 352|Letra sobre o ecrã
 353|As linhas da música flutuam pelo ecrã enquanto trabalha e os cliques passam através delas. Ligar ou desligar: botão na letra, menu da área de notificação ou Win + Alt + T
-353|Desativar letra sobre o ecrã
-354|Letra sobre o ecrã ativada
-355|Letra sobre o ecrã desativada
-356|Não foi encontrada letra para esta música, por isso os efeitos do estilo não se veem por completo
-357|A letra está desativada nas Definições, por isso os efeitos do estilo não se veem por completo
-358|Esta letra não está sincronizada, por isso os efeitos do estilo não se veem por completo
+354|Desativar letra sobre o ecrã
+355|Letra sobre o ecrã ativada
+356|Letra sobre o ecrã desativada
+357|Não foi encontrada letra para esta música, por isso os efeitos do estilo não se veem por completo
+358|A letra está desativada nas Definições, por isso os efeitos do estilo não se veem por completo
+359|Esta letra não está sincronizada, por isso os efeitos do estilo não se veem por completo

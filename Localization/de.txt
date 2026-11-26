@@ -350,9 +350,9 @@
 351|Schwebend
 352|Songtext über dem Bildschirm
 353|Liedzeilen schweben über den Bildschirm, während du arbeitest, und Klicks gehen hindurch. Ein- und ausschalten: Taste im Songtext, Tray-Menü oder Win + Alt + T
-353|Songtext über dem Bildschirm ausschalten
-354|Songtext über dem Bildschirm an
-355|Songtext über dem Bildschirm aus
-356|Für diesen Song wurde kein Songtext gefunden, daher sind die Stileffekte nicht voll sichtbar
-357|Songtexte sind in den Einstellungen aus, daher sind die Stileffekte nicht voll sichtbar
-358|Dieser Songtext ist nicht zeitsynchron, daher sind die Stileffekte nicht voll sichtbar
+354|Songtext über dem Bildschirm ausschalten
+355|Songtext über dem Bildschirm an
+356|Songtext über dem Bildschirm aus
+357|Für diesen Song wurde kein Songtext gefunden, daher sind die Stileffekte nicht voll sichtbar
+358|Songtexte sind in den Einstellungen aus, daher sind die Stileffekte nicht voll sichtbar
+359|Dieser Songtext ist nicht zeitsynchron, daher sind die Stileffekte nicht voll sichtbar

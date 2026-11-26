@@ -58,11 +58,33 @@ Want it every time you turn on the PC? Put the exe in a permanent folder (for ex
   </tr>
 </table>
 
+### Full-screen player
+
+Drag the artwork out of the island (or press the full-screen button on the big artwork) and the song takes the whole screen: blurred living background, glowing cover and synced lyrics. Pick a style with the layers button in the top right, or press **S**.
+
+<table>
+  <tr>
+    <td width="50%"><img src=".github/screenshots/fullscreen.png" alt="Full-screen player, Classic style"><p align="center"><b>Classic</b>: cover on the left, lyrics on the right</p></td>
+    <td width="50%"><img src=".github/screenshots/fullscreen-vinyl.png" alt="Full-screen player, Vinyl style"><p align="center"><b>Vinyl</b>: a spinning record with a tonearm</p></td>
+  </tr>
+  <tr>
+    <td><img src=".github/screenshots/fullscreen-cinema.png" alt="Full-screen player, Cinema style"><p align="center"><b>Cinema</b>: letterbox, film grain, projector light</p></td>
+    <td><img src=".github/screenshots/fullscreen-kinetic.png" alt="Full-screen player, Kinetic style"><p align="center"><b>Kinetic</b>: the line builds up word by word</p></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src=".github/screenshots/overlay.png" alt="Lyrics over screen"><p align="center"><b>Lyrics over screen</b>: lines float over your desktop while you work, clicks go straight through</p></td>
+  </tr>
+</table>
+
+Also: **Spotlight**, **Depth** and **Floating** styles.
+
 <sub>Screenshots use a made-up track, artwork and lyrics.</sub>
 
 ## Features
 
-- **Now Playing**: artwork, progress, playback controls and synced lyrics for whatever music is playing in Windows (Spotify, browsers, other players).
+- **Now Playing**: sharp artwork, progress, playback controls and synced lyrics for whatever music is playing in Windows (Spotify, browsers, other players). Scroll the lyrics with the mouse wheel and click any line to jump there.
+- **Full-screen player**: 7 styles (Classic, Cinema, Spotlight, Vinyl, Depth, Kinetic, Floating) with effects that move with the music.
+- **Lyrics over screen**: the song's lines float over your desktop. Turn it on or off from the island, the full-screen player, the tray icon or `Win + Alt + T`.
 - **Widgets**: sound (per-app volume), clock with month calendar, timer and Pomodoro, stopwatch, system monitor, Markdown notes, AI agent usage.
 - **Your home row**: by default it shows music only. Add up to 3 widgets side by side via **Widgets → Edit Home**.
 - **File tray**: drop files onto the island to keep them handy, then drag them out wherever you need them.
@@ -78,6 +100,8 @@ Want it every time you turn on the PC? Put the exe in a permanent folder (for ex
 | Make it see-through / hide it | Middle click / hold middle button on the island (see the tip above) |
 | Open settings | `Win + /`, or left-click the tray icon |
 | Per-app volume | `Win + Alt + V` |
+| Full-screen player | Drag the artwork out of the island. `Esc` exits, `Space` pauses, `←` / `→` seek, `S` changes style |
+| Lyrics over screen on / off | `Win + Alt + T`, or the tray icon |
 | Quit | Right-click the tray icon → **Quit** |
 
 ## FAQ
@@ -89,7 +113,10 @@ The exe isn't signed with a paid certificate, so SmartScreen doesn't know it yet
 `SnowyNotch-x.y.z-win-x64.exe` works on any Windows 10 (2004+) / 11 PC. The `-lite` version is smaller but needs the [.NET 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0) installed.
 
 **Does it use the internet?**
-Only to look up song lyrics on [lrclib.net](https://lrclib.net) (can be turned off in Settings → Media). AI usage limits are fetched only if you turn that on yourself.
+Only for music: to look up song lyrics on [lrclib.net](https://lrclib.net) (can be turned off in Settings → Media), and to get a sharper copy of the album cover from the iTunes catalog, because Windows hands over only a small one. The sharper cover is used only if it is the same picture. AI usage limits are fetched only if you turn that on yourself.
+
+**The full-screen player says the effects can't be seen in full.**
+The styles are built around time-synced lyrics. If a song has no lyrics, or only plain text without timing, you still get the background, cover and controls, and the style menu tells you why some effects are missing.
 
 **Can I hide "Spotify" / "SoundCloud" next to the artist name?**
 Yes: turn off **Settings → Media → Show where it's playing from**. Turn it back on the same way.

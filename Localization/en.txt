@@ -350,9 +350,9 @@
 351|Floating
 352|Lyrics over screen
 353|Song lines float around the screen while you work, and clicks pass right through them. Turn on or off: the button in the lyrics, the tray menu or Win + Alt + T
-353|Turn off lyrics over screen
-354|Lyrics over screen on
-355|Lyrics over screen off
-356|No lyrics found for this song, so style effects can't be seen in full
-357|Lyrics are turned off in Settings, so style effects can't be seen in full
-358|These lyrics aren't time-synced, so style effects can't be seen in full
+354|Turn off lyrics over screen
+355|Lyrics over screen on
+356|Lyrics over screen off
+357|No lyrics found for this song, so style effects can't be seen in full
+358|Lyrics are turned off in Settings, so style effects can't be seen in full
+359|These lyrics aren't time-synced, so style effects can't be seen in full

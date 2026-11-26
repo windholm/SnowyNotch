@@ -350,9 +350,9 @@
 351|Leijuva
 352|Sanat näytön päällä
 353|Kappaleen rivit leijuvat näytöllä työskennellessäsi, ja napsautukset menevät niiden läpi. Päälle ja pois: painike sanoituksissa, ilmoitusalueen valikko tai Win + Alt + T
-353|Poista sanat näytön päältä
-354|Sanat näytön päällä käytössä
-355|Sanat näytön päällä pois
-356|Kappaleelle ei löytynyt sanoja, joten tyylin tehosteet eivät näy täysin
-357|Laulujen sanat on poistettu käytöstä asetuksissa, joten tyylin tehosteet eivät näy täysin
-358|Näitä sanoja ei ole ajastettu, joten tyylin tehosteet eivät näy täysin
+354|Poista sanat näytön päältä
+355|Sanat näytön päällä käytössä
+356|Sanat näytön päällä pois
+357|Kappaleelle ei löytynyt sanoja, joten tyylin tehosteet eivät näy täysin
+358|Laulujen sanat on poistettu käytöstä asetuksissa, joten tyylin tehosteet eivät näy täysin
+359|Näitä sanoja ei ole ajastettu, joten tyylin tehosteet eivät näy täysin

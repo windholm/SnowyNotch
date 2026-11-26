@@ -350,9 +350,9 @@
 351|Fluttuante
 352|Testo sopra lo schermo
 353|Le righe della canzone fluttuano sullo schermo mentre lavori e i clic le attraversano. Attiva o disattiva: pulsante nel testo, menu dell'area di notifica o Win + Alt + T
-353|Disattiva testo sopra lo schermo
-354|Testo sopra lo schermo attivo
-355|Testo sopra lo schermo disattivato
-356|Nessun testo trovato per questo brano: gli effetti dello stile non si vedono del tutto
-357|Il testo è disattivato nelle Impostazioni: gli effetti dello stile non si vedono del tutto
-358|Questo testo non è sincronizzato: gli effetti dello stile non si vedono del tutto
+354|Disattiva testo sopra lo schermo
+355|Testo sopra lo schermo attivo
+356|Testo sopra lo schermo disattivato
+357|Nessun testo trovato per questo brano: gli effetti dello stile non si vedono del tutto
+358|Il testo è disattivato nelle Impostazioni: gli effetti dello stile non si vedono del tutto
+359|Questo testo non è sincronizzato: gli effetti dello stile non si vedono del tutto
