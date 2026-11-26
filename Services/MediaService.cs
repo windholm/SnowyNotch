@@ -73,6 +73,8 @@ public sealed class MediaService : IDisposable
     private DateTimeOffset _playSince = DateTimeOffset.UnixEpoch;
     private bool _noTimeline;
     private DateTimeOffset _trackChangedAt, _seekAt;
+    /// <summary>Когда перемотали в известную точку (строка текста, полоса прогресса) — см. ReadTimeline.</summary>
+    private DateTimeOffset _seekToAt;
     private (TimeSpan Pos, DateTimeOffset At)? _pendingBack;
     // Только музыка: решения «музыка или нет» по каждому треку и периодическая перепроверка
     // (в браузере SoundCloud может смениться YouTube в той же медиасессии).
@@ -196,7 +198,7 @@ public sealed class MediaService : IDisposable
     public Task SeekAsync(TimeSpan position)
     {
         _pos = position;
-        _posAt = _seekAt = DateTimeOffset.Now;
+        _posAt = _seekAt = _seekToAt = DateTimeOffset.Now;
         _pendingBack = null;
         Publish();
         return Try(s => s.TryChangePlaybackPositionAsync(position.Ticks).AsTask());
@@ -451,6 +453,7 @@ public sealed class MediaService : IDisposable
             // от плеера старая позиция получала текущее время, и трек «откатывался» назад (текст песни
             // перескакивал на прошлые строки или весь становился серым).
             if (sample == _lastTimeline && _lastTimeline != default) return false;
+            var previousSample = _lastTimeline;
             _lastTimeline = sample;
 
             var now = DateTimeOffset.Now;
@@ -468,6 +471,15 @@ public sealed class MediaService : IDisposable
             // (в самом плеере) подтверждаем: принимаем, если через 1.2 с её не опроверг новый замер.
             var samplePos = sample.Pos + (_playing ? now - at : TimeSpan.Zero);
             var expected = Extrapolate(now);
+
+            // Сразу после перемотки в известную точку плеер ещё какое-то время присылает старую позицию (до перемотки).
+            // Раньше её принимали, и текст песни отскакивал от нажатой строки. Первые 3 с верим только замерам рядом
+            // с целью; замер «мимо» не запоминаем — если плеер так и не перемотал, через 3 с он будет принят.
+            if (now - _seekToAt < TimeSpan.FromSeconds(3) && Math.Abs((samplePos - expected).TotalSeconds) > 2)
+            {
+                _lastTimeline = previousSample;
+                return false;
+            }
             bool recentAction = now - _trackChangedAt < TimeSpan.FromSeconds(3) || now - _seekAt < TimeSpan.FromSeconds(3);
             if (!recentAction && expected > TimeSpan.FromSeconds(3) && samplePos < expected - TimeSpan.FromSeconds(2.5))
             {

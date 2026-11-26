@@ -243,7 +243,15 @@ public partial class LyricsView : UserControl, IMediaView, IIslandWidget
         tb.MouseLeftButtonUp += (_, e) =>
         {
             e.Handled = true;
-            if (!_demo) SeekRequested?.Invoke(time);
+            if (_demo) return;
+            // Нажатая строка сразу становится звучащей; ручную прокрутку сбрасываем — её сдвиг отсчитывался
+            // от прежней строки, и после перемотки текст улетал далеко от нажатой.
+            _browseEnd.Stop();
+            _browsing = false;
+            _browse = 0;
+            int index = _visuals.IndexOf(v);
+            if (index >= 0) Highlight(index, animate: true);
+            SeekRequested?.Invoke(time);
         };
     }
 

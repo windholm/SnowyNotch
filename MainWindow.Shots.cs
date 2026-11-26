@@ -104,6 +104,7 @@ public partial class MainWindow
                 ("fullscreen-float", FullscreenStyle.Float, false),
                 ("fullscreen-browse", FullscreenStyle.Classic, false),
                 ("fullscreen-nolyrics", FullscreenStyle.Kinetic, false),
+                ("fullscreen-jump", FullscreenStyle.Classic, false),
             })
             {
                 if (!Wanted(name)) continue;
@@ -118,6 +119,8 @@ public partial class MainWindow
                     for (int i = 0; i < 3; i++) { await Task.Delay(1300); player.DebugHighlight(i); }
                 }
                 if (name == "fullscreen-browse") { await Task.Delay(1500); player.DebugBrowse(-220); }
+                // Прокрутили к концу текста и нажали последнюю строку — она должна встать на место звучащей.
+                if (name == "fullscreen-jump") { await Task.Delay(1500); player.DebugBrowse(-240); await Task.Delay(700); player.DebugJump(5); }
                 if (name == "fullscreen-nolyrics") { await Task.Delay(800); player.DebugNoLyrics(); player.SetOverlayActive(true); }
                 if (name == "fullscreen-nolyrics")
                 {

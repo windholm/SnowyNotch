@@ -1112,10 +1112,12 @@ public partial class FullscreenPlayer : Window, IMediaView
                 host.BeginAnimation(OpacityProperty, new DoubleAnimation(v.TargetOpacity, TimeSpan.FromMilliseconds(260)));
                 if (tb.Effect == v.Blur) v.Blur.BeginAnimation(BlurEffect.RadiusProperty, new DoubleAnimation(v.TargetBlur, TimeSpan.FromMilliseconds(260)));
             };
+            int index = _lines.Count;
             tb.MouseLeftButtonUp += async (_, e) =>
             {
                 e.Handled = true;
                 if (_demo || _snap == null) return;
+                JumpToLine(index);
                 await _media.SeekAsync(time);
             };
             LinesCanvas.Children.Add(host);
@@ -1260,6 +1262,18 @@ public partial class FullscreenPlayer : Window, IMediaView
         _browseEnd.Start();
         ShowChrome();
         Highlight(_current, animate: true);
+    }
+
+    /// <summary>
+    /// Нажали строку: она сразу становится звучащей и встаёт на своё место. Ручную прокрутку сбрасываем — её сдвиг
+    /// отсчитывался от прежней строки, и после перемотки текст улетал далеко от нажатой (баг: «перекидывает непонятно куда»).
+    /// </summary>
+    private void JumpToLine(int index)
+    {
+        _browseEnd.Stop();
+        _browsing = false;
+        _browse = 0;
+        if (index >= 0 && index < _lines.Count) Highlight(index, animate: true);
     }
 
     private void EndBrowse()
@@ -1429,6 +1443,9 @@ public partial class FullscreenPlayer : Window, IMediaView
         Relayout();
         if (style == FullscreenStyle.Cinematic) BarTop.BeginAnimation(HeightProperty, null);
     }
+
+    /// <summary>Для проверки: нажатие строки после ручной прокрутки (без перемотки трека).</summary>
+    public void DebugJump(int index) => JumpToLine(index);
 
     /// <summary>Для замеров: убрать часть сцены (lines, aurora, particles, scrim), чтобы увидеть её цену.</summary>
     public void DebugDisable(string parts)
