@@ -350,3 +350,9 @@
 351|Flottant
 352|Paroles par-dessus l'écran
 353|Les lignes de la chanson flottent sur l'écran pendant que vous travaillez, et les clics passent à travers. Activer ou désactiver : bouton dans les paroles, menu de la barre d'état ou Win + Alt + T
+353|Désactiver les paroles par-dessus l'écran
+354|Paroles par-dessus l'écran activées
+355|Paroles par-dessus l'écran désactivées
+356|Aucune parole trouvée pour ce titre : les effets du style ne sont pas entièrement visibles
+357|Les paroles sont désactivées dans les réglages : les effets du style ne sont pas entièrement visibles
+358|Ces paroles ne sont pas synchronisées : les effets du style ne sont pas entièrement visibles

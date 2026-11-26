@@ -350,3 +350,9 @@
 351|Plovoucí
 352|Text přes obrazovku
 353|Řádky písně plují po obrazovce, zatímco pracujete, a kliknutí jimi procházejí. Zapnout a vypnout: tlačítko v textu písně, nabídka v oznamovací oblasti nebo Win + Alt + T
+353|Vypnout text přes obrazovku
+354|Text přes obrazovku zapnut
+355|Text přes obrazovku vypnut
+356|K této skladbě se nenašel text — efekty stylu nejsou vidět naplno
+357|Texty písní jsou vypnuté v nastavení — efekty stylu nejsou vidět naplno
+358|Tento text není časově synchronizovaný — efekty stylu nejsou vidět naplno

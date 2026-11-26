@@ -350,3 +350,9 @@
 351|Süzülen
 352|Ekran üstü şarkı sözü
 353|Siz çalışırken şarkı satırları ekranda süzülür ve tıklamalar içlerinden geçer. Açmak ve kapatmak için: sözlerdeki düğme, tepsi menüsü veya Win + Alt + T
+353|Ekran üstü şarkı sözünü kapat
+354|Ekran üstü şarkı sözü açık
+355|Ekran üstü şarkı sözü kapalı
+356|Bu şarkı için söz bulunamadı, bu yüzden stil efektleri tam olarak görünmüyor
+357|Şarkı sözleri Ayarlar'da kapalı, bu yüzden stil efektleri tam olarak görünmüyor
+358|Bu sözler zamanla eşlenmemiş, bu yüzden stil efektleri tam olarak görünmüyor

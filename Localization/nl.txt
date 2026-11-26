@@ -350,3 +350,9 @@
 351|Zwevend
 352|Songtekst over het scherm
 353|Regels van het nummer zweven over het scherm terwijl je werkt, en klikken gaan er dwars doorheen. Aan of uit: de knop in de songtekst, het systeemvakmenu of Win + Alt + T
+353|Songtekst over het scherm uitzetten
+354|Songtekst over het scherm aan
+355|Songtekst over het scherm uit
+356|Geen songtekst gevonden voor dit nummer, dus de stijleffecten zijn niet helemaal te zien
+357|Songteksten staan uit in Instellingen, dus de stijleffecten zijn niet helemaal te zien
+358|Deze songtekst is niet gesynchroniseerd, dus de stijleffecten zijn niet helemaal te zien

@@ -6,52 +6,53 @@ using System.Windows.Media;
 namespace SnowyNotch.Controls;
 
 /// <summary>
-/// Двухтонные глифы сервисов (сетка 24×24): Main — сплошная часть, Tone — полупрозрачная подложка.
+/// Двухтонные глифы сервисов (сетка 24×24): Main — светлый металл, Tone — тёмный металл под ним.
 /// Рисуются «пером»: линии и дуги с круглыми концами превращаются в заливаемые контуры, поэтому у всех
-/// иконок одинаковая толщина штриха и скругления, как у единого набора.
+/// иконок одинаковая толщина штриха и скругления, как у единого набора. Штрих плотный — глиф читается
+/// как цельная металлическая деталь.
 /// </summary>
 public static class ServiceGlyphs
 {
     public static readonly Geometry MusicMain = Union(
         Head(7.0, 17.3), Head(16.6, 15.0),
-        Stroke("M8.9 6.6 V17 M18.5 4.3 V14.8", 1.7),
-        Soft("M8.05 6.3 L19.35 3.7 V6.9 L8.05 9.5 Z", 0.5));
+        Stroke("M8.9 6.6 V17 M18.5 4.3 V14.8", 2.2),
+        Soft("M7.8 6.2 L19.6 3.5 V7.1 L7.8 9.8 Z", 0.6));
 
     public static readonly Geometry TimerMain = Union(
-        Stroke("M7.2 3.8 H16.8 M7.2 20.2 H16.8", 2.0),
+        Stroke("M6.9 3.8 H17.1 M6.9 20.2 H17.1", 2.6),
         Stroke("M8.6 4 V6.9 C8.6 9.4 11.3 10.6 11.3 12 C11.3 13.4 8.6 14.6 8.6 17.1 V20 " +
-               "M15.4 4 V6.9 C15.4 9.4 12.7 10.6 12.7 12 C12.7 13.4 15.4 14.6 15.4 17.1 V20", 1.6),
+               "M15.4 4 V6.9 C15.4 9.4 12.7 10.6 12.7 12 C12.7 13.4 15.4 14.6 15.4 17.1 V20", 2.1),
         Fill("M9.9 19.4 C9.9 17.5 11.2 16.6 12 15.7 C12.8 16.6 14.1 17.5 14.1 19.4 Z"));
     public static readonly Geometry TimerTone = Fill(
         "M8.6 4 H15.4 V6.9 C15.4 9.4 12.7 10.6 12.7 12 C12.7 13.4 15.4 14.6 15.4 17.1 V20 H8.6 V17.1 " +
         "C8.6 14.6 11.3 13.4 11.3 12 C11.3 10.6 8.6 9.4 8.6 6.9 Z");
 
     public static readonly Geometry NotesMain = Union(
-        Stroke("M8.5 11.3 H15.5 M8.5 14.4 H15.5 M8.5 17.5 H12.5", 1.5),
+        Stroke("M8.6 11.3 H15.4 M8.6 14.5 H15.4 M8.6 17.7 H12.4", 2.0),
         Fill("M14.2 3.4 L18.8 8 H15.5 A1.3 1.3 0 0 1 14.2 6.7 Z"));
     public static readonly Geometry NotesTone = Soft(
         "M7.4 3.6 H14.2 L18.6 8 V18.4 A2 2 0 0 1 16.6 20.4 H7.4 A2 2 0 0 1 5.4 18.4 V5.6 A2 2 0 0 1 7.4 3.6 Z", 0.8);
 
     public static readonly Geometry SystemMain = Union(
-        Stroke(Arc(12, 14, 8.2, 160, 292), 2.5),
-        Stroke("M12 14 L14.4 8.2", 2.0),
-        Circle(12, 14, 2.1));
-    public static readonly Geometry SystemTone = Stroke(Arc(12, 14, 8.2, 160, 380), 2.5);
+        Stroke(Arc(12, 14, 8.2, 160, 292), 3.1),
+        Stroke("M12 14 L14.4 8.2", 2.5),
+        Circle(12, 14, 2.6));
+    public static readonly Geometry SystemTone = Stroke(Arc(12, 14, 8.2, 160, 380), 3.1);
 
     public static readonly Geometry StopwatchMain = Union(
-        Stroke(Ring(12, 13.7, 7.1), 1.9),
-        Stroke("M10 2.9 H14 M12 3 V6 M17.9 6.9 L19 5.8", 1.9),
-        Stroke("M12 13.7 V9.7", 1.9));
+        Stroke(Ring(12, 13.7, 7.1), 2.5),
+        Stroke("M10 2.9 H14 M12 3 V6 M17.9 6.9 L19 5.8", 2.4),
+        Stroke("M12 13.7 V9.7", 2.4));
     public static readonly Geometry StopwatchTone = Circle(12, 13.7, 7.1);
 
     public static readonly Geometry SoundMain = Union(
         Soft("M4.2 9.8 H7.2 L11.4 6.3 V17.7 L7.2 14.2 H4.2 Z", 1.3),
-        Stroke(Arc(11.2, 12, 4.3, -48, 48), 1.9));
-    public static readonly Geometry SoundTone = Stroke(Arc(11.2, 12, 8.0, -48, 48), 1.9);
+        Stroke(Arc(11.2, 12, 4.3, -48, 48), 2.5));
+    public static readonly Geometry SoundTone = Stroke(Arc(11.2, 12, 8.0, -48, 48), 2.5);
 
     public static readonly Geometry ClockMain = Union(
-        Stroke(Ring(12, 12, 8.3), 1.9),
-        Stroke("M12 7.4 V12 L15.2 13.9", 1.9));
+        Stroke(Ring(12, 12, 8.3), 2.5),
+        Stroke("M12 7.4 V12 L15.2 13.9", 2.5));
     public static readonly Geometry ClockTone = Circle(12, 12, 8.3);
 
     public static readonly Geometry AgentsMain = Union(Sparkle(10.2, 11.4, 7.6), Sparkle(18.3, 17.8, 3.3));
@@ -116,7 +117,7 @@ public static class ServiceGlyphs
     /// <summary>Нотная головка: наклонённый эллипс.</summary>
     private static Geometry Head(double cx, double cy)
     {
-        var e = new EllipseGeometry(new Point(cx, cy), 2.8, 2.15) { Transform = new RotateTransform(-20, cx, cy) };
+        var e = new EllipseGeometry(new Point(cx, cy), 3.0, 2.35) { Transform = new RotateTransform(-20, cx, cy) };
         var g = e.GetFlattenedPathGeometry(0.01, ToleranceType.Absolute);
         g.Freeze();
         return g;

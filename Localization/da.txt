@@ -350,3 +350,9 @@
 351|Svævende
 352|Sangtekst over skærmen
 353|Sangens linjer svæver over skærmen, mens du arbejder, og klik går lige igennem dem. Slå til eller fra: knappen i sangteksten, menuen i proceslinjen eller Win + Alt + T
+353|Slå sangtekst over skærmen fra
+354|Sangtekst over skærmen til
+355|Sangtekst over skærmen fra
+356|Der blev ikke fundet nogen sangtekst til denne sang, så stileffekterne ses ikke fuldt ud
+357|Sangtekster er slået fra i Indstillinger, så stileffekterne ses ikke fuldt ud
+358|Denne sangtekst er ikke tidssynkroniseret, så stileffekterne ses ikke fuldt ud

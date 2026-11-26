@@ -102,6 +102,7 @@ public partial class MainWindow
                 ("fullscreen-kinetic", FullscreenStyle.Kinetic, false),
                 ("fullscreen-float", FullscreenStyle.Float, false),
                 ("fullscreen-browse", FullscreenStyle.Classic, false),
+                ("fullscreen-nolyrics", FullscreenStyle.Kinetic, false),
             })
             {
                 if (!Wanted(name)) continue;
@@ -116,6 +117,7 @@ public partial class MainWindow
                     for (int i = 0; i < 3; i++) { await Task.Delay(1300); player.DebugHighlight(i); }
                 }
                 if (name == "fullscreen-browse") { await Task.Delay(1500); player.DebugBrowse(-220); }
+                if (name == "fullscreen-nolyrics") { await Task.Delay(800); player.DebugNoLyrics(); player.SetOverlayActive(true); }
                 await Task.Delay(3400);
                 var root = (FrameworkElement)player.Content;
                 var rtb = new RenderTargetBitmap((int)root.ActualWidth, (int)root.ActualHeight, 96, 96, PixelFormats.Pbgra32);

@@ -350,3 +350,9 @@
 351|Svävande
 352|Låttext över skärmen
 353|Låtraderna svävar över skärmen medan du arbetar, och klick går rakt igenom. Slå på eller av: knappen i låttexten, menyn i aktivitetsfältet eller Win + Alt + T
+353|Stäng av låttext över skärmen
+354|Låttext över skärmen på
+355|Låttext över skärmen av
+356|Ingen låttext hittades för den här låten, så stileffekterna syns inte fullt ut
+357|Låttexter är avstängda i Inställningar, så stileffekterna syns inte fullt ut
+358|Den här låttexten är inte tidssynkad, så stileffekterna syns inte fullt ut

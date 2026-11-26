@@ -30,12 +30,20 @@ public partial class MainWindow
             if (_fullscreenPlayer == player) _fullscreenPlayer = null;
             ActivateWidgets();
         };
-        player.OverlayRequested += () =>
+        player.OverlayToggleRequested += () =>
         {
+            if (_lyricsOverlay != null)
+            {
+                // Уже плавает по экрану — выключаем, плеер остаётся открытым.
+                ToggleLyricsOverlay();
+                player.SetOverlayActive(false, announce: true);
+                return;
+            }
             player.CloseAnimated();
-            if (_lyricsOverlay == null) ToggleLyricsOverlay();
+            ToggleLyricsOverlay();
         };
         _fullscreenPlayer = player;
+        player.SetOverlayActive(_lyricsOverlay != null);
         player.Update(_snap);
         player.Show();
         ActivateWidgets();
@@ -69,12 +77,14 @@ public partial class MainWindow
                 if (_lyricsOverlay == overlay) _lyricsOverlay = null;
                 ActivateWidgets();
                 _lyricsView?.SetOverlayActive(false);
+                _fullscreenPlayer?.SetOverlayActive(false);
             };
             _lyricsOverlay = overlay;
             overlay.Update(_snap);
             overlay.Show();
         }
         _lyricsView?.SetOverlayActive(_lyricsOverlay != null);
+        _fullscreenPlayer?.SetOverlayActive(_lyricsOverlay != null);
         ActivateWidgets();
     }
 

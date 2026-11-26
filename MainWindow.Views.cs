@@ -570,7 +570,7 @@ public partial class MainWindow
     private void BuildServiceDock()
     {
         foreach (var info in WidgetCatalog.All)
-            Dock.Add(info.Id, info.Title, info.Icon.Create(SnowyNotch.Controls.ServiceDock.IconSize), info.Icon.Top);
+            Dock.Add(info.Id, info.Title, info.Icon.Create(SnowyNotch.Controls.ServiceDock.IconSize), Color.FromRgb(0xE4, 0xE4, 0xE8));
         Dock.Invoked += (id, centerX) =>
         {
             // Сервис раскрывается из своей иконки.

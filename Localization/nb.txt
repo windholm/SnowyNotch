@@ -350,3 +350,9 @@
 351|Svevende
 352|Sangtekst over skjermen
 353|Sanglinjene svever over skjermen mens du jobber, og klikk går rett gjennom dem. Slå på eller av: knappen i sangteksten, menyen i systemstatusfeltet eller Win + Alt + T
+353|Slå av sangtekst over skjermen
+354|Sangtekst over skjermen på
+355|Sangtekst over skjermen av
+356|Fant ingen sangtekst for denne sangen, så stileffektene vises ikke fullt ut
+357|Sangtekster er slått av i Innstillinger, så stileffektene vises ikke fullt ut
+358|Denne sangteksten er ikke tidssynkronisert, så stileffektene vises ikke fullt ut

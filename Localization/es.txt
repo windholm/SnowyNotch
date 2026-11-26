@@ -350,3 +350,9 @@
 351|Flotante
 352|Letra sobre la pantalla
 353|Las líneas de la canción flotan por la pantalla mientras trabajas y los clics las atraviesan. Activar o desactivar: botón en la letra, menú de la bandeja o Win + Alt + T
+353|Desactivar letra sobre la pantalla
+354|Letra sobre la pantalla activada
+355|Letra sobre la pantalla desactivada
+356|No se encontró la letra de esta canción, así que los efectos del estilo no se ven del todo
+357|La letra está desactivada en Ajustes, así que los efectos del estilo no se ven del todo
+358|Esta letra no está sincronizada, así que los efectos del estilo no se ven del todo

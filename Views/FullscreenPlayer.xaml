@@ -263,6 +263,20 @@
         <Rectangle x:Name="BarTop" Fill="Black" Height="0" VerticalAlignment="Top" IsHitTestVisible="False"/>
         <Rectangle x:Name="BarBottom" Fill="Black" Height="0" VerticalAlignment="Bottom" IsHitTestVisible="False"/>
 
+        <!-- Текста нет (или он без синхронизации): эффекты стиля строятся на строках песни — честно предупреждаем. -->
+        <Border x:Name="NoLyricsNote" Background="#33FFFFFF" CornerRadius="18" Padding="16,9,18,9" Margin="0,0,0,34"
+                HorizontalAlignment="Center" VerticalAlignment="Bottom" IsHitTestVisible="False" Opacity="0" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal">
+                <Grid Width="18" Height="18" VerticalAlignment="Center">
+                    <Ellipse Stroke="#CCFFFFFF" StrokeThickness="1.6"/>
+                    <TextBlock Text="i" FontSize="12" FontWeight="Bold" Foreground="#CCFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               FontFamily="Georgia"/>
+                </Grid>
+                <TextBlock x:Name="NoLyricsText" FontSize="14" FontWeight="SemiBold" Foreground="#E6FFFFFF" Margin="10,0,0,0"
+                           VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="640"/>
+            </StackPanel>
+        </Border>
+
         <!-- ===== Верх: выход слева, стиль справа. Прячутся вместе с курсором, когда мышь не двигается. ===== -->
         <StackPanel x:Name="TopBar" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,32,0,0" Opacity="0">
             <Button Style="{StaticResource IconButton}" Width="48" Height="48" Background="#2EFFFFFF" Click="Close_Click"
@@ -279,9 +293,10 @@
             <Border x:Name="StyleToast" Background="#33FFFFFF" CornerRadius="16" Padding="14,7" Margin="0,0,12,0" VerticalAlignment="Center" Opacity="0">
                 <TextBlock x:Name="StyleToastText" FontSize="14" FontWeight="SemiBold"/>
             </Border>
-            <Button Style="{StaticResource IconButton}" Width="48" Height="48" Background="#2EFFFFFF" Margin="0,0,10,0"
+            <!-- «Текст поверх экрана»: включает (плеер закрывается) и выключает (плеер остаётся). Включён — кнопка светлая. -->
+            <Button x:Name="OverlayButton" Style="{StaticResource IconButton}" Width="48" Height="48" Background="#2EFFFFFF" Margin="0,0,10,0"
                     Click="Overlay_Click" ToolTip="{l:T 'Текст поверх экрана'}">
-                <c:IconGlyph Data="{StaticResource IconFloatText}" Width="21" Height="21" StrokeWidth="1.8"/>
+                <c:IconGlyph x:Name="OverlayGlyph" Data="{StaticResource IconFloatText}" Width="21" Height="21" StrokeWidth="1.8"/>
             </Button>
             <!-- Стиль: «пилюля» со слоями и названием; меню со всеми стилями. -->
             <Button x:Name="StyleButton" Style="{StaticResource IconButton}" Height="48" Background="#2EFFFFFF" Click="Style_Click"

@@ -148,7 +148,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <c:AppIcon Width="36" Height="36" Glyph="{x:Static c:ServiceGlyphs.SoundMain}" Tone="{x:Static c:ServiceGlyphs.SoundTone}" Top="#74BEFF" Bottom="#0A66F5"
+                                <c:AppIcon Width="36" Height="36" Glyph="{x:Static c:ServiceGlyphs.SoundMain}" Tone="{x:Static c:ServiceGlyphs.SoundTone}"
                                            VerticalAlignment="Center"/>
                                 <StackPanel Grid.Column="1" Margin="11,0,12,0" VerticalAlignment="Center">
                                     <TextBlock Text="{l:T 'Звук по программам'}" Style="{StaticResource Label}"/>

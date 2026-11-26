@@ -347,10 +347,19 @@ public partial class FullscreenPlayer : Window, IMediaView
         _idle.Stop();
     }
 
-    /// <summary>Перейти в «Текст поверх экрана» (плеер закроется).</summary>
-    public event Action? OverlayRequested;
+    /// <summary>Нажата кнопка «Текст поверх экрана»: выключен — включить (плеер закроется), включён — выключить.</summary>
+    public event Action? OverlayToggleRequested;
 
-    private void Overlay_Click(object sender, RoutedEventArgs e) => OverlayRequested?.Invoke();
+    private void Overlay_Click(object sender, RoutedEventArgs e) => OverlayToggleRequested?.Invoke();
+
+    /// <summary>Показать на кнопке, включён ли «Текст поверх экрана». <paramref name="announce"/> — всплывающая подпись.</summary>
+    public void SetOverlayActive(bool active, bool announce = false)
+    {
+        OverlayButton.Background = new SolidColorBrush(active ? Color.FromArgb(0xEB, 0xFF, 0xFF, 0xFF) : Color.FromArgb(0x2E, 0xFF, 0xFF, 0xFF));
+        OverlayGlyph.Foreground = active ? Brushes.Black : Brushes.White;
+        OverlayButton.ToolTip = active ? L.T("Выключить текст поверх экрана") : L.T("Текст поверх экрана");
+        if (announce) ShowToast(active ? L.T("Текст поверх экрана включён") : L.T("Текст поверх экрана выключен"));
+    }
     /// <summary>Смена стиля: сцена гаснет, перестраивается и проявляется с пружинкой; вверху — название стиля.</summary>
     private void TransitionTo(FullscreenStyle style)
     {
@@ -885,6 +894,33 @@ public partial class FullscreenPlayer : Window, IMediaView
         }
         else Relayout();
         if (state != LyricsState.Synced) SetCaption("");
+        UpdateNoLyricsNote();
+    }
+
+    /// <summary>
+    /// Подсказка внизу: стили (свечение строк, «Кинетика», «Парящий», субтитр…) живут на синхронизированном тексте.
+    /// Его нет — эффекты видны не полностью, и об этом лучше сказать, чем оставить человека гадать.
+    /// </summary>
+    private void UpdateNoLyricsNote()
+    {
+        string? text = _demo ? null : _lyricsState switch
+        {
+            LyricsState.None => L.T("Для этой песни не нашлось текста — эффекты стиля видны не в полной мере"),
+            LyricsState.Off => L.T("Текст песни выключен в настройках — эффекты стиля видны не в полной мере"),
+            LyricsState.Plain => L.T("Текст без привязки ко времени — эффекты стиля видны не в полной мере"),
+            _ => null,
+        };
+        if (text != null) NoLyricsText.Text = text;
+        bool show = text != null;
+        if (show == (NoLyricsNote.Visibility == Visibility.Visible && NoLyricsNote.Tag is true)) return;
+        NoLyricsNote.Tag = show;
+        if (show) NoLyricsNote.Visibility = Visibility.Visible;
+        var anim = new DoubleAnimation(show ? 1 : 0, TimeSpan.FromMilliseconds(show ? 500 : 250))
+        {
+            BeginTime = show ? TimeSpan.FromMilliseconds(400) : TimeSpan.Zero,
+        };
+        if (!show) anim.Completed += (_, _) => { if (NoLyricsNote.Tag is false) NoLyricsNote.Visibility = Visibility.Collapsed; };
+        NoLyricsNote.BeginAnimation(OpacityProperty, anim);
     }
 
     private void ClearLines()
@@ -1241,6 +1277,16 @@ public partial class FullscreenPlayer : Window, IMediaView
         _aurora = AuroraTarget; _beam = BeamTarget; _particles = ParticlesTarget;
         Relayout();
         if (style == FullscreenStyle.Cinematic) BarTop.BeginAnimation(HeightProperty, null);
+    }
+
+    /// <summary>Для скриншотов: песня без текста (видна подсказка внизу), управление показано.</summary>
+    public void DebugNoLyrics()
+    {
+        _loadVersion++;
+        _demo = false;
+        ShowLyrics(LyricsResult.None);
+        ShowChrome();
+        _idle.Stop();
     }
 #endif
 }
