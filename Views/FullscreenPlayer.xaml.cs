@@ -73,6 +73,8 @@ public partial class FullscreenPlayer : Window, IMediaView
     private sealed class LineVisual
     {
         public required TextBlock Text;
+        /// <summary>Обёртка строки с кешем: на ней сдвиг, масштаб и прозрачность.</summary>
+        public required Border Host;
         public required TranslateTransform Shift;
         public required ScaleTransform Scale;
         public required BlurEffect Blur;
@@ -103,6 +105,7 @@ public partial class FullscreenPlayer : Window, IMediaView
 
         SourceInitialized += (_, _) => CoverMonitor();
         SizeChanged += (_, _) => Relayout();
+        BackArtA.SizeChanged += (_, _) => { if (BackdropSizeChanged()) RefreshBackdrop(); };
         LyricsPane.MouseWheel += LyricsPane_MouseWheel;
         LyricsPane.SizeChanged += (_, e) => LyricsMask.EndPoint = new Point(0, e.NewSize.Height); // маска — по видимой высоте
         _browseEnd.Tick += (_, _) => EndBrowse();
@@ -148,6 +151,7 @@ public partial class FullscreenPlayer : Window, IMediaView
         else s = Math.Round(lyrics ? Math.Min(h * 0.44, w * 0.27) : Math.Min(h * 0.52, w * 0.36));
 
         CoverHost.Width = CoverHost.Height = s;
+        UpdateShadows(s);
         CoverHost.HorizontalAlignment = corner ? HorizontalAlignment.Left : HorizontalAlignment.Center;
         LeftCol.Width = corner ? Math.Max(s, 420) : Math.Max(s, _style == FullscreenStyle.Spotlight ? Math.Min(w * 0.5, 640) : s);
         LeftCol.HorizontalAlignment = corner ? HorizontalAlignment.Left : HorizontalAlignment.Center;
@@ -271,10 +275,18 @@ public partial class FullscreenPlayer : Window, IMediaView
             FullscreenStyle.Cinematic => 64, FullscreenStyle.Spotlight => 120, FullscreenStyle.Kinetic => 100,
             FullscreenStyle.Float => 120, FullscreenStyle.Depth => 140, _ => 160,
         };
-        BlurA.Radius = BlurB.Radius = blur;
+        if (blur != _backRadius)
+        {
+            _backRadius = blur;
+            RefreshBackdrop();
+        }
         Scrim.BeginAnimation(OpacityProperty, new DoubleAnimation(cinema ? 0.75 : _style == FullscreenStyle.Kinetic ? 1.15 : 1, dur));
         Vignette.BeginAnimation(OpacityProperty, new DoubleAnimation(cinema || _style == FullscreenStyle.Depth ? 1 : spot ? 0.85 : 0.7, dur));
-        Grain.BeginAnimation(OpacityProperty, new DoubleAnimation(cinema ? 0.085 : 0, dur));
+        // Зерно на весь экран: когда стиль его не использует — не просто прозрачное, а совсем убрано из отрисовки.
+        var grain = new DoubleAnimation(cinema ? 0.085 : 0, dur);
+        if (cinema) Grain.Visibility = Visibility.Visible;
+        else grain.Completed += (_, _) => { if (_style != FullscreenStyle.Cinematic) Grain.Visibility = Visibility.Collapsed; };
+        Grain.BeginAnimation(OpacityProperty, grain);
 
         SquareArt.Visibility = vinyl ? Visibility.Collapsed : Visibility.Visible;
         VinylArt.Visibility = vinyl ? Visibility.Visible : Visibility.Collapsed;
@@ -525,6 +537,8 @@ public partial class FullscreenPlayer : Window, IMediaView
         _particles += (ParticlesTarget - _particles) * k;
         Aurora.Opacity = Math.Min(1, _aurora + 0.3 * _level);
         Beam.Opacity = _beam <= 0.005 ? 0 : _beam * (0.85 + 0.1 * Math.Sin(_time * 23) + 0.05 * Math.Sin(_time * 61)) + 0.25 * _level * _beam;
+        var beamVis = _beam <= 0.005 ? Visibility.Collapsed : Visibility.Visible; // невидимый луч на весь экран не рисуем
+        if (Beam.Visibility != beamVis) Beam.Visibility = beamVis;
         Particles.Opacity = _particles;
         GlowScale.ScaleX = GlowScale.ScaleY = 1 + 0.12 * _level;
 
@@ -729,8 +743,12 @@ public partial class FullscreenPlayer : Window, IMediaView
         if (key != _artKey)
         {
             bool first = _artKey == default;
+            // Та же песня, та же картинка, но чётче (пришла версия в высоком разрешении) — тихая подмена, без анимации.
+            bool sharper = !first && key.Title == _artKey.Title && _artKey.Art is BitmapSource was
+                           && snap.Artwork is { } now && now.PixelWidth > was.PixelWidth;
             _artKey = key;
-            ApplyArt(snap, animate: !first);
+            if (sharper) UpgradeArt(snap);
+            else ApplyArt(snap, animate: !first);
         }
 
         string trackKey = $"{snap.Artist}\u0001{snap.Title}";
@@ -757,11 +775,12 @@ public partial class FullscreenPlayer : Window, IMediaView
         var c = snap.Accent;
         var dur = TimeSpan.FromMilliseconds(animate ? 900 : 0);
 
+        _coverBrush = brush;
         if (animate)
         {
             CoverNext.Background = brush;
             var show = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(450));
-            show.Completed += (_, _) => { Cover.Background = brush; CoverNext.BeginAnimation(OpacityProperty, null); CoverNext.Opacity = 0; };
+            show.Completed += (_, _) => { Cover.Background = _coverBrush; CoverNext.BeginAnimation(OpacityProperty, null); CoverNext.Opacity = 0; };
             CoverNext.BeginAnimation(OpacityProperty, show);
             var pop = new DoubleAnimation(0.93, 1, TimeSpan.FromMilliseconds(600)) { EasingFunction = SpringEase.Bouncy };
             FlyScale.BeginAnimation(ScaleTransform.ScaleXProperty, pop);
@@ -771,11 +790,7 @@ public partial class FullscreenPlayer : Window, IMediaView
         else Cover.Background = brush;
         Label.Fill = brush;
 
-        var (front, back) = _backB ? (BackArtA, BackArtB) : (BackArtB, BackArtA);
-        _backB = !_backB;
-        front.Background = brush;
-        front.BeginAnimation(OpacityProperty, new DoubleAnimation(1, dur));
-        back.BeginAnimation(OpacityProperty, new DoubleAnimation(0, dur));
+        ShowBackdrop(snap.Artwork, brush, dur);
 
         Tint(CoverGlowIn, CoverGlowOut, Brighten(c), 0x90, dur);
         Tint(BlobAIn, BlobAOut, Hue(c, 0), 0xB0, dur);
@@ -787,6 +802,132 @@ public partial class FullscreenPlayer : Window, IMediaView
     {
         inner.BeginAnimation(GradientStop.ColorProperty, new ColorAnimation(Color.FromArgb(alpha, c.R, c.G, c.B), dur));
         outer.BeginAnimation(GradientStop.ColorProperty, new ColorAnimation(Color.FromArgb(0, c.R, c.G, c.B), dur));
+    }
+
+    /// <summary>Кисть, которая должна остаться на обложке, когда закончится смена (может обновиться посреди неё).</summary>
+    private Brush? _coverBrush;
+
+    /// <summary>Пришла чёткая версия той же обложки: подменяем на месте. Размытый фон не трогаем — после размытия разницы нет.</summary>
+    private void UpgradeArt(MediaSnapshot snap)
+    {
+        var brush = MediaVisuals.ArtBrush(snap);
+        _coverBrush = brush;
+        Cover.Background = brush;
+        if (CoverNext.Opacity > 0) CoverNext.Background = brush;
+        Label.Fill = brush;
+    }
+
+    // ======================= размытый фон =======================
+
+    private Border? _frontLayer;
+    private BitmapSource? _backArt;
+    private Brush? _backPlain;
+    private double _backRadius = 160;
+    private Size _backSize;
+    private int _backVersion;
+    private readonly List<(BitmapSource Art, double Radius, Size Size, Brush Brush)> _backCache = new();
+
+    /// <summary>Размер слоя фона; до раскладки — по экрану (окно растягивается на монитор).</summary>
+    private Size BackdropSize()
+    {
+        if (BackArtA.ActualWidth > 0 && BackArtA.ActualHeight > 0) return new Size(BackArtA.ActualWidth, BackArtA.ActualHeight);
+        return new Size(SystemParameters.PrimaryScreenWidth + 520, SystemParameters.PrimaryScreenHeight + 520);
+    }
+
+    private bool BackdropSizeChanged()
+    {
+        var s = BackdropSize();
+        return Math.Abs(s.Width - _backSize.Width) > s.Width * 0.03 || Math.Abs(s.Height - _backSize.Height) > s.Height * 0.03;
+    }
+
+    /// <summary>Размытая обложка для фона: считается в фоне один раз на картинку, радиус и размер, потом берётся из кеша.</summary>
+    private async System.Threading.Tasks.Task<Brush> BackdropBrushAsync(BitmapSource art, double radius, Size size)
+    {
+        foreach (var c in _backCache)
+            if (ReferenceEquals(c.Art, art) && c.Radius == radius && c.Size == size) return c.Brush;
+        var bmp = await ImageFx.BlurredFillAsync(art, radius, size);
+        var brush = new ImageBrush(bmp) { Stretch = Stretch.UniformToFill };
+        brush.Freeze();
+        _backCache.Add((art, radius, size, brush));
+        if (_backCache.Count > 8) _backCache.RemoveAt(0);
+        return brush;
+    }
+
+    /// <summary>Новая обложка в фоне: слои плавно сменяют друг друга (как раньше), скрытый слой не рисуется.</summary>
+    private async void ShowBackdrop(BitmapSource? art, Brush plain, TimeSpan dur)
+    {
+        int v = ++_backVersion;
+        _backArt = art;
+        _backPlain = plain;
+        double radius = _backRadius;
+        var size = BackdropSize();
+        _backSize = size;
+        Brush brush = art == null ? plain : await BackdropBrushAsync(art, radius, size);
+        if (v != _backVersion) return;
+
+        var (front, back) = _backB ? (BackArtA, BackArtB) : (BackArtB, BackArtA);
+        _backB = !_backB;
+        _frontLayer = front;
+        front.Visibility = Visibility.Visible;
+        front.Background = brush;
+        front.BeginAnimation(OpacityProperty, new DoubleAnimation(1, dur));
+        var fade = new DoubleAnimation(0, dur);
+        fade.Completed += (_, _) => { if (back != _frontLayer) back.Visibility = Visibility.Hidden; };
+        back.BeginAnimation(OpacityProperty, fade);
+
+        if (radius != _backRadius || BackdropSizeChanged()) RefreshBackdrop();
+    }
+
+    /// <summary>Сменился радиус размытия (стиль) или размер окна — пересчитать текущий фон без смены картинки.</summary>
+    private async void RefreshBackdrop()
+    {
+        var art = _backArt;
+        var layer = _frontLayer;
+        if (art == null || layer == null) return;
+        int v = _backVersion;
+        double radius = _backRadius;
+        var size = BackdropSize();
+        _backSize = size;
+        var brush = await BackdropBrushAsync(art, radius, size);
+        if (v != _backVersion || layer != _frontLayer || radius != _backRadius) return;
+        layer.Background = brush;
+    }
+
+    // ======================= тени =======================
+
+    private double _shadowFor;
+    private readonly Dictionary<(double Size, bool Circle), Brush> _shadowCache = new();
+
+    /// <summary>
+    /// Тени обложки и пластинки — готовые картинки, совпадающие с прежними DropShadowEffect. Эффект пересчитывался
+    /// каждый кадр (фон всё время движется), а картинка просто рисуется. Считаются один раз на размер обложки.
+    /// </summary>
+    private async void UpdateShadows(double s)
+    {
+        if (s <= 0 || s == _shadowFor) return;
+        _shadowFor = s;
+        var cover = await ShadowBrushAsync(s, circle: false, blur: 70, opacity: 0.6);
+        var vinyl = await ShadowBrushAsync(s, circle: true, blur: 60, opacity: 0.65);
+        if (s != _shadowFor) return;
+        PlaceShadow(CoverShadow, cover, blur: 70, depth: 22);
+        PlaceShadow(VinylShadow, vinyl, blur: 60, depth: 20);
+    }
+
+    private async System.Threading.Tasks.Task<Brush> ShadowBrushAsync(double s, bool circle, double blur, double opacity)
+    {
+        if (_shadowCache.TryGetValue((s, circle), out var known)) return known;
+        var bmp = await ImageFx.ShadowAsync(s, s, 28, circle, blur, opacity);
+        var brush = new ImageBrush(bmp) { Stretch = Stretch.Fill };
+        brush.Freeze();
+        _shadowCache[(s, circle)] = brush;
+        return brush;
+    }
+
+    private static void PlaceShadow(Border host, Brush brush, double blur, double depth)
+    {
+        double pad = ImageFx.ShadowPad(blur);
+        host.Margin = new Thickness(-pad, -pad + depth, -pad, -pad - depth);
+        host.Background = brush;
     }
 
     /// <summary>На паузе обложка отходит назад (как в Apple Music), тонарм поднимается; при игре — всё возвращается с пружинкой.</summary>
@@ -927,6 +1068,12 @@ public partial class FullscreenPlayer : Window, IMediaView
         _current = -2;
     }
 
+    /// <summary>Масштаб кеша строк = масштаб экрана (125 %, 150 %…): кеш не учитывает его сам, и текст мылился бы.</summary>
+    private double LineCacheScale => Math.Max(1, VisualTreeHelper.GetDpi(this).DpiScaleX);
+
+    /// <summary>Кеш строки: в разрешении экрана и ровно по пикселям (без этого текст чуть мылился).</summary>
+    private BitmapCache LineCache() => new(LineCacheScale) { SnapsToDevicePixels = true };
+
     private void BuildLines()
     {
         foreach (var line in _lyricLines)
@@ -939,21 +1086,30 @@ public partial class FullscreenPlayer : Window, IMediaView
             {
                 Text = string.IsNullOrWhiteSpace(line.Text) ? "♪" : line.Text,
                 FontSize = _lyricFont, FontWeight = FontWeights.Bold, TextWrapping = TextWrapping.Wrap,
-                Foreground = Brushes.White, Opacity = 0.2, Background = Brushes.Transparent, Cursor = Cursors.Hand,
-                RenderTransform = new TransformGroup { Children = { scale, shift } },
+                Foreground = Brushes.White, Background = Brushes.Transparent, Cursor = Cursors.Hand,
                 Effect = blur,
             };
-            var v = new LineVisual { Text = tb, Shift = shift, Scale = scale, Blur = blur, Glow = glow };
+            // Эффект (размытие, свечение) — на тексте, а сдвиг, масштаб и прозрачность — на обёртке с кешем: строка
+            // с эффектом рисуется один раз и дальше берётся готовой картинкой. Фон движется всегда, и без кеша эффект
+            // каждой строки пересчитывался на каждом кадре. Кеш у элемента не включает его собственный эффект —
+            // поэтому обёртка, а не CacheMode на самом тексте.
+            var host = new Border
+            {
+                Child = tb, Opacity = 0.2,
+                RenderTransform = new TransformGroup { Children = { scale, shift } },
+                CacheMode = LineCache(),
+            };
+            var v = new LineVisual { Text = tb, Host = host, Shift = shift, Scale = scale, Blur = blur, Glow = glow };
             var time = line.Time;
             // Наведение проясняет строку, нажатие перематывает к ней.
             tb.MouseEnter += (_, _) =>
             {
-                tb.BeginAnimation(OpacityProperty, new DoubleAnimation(Math.Max(v.TargetOpacity, 0.8), TimeSpan.FromMilliseconds(140)));
+                host.BeginAnimation(OpacityProperty, new DoubleAnimation(Math.Max(v.TargetOpacity, 0.8), TimeSpan.FromMilliseconds(140)));
                 if (tb.Effect == v.Blur) v.Blur.BeginAnimation(BlurEffect.RadiusProperty, new DoubleAnimation(0, TimeSpan.FromMilliseconds(140)));
             };
             tb.MouseLeave += (_, _) =>
             {
-                tb.BeginAnimation(OpacityProperty, new DoubleAnimation(v.TargetOpacity, TimeSpan.FromMilliseconds(260)));
+                host.BeginAnimation(OpacityProperty, new DoubleAnimation(v.TargetOpacity, TimeSpan.FromMilliseconds(260)));
                 if (tb.Effect == v.Blur) v.Blur.BeginAnimation(BlurEffect.RadiusProperty, new DoubleAnimation(v.TargetBlur, TimeSpan.FromMilliseconds(260)));
             };
             tb.MouseLeftButtonUp += async (_, e) =>
@@ -962,7 +1118,7 @@ public partial class FullscreenPlayer : Window, IMediaView
                 if (_demo || _snap == null) return;
                 await _media.SeekAsync(time);
             };
-            LinesCanvas.Children.Add(tb);
+            LinesCanvas.Children.Add(host);
             _lines.Add(v);
         }
         RelayoutLines();
@@ -977,7 +1133,7 @@ public partial class FullscreenPlayer : Window, IMediaView
         {
             v.Text.Width = width;
             v.Text.TextAlignment = center ? TextAlignment.Center : TextAlignment.Left;
-            v.Text.RenderTransformOrigin = new Point(center ? 0.5 : 0, 0.5);
+            v.Host.RenderTransformOrigin = new Point(center ? 0.5 : 0, 0.5);
             v.Glow.BlurRadius = center ? 42 : 28;
             v.Glow.Opacity = center ? 0.45 : 0.32;
             v.Text.Measure(new Size(width, double.PositiveInfinity));
@@ -1061,12 +1217,13 @@ public partial class FullscreenPlayer : Window, IMediaView
             }
             v.TargetOpacity = opacity;
             v.TargetBlur = blur;
+            targetY = Math.Round(targetY); // строка в кеше встаёт ровно на пиксели — иначе картинка чуть мылится
 
-            var begin = TimeSpan.FromMilliseconds(animate && d > 0 && !_browsing ? Math.Min(6, d) * 35 : 0);
+            var begin =TimeSpan.FromMilliseconds(animate && d > 0 && !_browsing ? Math.Min(6, d) * 35 : 0);
             var dur = TimeSpan.FromMilliseconds(!animate ? 0 : _browsing ? 260 : 700);
             IEasingFunction moveEase = !animate || _browsing ? ease : SpringEase.Soft;
             v.Shift.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(targetY, dur) { BeginTime = begin, EasingFunction = moveEase });
-            v.Text.BeginAnimation(OpacityProperty, new DoubleAnimation(opacity, dur) { BeginTime = begin, EasingFunction = ease });
+            v.Host.BeginAnimation(OpacityProperty, new DoubleAnimation(opacity, dur) { BeginTime = begin, EasingFunction = ease });
             var s = new DoubleAnimation(scale, dur) { BeginTime = begin, EasingFunction = animate && !_browsing ? SpringEase.Lively : ease };
             v.Scale.BeginAnimation(ScaleTransform.ScaleXProperty, s);
             v.Scale.BeginAnimation(ScaleTransform.ScaleYProperty, s);
@@ -1078,6 +1235,9 @@ public partial class FullscreenPlayer : Window, IMediaView
                 v.Blur.BeginAnimation(BlurEffect.RadiusProperty, new DoubleAnimation(blur, dur) { BeginTime = begin, EasingFunction = ease });
             }
             else v.Text.Effect = null;
+            // Кеш нужен только строкам с эффектом; простой текст дешевле нарисовать, чем держать картинкой.
+            var cache = v.Text.Effect != null ? v.Host.CacheMode ?? LineCache() : null;
+            if (v.Host.CacheMode != cache) v.Host.CacheMode = cache;
         }
     }
 
@@ -1155,19 +1315,20 @@ public partial class FullscreenPlayer : Window, IMediaView
         bool spaced = text.Contains(' ');
         for (int i = 0; i < words.Count; i++)
         {
-            var tb = new TextBlock
+            var tb = new TextBlock { Text = words[i], FontSize = size, FontWeight = FontWeights.Black, Foreground = Brushes.White };
+            // Как у строк: эффект на слове, движение и прозрачность — на обёртке с кешем (свечение не пересчитывается каждый кадр).
+            var word = new Border
             {
-                Text = words[i], FontSize = size, FontWeight = FontWeights.Black, Foreground = Brushes.White,
-                Margin = new Thickness(0, 0, spaced ? size * 0.28 : 0, 0), Opacity = 0,
-                RenderTransformOrigin = new Point(0.5, 1),
+                Child = tb, Margin = new Thickness(0, 0, spaced ? size * 0.28 : 0, 0), Opacity = 0,
+                RenderTransformOrigin = new Point(0.5, 1), CacheMode = LineCache(),
             };
             var tt = new TranslateTransform(0, size * 0.55);
             var sc = new ScaleTransform(0.8, 0.8);
-            tb.RenderTransform = new TransformGroup { Children = { sc, tt } };
+            word.RenderTransform = new TransformGroup { Children = { sc, tt } };
             var blur = new BlurEffect { Radius = 14, RenderingBias = RenderingBias.Performance };
             tb.Effect = blur;
             var begin = TimeSpan.FromMilliseconds(i * stepMs);
-            tb.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(260)) { BeginTime = begin });
+            word.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(260)) { BeginTime = begin });
             tt.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(size * 0.55, 0, TimeSpan.FromMilliseconds(620)) { BeginTime = begin, EasingFunction = SpringEase.Lively });
             var grow = new DoubleAnimation(0.8, 1, TimeSpan.FromMilliseconds(620)) { BeginTime = begin, EasingFunction = SpringEase.Bouncy };
             sc.BeginAnimation(ScaleTransform.ScaleXProperty, grow);
@@ -1175,7 +1336,7 @@ public partial class FullscreenPlayer : Window, IMediaView
             var unblur = new DoubleAnimation(14, 0, TimeSpan.FromMilliseconds(420)) { BeginTime = begin };
             unblur.Completed += (_, _) => tb.Effect = new DropShadowEffect { Color = Colors.White, BlurRadius = 34, ShadowDepth = 0, Opacity = 0.3, RenderingBias = RenderingBias.Performance };
             blur.BeginAnimation(BlurEffect.RadiusProperty, unblur);
-            wrap.Children.Add(tb);
+            wrap.Children.Add(word);
         }
 
         var stack = new StackPanel { VerticalAlignment = VerticalAlignment.Center, RenderTransform = new TranslateTransform() };
@@ -1267,6 +1428,21 @@ public partial class FullscreenPlayer : Window, IMediaView
         _aurora = AuroraTarget; _beam = BeamTarget; _particles = ParticlesTarget;
         Relayout();
         if (style == FullscreenStyle.Cinematic) BarTop.BeginAnimation(HeightProperty, null);
+    }
+
+    /// <summary>Для замеров: убрать часть сцены (lines, aurora, particles, scrim), чтобы увидеть её цену.</summary>
+    public void DebugDisable(string parts)
+    {
+        foreach (var p in parts.Split(',', StringSplitOptions.RemoveEmptyEntries))
+            switch (p)
+            {
+                case "lines": foreach (var v in _lines) v.Text.Effect = null; break;
+                case "aurora": Aurora.Visibility = Visibility.Collapsed; break;
+                case "particles": Particles.Visibility = Visibility.Collapsed; break;
+                case "scrim": Scrim.Visibility = Vignette.Visibility = Visibility.Collapsed; break;
+                case "backdrop": BackArtA.Visibility = BackArtB.Visibility = Visibility.Collapsed; break;
+                case "glow": CoverGlow.Visibility = Visibility.Collapsed; break;
+            }
     }
 
     /// <summary>Для скриншотов: открыть меню стилей и вернуть его содержимое.</summary>

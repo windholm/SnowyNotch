@@ -282,8 +282,9 @@ public sealed class MediaService : IDisposable
             double? aspect = null;
             if (artist.Length > 0 && album.Length == 0 && props?.Thumbnail != null)
             {
-                var art = await LoadThumbnailAsync(props.Thumbnail);
-                if (art != null && art.PixelHeight > 0) aspect = art.PixelWidth / (double)art.PixelHeight;
+                // Нужны только пропорции — читаем размер из заголовка, без декодирования картинки.
+                var data = await ReadThumbnailBytesAsync(props.Thumbnail);
+                if (data != null && ImageFx.Measure(data) is { H: > 0 } size) aspect = size.W / (double)size.H;
             }
             bool verdict = MusicSources.IsMusic(kind, videoType, musicType, artist, album, aspect);
             if (_verdicts.Count > 300) _verdicts.Clear();
@@ -377,15 +378,34 @@ public sealed class MediaService : IDisposable
 
         if (props?.Thumbnail != null)
         {
-            var art = await LoadThumbnailAsync(props.Thumbnail);
+            var thumb = await LoadThumbnailAsync(props.Thumbnail);
             if (version != _propsVersion || s != _session) return;
-            if (art != null)
+            if (thumb is { } t)
             {
-                _art = art;
-                _accent = ColorExtractor.GetAccent(art);
+                _accent = t.Accent;
+                // Плеер прислал ту же картинку ещё раз (свойства меняются по нескольку раз за трек) — оставляем чёткую.
+                if (_hiRes is { } hr && hr.Thumb == t.Hash) _art = hr.Art;
+                else
+                {
+                    _art = t.Art;
+                    if (HiResArtwork.Worth(t.Art)) _ = UpgradeArtAsync(version, s, title, artist, t);
+                }
             }
         }
 
+        Publish();
+    }
+
+    /// <summary>Чёткая версия текущей обложки (см. <see cref="HiResArtwork"/>) и отпечаток картинки, которую она заменяет.</summary>
+    private (int Thumb, BitmapSource Art)? _hiRes;
+
+    /// <summary>Найти обложку в высоком разрешении и тихо подменить ею текущую (цвета остаются от исходной).</summary>
+    private async Task UpgradeArtAsync(int version, Session s, string title, string artist, Thumb thumb)
+    {
+        var hi = await HiResArtwork.FindAsync(title, artist, thumb.Art);
+        if (hi == null || s != _session || !ReferenceEquals(_art, thumb.Art) || title != _title || artist != _artist) return;
+        _hiRes = (thumb.Hash, hi);
+        _art = hi;
         Publish();
     }
 
@@ -485,7 +505,9 @@ public sealed class MediaService : IDisposable
     private TimeSpan Extrapolate(DateTimeOffset now) =>
         _playing ? _pos + (now - _posAt) : _pos;
 
-    private static async Task<BitmapSource?> LoadThumbnailAsync(IRandomAccessStreamReference reference)
+    private readonly record struct Thumb(BitmapSource Art, Color Accent, int Hash);
+
+    private static async Task<byte[]?> ReadThumbnailBytesAsync(IRandomAccessStreamReference reference)
     {
         try
         {
@@ -493,22 +515,31 @@ public sealed class MediaService : IDisposable
             using var stream = ras.AsStreamForRead();
             var ms = new MemoryStream();
             await stream.CopyToAsync(ms);
-            ms.Position = 0;
-
-            var bmp = new BitmapImage();
-            bmp.BeginInit();
-            bmp.CacheOption = BitmapCacheOption.OnLoad;
-            bmp.DecodePixelWidth = 160;
-            bmp.StreamSource = ms;
-            bmp.EndInit();
-            bmp.Freeze();
-            return bmp;
+            return ms.ToArray();
         }
         catch (Exception ex)
         {
             Debug.WriteLine($"[media] thumbnail failed: {ex.Message}");
             return null;
         }
+    }
+
+    /// <summary>
+    /// Обложка в родном размере (раньше ужималась до 160 px и мылилась на больших видах). Декодирование и подбор
+    /// цвета — в фоне, чтобы смена трека не подтормаживала интерфейс.
+    /// </summary>
+    private static async Task<Thumb?> LoadThumbnailAsync(IRandomAccessStreamReference reference)
+    {
+        var data = await ReadThumbnailBytesAsync(reference);
+        if (data == null || data.Length == 0) return null;
+        return await Task.Run<Thumb?>(() =>
+        {
+            var art = ImageFx.Decode(data);
+            if (art == null) return null;
+            var hash = new HashCode();
+            hash.AddBytes(data);
+            return new Thumb(art, ColorExtractor.GetAccent(art), hash.ToHashCode());
+        });
     }
 
     private void Publish()

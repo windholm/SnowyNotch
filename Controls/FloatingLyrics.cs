@@ -113,16 +113,25 @@ public sealed class FloatingLyrics : Canvas
         double y = t + row * ch + (ch - ds.Height) / 2 + (_rnd.NextDouble() - 0.5) * ch * 0.5;
         x = Math.Clamp(x, l, w - w * SafeArea.Right - ds.Width);
         y = Math.Clamp(y, t, h - h * SafeArea.Bottom - ds.Height);
-        SetLeft(tb, x);
-        SetTop(tb, y);
+
+        // Тень/свечение — на тексте, а движение и прозрачность — на обёртке с кешем: строка всё время плывёт,
+        // и без кеша её эффект пересчитывался на каждом кадре. Кеш элемента не включает его собственный эффект,
+        // поэтому нужна обёртка. Кеш — в разрешении экрана.
+        var host = new Border
+        {
+            Child = tb,
+            CacheMode = new BitmapCache(Math.Max(1, VisualTreeHelper.GetDpi(this).DpiScaleX)) { SnapsToDevicePixels = true },
+        };
+        SetLeft(host, x);
+        SetTop(host, y);
 
         var scale = new ScaleTransform(1, 1);
         var tilt = new RotateTransform((_rnd.NextDouble() - 0.5) * 7);
         var shift = new TranslateTransform();
-        tb.RenderTransformOrigin = new Point(align == TextAlignment.Left ? 0 : align == TextAlignment.Right ? 1 : 0.5, 0.5);
-        tb.RenderTransform = new TransformGroup { Children = { scale, tilt, shift } };
-        Children.Add(tb);
-        var item = new Item { El = tb, Shift = shift, Scale = scale, Tilt = tilt };
+        host.RenderTransformOrigin = new Point(align == TextAlignment.Left ? 0 : align == TextAlignment.Right ? 1 : 0.5, 0.5);
+        host.RenderTransform = new TransformGroup { Children = { scale, tilt, shift } };
+        Children.Add(host);
+        var item = new Item { El = host, Shift = shift, Scale = scale, Tilt = tilt };
         _items.Add(item);
 
         Animate(item, tb, (Entrance)_rnd.Next(6), col);
@@ -145,25 +154,25 @@ public sealed class FloatingLyrics : Canvas
                 unblur.Completed += (_, _) => { if (tb.Effect == blur) tb.Effect = keep; };
                 blur.BeginAnimation(BlurEffect.RadiusProperty, unblur);
                 Grow(it, 0.9, SpringEase.Soft, 800);
-                tb.BeginAnimation(OpacityProperty, fade);
+                it.El.BeginAnimation(OpacityProperty, fade);
                 break;
 
             case Entrance.Slide:
                 double dx = col == 2 ? 120 : -120;
                 it.Shift.BeginAnimation(TranslateTransform.XProperty, new DoubleAnimation(dx, 0, TimeSpan.FromMilliseconds(800)) { EasingFunction = SpringEase.Lively });
-                tb.BeginAnimation(OpacityProperty, fade);
+                it.El.BeginAnimation(OpacityProperty, fade);
                 break;
 
             case Entrance.Pop:
                 Grow(it, 0.4, SpringEase.Bouncy, 700);
-                tb.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(220)));
+                it.El.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(220)));
                 break;
 
             case Entrance.Rise:
                 double angle = it.Tilt.Angle;
                 it.Tilt.BeginAnimation(RotateTransform.AngleProperty, new DoubleAnimation(angle + (_rnd.NextDouble() < 0.5 ? -14 : 14), angle, TimeSpan.FromMilliseconds(900)) { EasingFunction = SpringEase.Lively });
                 it.Shift.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(70, 0, TimeSpan.FromMilliseconds(900)) { EasingFunction = SpringEase.Lively });
-                tb.BeginAnimation(OpacityProperty, fade);
+                it.El.BeginAnimation(OpacityProperty, fade);
                 break;
 
             case Entrance.Wipe:

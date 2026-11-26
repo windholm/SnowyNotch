@@ -30,6 +30,9 @@ public sealed class LyricsOverlay : Window, IMediaView
     private int _current = -2;
     private bool _closing;
 
+    /// <summary>Проверка «не пора ли следующей строке» — 20 раз в секунду хватает (раньше — каждый кадр экрана).</summary>
+    private readonly System.Windows.Threading.DispatcherTimer _tick = new() { Interval = TimeSpan.FromMilliseconds(50) };
+
     public LyricsOverlay(LyricsService lyrics, AppSettings settings)
     {
         _lyrics = lyrics;
@@ -59,9 +62,10 @@ public sealed class LyricsOverlay : Window, IMediaView
         Loaded += (_, _) =>
         {
             BeginAnimation(OpacityProperty, new DoubleAnimation(1, TimeSpan.FromMilliseconds(400)));
-            CompositionTarget.Rendering += OnFrame;
+            _tick.Tick += (_, _) => Tick();
+            _tick.Start();
         };
-        Closed += (_, _) => CompositionTarget.Rendering -= OnFrame;
+        Closed += (_, _) => _tick.Stop();
     }
 
     public void CloseAnimated()
@@ -103,7 +107,6 @@ public sealed class LyricsOverlay : Window, IMediaView
         Tick();
     }
 
-    private void OnFrame(object? sender, EventArgs e) => Tick();
 
 #if DEBUG
     /// <summary>Для скриншотов: показать строку без загрузки текста.</summary>

@@ -11,8 +11,8 @@
 
         <!-- ===== Фон: размытая обложка (два слоя для смены трека), цветные пятна, луч, частицы, затемнения ===== -->
         <Grid x:Name="Backdrop" Opacity="0" IsHitTestVisible="False">
-            <Border x:Name="BackArtA" Margin="-260" RenderTransformOrigin="0.5,0.5" CacheMode="BitmapCache">
-                <Border.Effect><BlurEffect x:Name="BlurA" Radius="160" RenderingBias="Performance" KernelType="Gaussian"/></Border.Effect>
+            <!-- Размытие «запечено» в картинку (ImageFx.BlurredFill): BlurEffect на весь экран пересчитывался каждый кадр. -->
+            <Border x:Name="BackArtA" Margin="-260" RenderTransformOrigin="0.5,0.5">
                 <Border.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform x:Name="DriftScale" ScaleX="1.12" ScaleY="1.12"/>
@@ -20,9 +20,7 @@
                     </TransformGroup>
                 </Border.RenderTransform>
             </Border>
-            <Border x:Name="BackArtB" Margin="-260" Opacity="0" RenderTransformOrigin="0.5,0.5" CacheMode="BitmapCache">
-                <Border.Effect><BlurEffect x:Name="BlurB" Radius="160" RenderingBias="Performance" KernelType="Gaussian"/></Border.Effect>
-            </Border>
+            <Border x:Name="BackArtB" Margin="-260" Opacity="0" RenderTransformOrigin="0.5,0.5" Visibility="Hidden"/>
 
             <Canvas x:Name="Aurora" Opacity="0.55">
                 <Ellipse x:Name="BlobA" Width="900" Height="900">
@@ -144,11 +142,9 @@
                         <Grid.RenderTransform><ScaleTransform x:Name="PauseScale"/></Grid.RenderTransform>
 
                         <Grid x:Name="SquareArt">
-                            <Border x:Name="Cover" CornerRadius="28" Background="#2A2A2E">
-                                <Border.Effect>
-                                    <DropShadowEffect BlurRadius="70" ShadowDepth="22" Direction="270" Opacity="0.6" Color="Black" RenderingBias="Performance"/>
-                                </Border.Effect>
-                            </Border>
+                            <!-- Тень — готовая картинка (как DropShadowEffect: размытие 70, сдвиг 22 вниз, 60 %), см. UpdateShadows. -->
+                            <Border x:Name="CoverShadow" IsHitTestVisible="False"/>
+                            <Border x:Name="Cover" CornerRadius="28" Background="#2A2A2E"/>
                             <Border x:Name="CoverNext" CornerRadius="28" Opacity="0"/>
                             <Border x:Name="CoverShine" CornerRadius="28" IsHitTestVisible="False" Opacity="0">
                                 <Border.Background>
@@ -165,11 +161,9 @@
 
                         <!-- Пластинка: диск с бороздками крутится, обложка — этикетка; блик стоит на месте; тонарм. -->
                         <Grid x:Name="VinylArt" Visibility="Collapsed">
-                            <Ellipse Fill="Black">
-                                <Ellipse.Effect>
-                                    <DropShadowEffect BlurRadius="60" ShadowDepth="20" Direction="270" Opacity="0.65" Color="Black" RenderingBias="Performance"/>
-                                </Ellipse.Effect>
-                            </Ellipse>
+                            <!-- Тень пластинки — готовая картинка (размытие 60, сдвиг 20 вниз, 65 %). -->
+                            <Border x:Name="VinylShadow" IsHitTestVisible="False"/>
+                            <Ellipse Fill="Black"/>
                             <Grid RenderTransformOrigin="0.5,0.5">
                                 <Grid.RenderTransform><RotateTransform x:Name="DiscSpin"/></Grid.RenderTransform>
                                 <Ellipse x:Name="Disc"/>

@@ -153,6 +153,8 @@ internal static class MediaVisuals
         if (!ReferenceEquals(snap.Artwork, _artFor) || _art == null)
         {
             var b = new ImageBrush(snap.Artwork) { Stretch = Stretch.UniformToFill };
+            // Обложка теперь в родном (крупном) размере: на маленьких видах уменьшаем качественно, без ряби.
+            RenderOptions.SetBitmapScalingMode(b, BitmapScalingMode.HighQuality);
             b.Freeze();
             _art = b;
             _artFor = snap.Artwork;

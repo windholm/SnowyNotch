@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -135,6 +136,37 @@ public partial class MainWindow
                 Save(rtb, Path.Combine(dir, name + ".png"));
                 player.Close();
                 await Task.Delay(500);
+            }
+
+            // «--shot-only=perf»: замер полноэкранного плеера — кадры в секунду и процессор за 6 секунд на стиль.
+            if (only != null && Array.IndexOf(only, "perf") >= 0)
+            {
+                var report = new System.Text.StringBuilder();
+                foreach (var style in (Environment.GetEnvironmentVariable("SN_PERF_STYLES") ?? "Classic,Cinematic,Vinyl,Depth").Split(',').Select(Enum.Parse<FullscreenStyle>))
+                {
+                    _settings.FullscreenStyle = style;
+                    var player = DebugOpenFullscreen(DemoLyrics, 2);
+                    if (player == null) continue;
+                    player.DebugSetStyle(style);
+                    await Task.Delay(2000);
+                    player.DebugDisable(Environment.GetEnvironmentVariable("SN_PERF_OFF") ?? "");
+                    await Task.Delay(300);
+                    int frames = 0;
+                    EventHandler count = (_, _) => frames++;
+                    var proc = System.Diagnostics.Process.GetCurrentProcess();
+                    var cpu0 = proc.TotalProcessorTime;
+                    var sw = System.Diagnostics.Stopwatch.StartNew();
+                    System.Windows.Media.CompositionTarget.Rendering += count;
+                    await Task.Delay(6000);
+                    System.Windows.Media.CompositionTarget.Rendering -= count;
+                    proc.Refresh();
+                    double sec = sw.Elapsed.TotalSeconds;
+                    double cpu = (proc.TotalProcessorTime - cpu0).TotalSeconds / sec / Environment.ProcessorCount * 100;
+                    report.AppendLine($"{style,-10} {frames / sec,5:0.0} fps   CPU {cpu,5:0.0} %");
+                    player.Close();
+                    await Task.Delay(600);
+                }
+                File.WriteAllText(Path.Combine(dir, "perf.txt"), report.ToString());
             }
 
             // «Текст поверх экрана» — поверх «обоев», как над рабочим столом.
