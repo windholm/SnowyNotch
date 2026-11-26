@@ -218,7 +218,11 @@ public partial class App : System.Windows.Application
         var menu = new Forms.ContextMenuStrip();
         menu.Items.Add(L.T("Настройки        Win + /"), null, (_, _) => OpenSettings());
         menu.Items.Add(L.T("Показать остров"), null, (_, _) => _island?.ShowIsland());
-        menu.Items.Add(L.T("Текст поверх экрана") + "   " + (_lyricsHotkey?.Label ?? ""), null, (_, _) => _island?.ToggleLyricsOverlay());
+        // Галочка — включён ли режим: видно, что повторное нажатие его выключит.
+        var overlayItem = new Forms.ToolStripMenuItem(L.T("Текст поверх экрана") + "   " + (_lyricsHotkey?.Label ?? ""), null,
+            (_, _) => _island?.ToggleLyricsOverlay());
+        menu.Items.Add(overlayItem);
+        menu.Opening += (_, _) => overlayItem.Checked = _island?.LyricsOverlayActive == true;
         menu.Items.Add(new Forms.ToolStripSeparator());
         menu.Items.Add(L.T("Выход"), null, (_, _) => Shutdown());
 
